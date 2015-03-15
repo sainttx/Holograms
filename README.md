@@ -3,7 +3,7 @@ A Bukkit plugin that allows easy creation and management of text based Holograms
 
 Usage
 --------
-This subcommands for this plugin are as follows:
+The subcommands for this plugin are as follows:
 
 * `/holograms addline <hologramName> <textToAdd>`
 * `/holograms create <hologramName> <initialText>`
