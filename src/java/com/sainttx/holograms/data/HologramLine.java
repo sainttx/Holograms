@@ -47,7 +47,7 @@ public class HologramLine {
      * @param parent The Hologram hosting this line of text
      * @param text   The line of text that is held by this object
      */
-    public HologramLine(Hologram parent, String text) {
+    protected HologramLine(Hologram parent, String text) {
         this.parent = parent;
         this.text = ChatColor.translateAlternateColorCodes('&', text);
         this.originalText = text;

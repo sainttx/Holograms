@@ -35,6 +35,7 @@ public class HologramPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
 
         setupController();
+        manager.load();
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.sainttx.holograms.util;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+
+import java.text.NumberFormat;
 
 /**
  * Created by Matthew on 15/03/2015.
@@ -15,6 +18,31 @@ public class TextUtil {
      */
     public static String color(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
+    /**
+     * Converts a Location into a String
+     *
+     * @param location A location to be converted
+     * @return A string representation of the Location
+     */
+    public static String locationAsString(Location location) {
+        return location.getWorld().getName() + " (x/y/z: " + formatDouble(location.getX()) + "/" + formatDouble(location.getY())
+                + "/" + formatDouble(location.getZ()) + ")";
+    }
+
+    /**
+     * Returns a formatted String representation of a double, rounded to 2
+     * decimal places
+     *
+     * @param value The double to be formatted
+     * @return A formatted string of the double
+     */
+    public static String formatDouble(double value) {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(2);
+        return nf.format(value);
     }
 
     /**

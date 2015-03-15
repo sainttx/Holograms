@@ -71,15 +71,15 @@ public class HologramCommands implements CommandExecutor {
      */
     private void sendMenu(CommandSender sender) {
         sender.sendMessage(TextUtil.color("&7&m----------&7[ &eHolograms Help &7]&m----------"));
-        sender.sendMessage(TextUtil.color("&e/holograms addline &f<hologram> <text>"));
-        sender.sendMessage(TextUtil.color("&e/holograms create &f<hologram> <text>"));
-        sender.sendMessage(TextUtil.color("&e/holograms delete &f<hologram>"));
-        sender.sendMessage(TextUtil.color("&e/holograms info &f<hologram>"));
-        sender.sendMessage(TextUtil.color("&e/holograms insertline &f<hologram> <index> <text>"));
+        sender.sendMessage(TextUtil.color("&e/holograms addline &f<name> <text>"));
+        sender.sendMessage(TextUtil.color("&e/holograms create &f<name> <text>"));
+        sender.sendMessage(TextUtil.color("&e/holograms delete &f<name>"));
+        sender.sendMessage(TextUtil.color("&e/holograms info &f<name>"));
+        sender.sendMessage(TextUtil.color("&e/holograms insertline &f<name> <index> <text>"));
         sender.sendMessage(TextUtil.color("&e/holograms list"));
-        sender.sendMessage(TextUtil.color("&e/holograms movehere &f<hologram>"));
+        sender.sendMessage(TextUtil.color("&e/holograms movehere &f<name>"));
         sender.sendMessage(TextUtil.color("&e/holograms near &f<radius>"));
-        sender.sendMessage(TextUtil.color("&e/holograms removeline &f<hologram> <index>"));
+        sender.sendMessage(TextUtil.color("&e/holograms removeline &f<name> <index>"));
         sender.sendMessage(TextUtil.color("&7&oHolograms v" + plugin.getDescription().getVersion() + " by SainttX"));
 
     }

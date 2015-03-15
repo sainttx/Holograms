@@ -79,7 +79,7 @@ public class Hologram {
      *
      * @return The persistence of the hologram
      */
-    public boolean getPersistency() {
+    public boolean isPersistent() {
         return persist;
     }
 
@@ -145,6 +145,26 @@ public class Hologram {
     }
 
     /**
+     * Adds a new line to this hologram
+     *
+     * @param line The hologram line
+     */
+    public void addLine(HologramLine line) {
+        lines.add(line);
+        saveIfPersistent();
+    }
+
+    /**
+     * Adds a new String of text to this hologram
+     *
+     * @param text The text to add
+     */
+    public void addLine(String text) {
+        HologramLine newLine = new HologramLine(this, text);
+        addLine(newLine);
+    }
+
+    /**
      * Removes a line from the list of active lines and despawns it
      *
      * @param line The line to be removed
@@ -152,7 +172,7 @@ public class Hologram {
     public void removeLine(HologramLine line) {
         lines.remove(line);
         line.despawn();
-        refreshAll();
+        saveIfPersistent();
     }
 
     /**
@@ -160,14 +180,32 @@ public class Hologram {
      *
      * @param index The index of the line
      */
-    public void removeLine(int index) {
+    public HologramLine removeLine(int index) {
         HologramLine line = lines.get(index);
         removeLine(line);
+        return line;
     }
 
+    /**
+     * Inserts a line into the Hologram at a particular index
+     *
+     * @param line  The hologram line of text to insert
+     * @param index The index where the line should be inserted
+     */
     public void insertLine(HologramLine line, int index) {
         lines.add(index, line);
-        refreshAll();
+        saveIfPersistent();
+    }
+
+    /**
+     * Inserts a line into the Hologram at a particular index
+     *
+     * @param text  The string of text to insert
+     * @param index The index where the line should be inserted
+     */
+    public void insertLine(String text, int index) {
+        HologramLine line = new HologramLine(this, text);
+        insertLine(line, index);
     }
 
     /**
@@ -232,9 +270,7 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location;
-            despawnEntities();
-            refreshAll();
-            return;
         }
+        saveIfPersistent();
     }
 }
