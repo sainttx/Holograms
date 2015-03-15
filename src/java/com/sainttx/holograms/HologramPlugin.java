@@ -16,7 +16,7 @@ public class HologramPlugin extends JavaPlugin {
     /**
      * The path to the package that contains our NMS implementations
      */
-    public static final String NMS_PACKAGE_PATH = "com.sainttx.holograms.nms" + ReflectionUtil.getVersion();
+    public static final String NMS_PACKAGE_PATH = "com.sainttx.holograms.nms." + ReflectionUtil.getVersion();
 
     /*
      * The Hologram manager instance
@@ -31,10 +31,10 @@ public class HologramPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.manager = new HologramManager(this);
-        setupController();
-
-        getCommand("holograms").setExecutor(new HologramCommands());
+        getCommand("holograms").setExecutor(new HologramCommands(this));
         getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
+
+        setupController();
     }
 
     @Override

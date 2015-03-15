@@ -225,7 +225,7 @@ public class Hologram {
     }
 
     /**
-     * Teleports this Hologram to a Location
+     * Teleports this Hologram to a new Location
      *
      * @param location The new location of this Hologram
      */

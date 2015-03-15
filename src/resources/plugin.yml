@@ -9,6 +9,7 @@ commands:
   holograms:
     description: All commands for Hologram
     aliases: [hologram, holo, h]
+    permission-message: You do not have sufficient permissions to use this command
 
 permissions:
   hologram.*:
