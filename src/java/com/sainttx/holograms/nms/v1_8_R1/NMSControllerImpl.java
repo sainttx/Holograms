@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class NMSControllerImpl implements NMSController {
 
+    @Override
     public void setup() {
         try {
             registerCustomEntity(EntityNMSArmorStand.class, "ArmorStand", 30);
@@ -39,6 +40,7 @@ public class NMSControllerImpl implements NMSController {
         map.put(key, value);
     }
 
+    @Override
     public EntityNMSArmorStand spawnArmorStand(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
         EntityNMSArmorStand armorStand = new EntityNMSArmorStand(nmsWorld, parentPiece);
@@ -54,6 +56,7 @@ public class NMSControllerImpl implements NMSController {
         return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
+    @Override
     public NMSEntityBase getNMSEntityBase(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof NMSEntityBase ? (NMSEntityBase) nmsEntity : null;

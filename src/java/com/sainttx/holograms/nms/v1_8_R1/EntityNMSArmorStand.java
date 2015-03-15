@@ -129,10 +129,6 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
         // Remove sounds.
     }
 
-    public void callSuperTick() {
-        super.h();
-    }
-
     @Override
     public void setLockTick(boolean lock) {
         lockTick = lock;

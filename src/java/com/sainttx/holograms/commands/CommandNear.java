@@ -46,9 +46,11 @@ public class CommandNear implements CommandExecutor {
             HologramManager manager = plugin.getHologramManager();
             Map<Hologram, Double> nearby = new HashMap<Hologram, Double>();
             for (Hologram hologram : manager.getActiveHolograms().values()) {
-                double distance = hologram.getLocation().distance(player.getLocation());
-                if (distance <= radius) {
-                    nearby.put(hologram, distance);
+                if (hologram.getLocation().getWorld().equals(player.getWorld())) {
+                    double distance = hologram.getLocation().distance(player.getLocation());
+                    if (distance <= radius) {
+                        nearby.put(hologram, distance);
+                    }
                 }
             }
 
