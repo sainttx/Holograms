@@ -31,6 +31,8 @@ public class HologramPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.manager = new HologramManager(this);
+        setupController();
+
         getCommand("holograms").setExecutor(new HologramCommands());
         getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
     }

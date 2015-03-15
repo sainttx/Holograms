@@ -26,7 +26,7 @@ public class Hologram {
      * A boolean depicting whether or not this Hologram
      * stays through server restarts
      */
-    private final boolean persist;
+    private boolean persist;
 
     /*
      * The lines of text that this Hologram is hosting
@@ -61,10 +61,7 @@ public class Hologram {
             this.lines.add(holoLine);
         }
 
-        if (persist) {
-            HologramManager.getInstance().saveHologram(this);
-        }
-
+        saveIfPersistent();
         HologramManager.getInstance().addHologram(this);
     }
 
@@ -75,6 +72,25 @@ public class Hologram {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Returns whether or not this Hologram is persistent throughout server restarts
+     *
+     * @return The persistence of the hologram
+     */
+    public boolean getPersistency() {
+        return persist;
+    }
+
+    /**
+     * Sets whether or not this Hologram is persistent
+     *
+     * @param persist the new persistence value
+     */
+    public void setPersistency(boolean persist) {
+        this.persist = persist;
+        saveIfPersistent();
     }
 
     /**
@@ -111,6 +127,15 @@ public class Hologram {
     }
 
     /**
+     * Saves this hologram if it is marked as persistent
+     */
+    public void saveIfPersistent() {
+        if (persist) {
+            HologramManager.getInstance().saveHologram(this);
+        }
+    }
+
+    /**
      * Returns the lines that this Hologram is hosting
      *
      * @return A shallow copy of the list of Hologram Lines at this Hologram
@@ -127,6 +152,22 @@ public class Hologram {
     public void removeLine(HologramLine line) {
         lines.remove(line);
         line.despawn();
+        refreshAll();
+    }
+
+    /**
+     * Removes a line from the list of active lines
+     *
+     * @param index The index of the line
+     */
+    public void removeLine(int index) {
+        HologramLine line = lines.get(index);
+        removeLine(line);
+    }
+
+    public void insertLine(HologramLine line, int index) {
+        lines.add(index, line);
+        refreshAll();
     }
 
     /**
@@ -142,9 +183,10 @@ public class Hologram {
     }
 
     /**
-     * Refreshes this Holograms lines if the chunk storing it is loaded
+     * Refreshes this Holograms lines
      */
     public void refreshAll() {
+        despawnEntities();
         if (location.getChunk().isLoaded()) {
             spawnEntities();
         }
