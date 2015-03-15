@@ -1,5 +1,6 @@
 package com.sainttx.holograms;
 
+import com.sainttx.holograms.commands.HologramCommands;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -26,6 +27,7 @@ public class HologramPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.manager = new HologramManager(this);
+        getCommand("holograms").setExecutor(new HologramCommands());
         getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
     }
 }
