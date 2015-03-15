@@ -1,6 +1,7 @@
-package com.sainttx.holograms.nms;
+package com.sainttx.holograms.nms.v1_8_R2;
 
 import com.sainttx.holograms.data.HologramLine;
+import com.sainttx.holograms.nms.NMSEntityBase;
 import net.minecraft.server.v1_8_R2.*;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 
@@ -16,6 +17,7 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
 
     public EntityNMSArmorStand(World world, HologramLine parentPiece) {
         super(world);
+        super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
         setSmall(true);
         setArms(false);
@@ -27,7 +29,6 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
         } catch (Exception e) {
             // There's still the overridden method.
         }
-        forceSetBoundingBox(new NullBoundingBox());
     }
 
     @Override
@@ -65,7 +66,16 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
 
     @Override
     public void setCustomName(String customName) {
-        // Locks the custom name.
+        if (customName != null && customName.length() > 300) {
+            customName = customName.substring(0, 300);
+        }
+        super.setCustomName(customName);
+        super.setCustomNameVisible(customName != null && !customName.isEmpty());
+    }
+
+    @Override
+    public String getCustomName() {
+        return super.getCustomName();
     }
 
     @Override
@@ -95,10 +105,6 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
         // Do not change it!
     }
 
-    public void forceSetBoundingBox(AxisAlignedBB boundingBox) {
-        super.a(boundingBox);
-    }
-
     @Override
     public int getId() {
 
@@ -123,22 +129,11 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
         // Remove sounds.
     }
 
-    public void setCustomNameNMS(String name) {
-        if (name != null && name.length() > 300) {
-            name = name.substring(0, 300);
-        }
-        super.setCustomName(name);
-        super.setCustomNameVisible(name != null && !name.isEmpty());
-    }
-
-    public String getCustomNameNMS() {
-        return super.getCustomName();
-    }
-
     public void callSuperTick() {
         super.h();
     }
 
+    @Override
     public void setLockTick(boolean lock) {
         lockTick = lock;
     }

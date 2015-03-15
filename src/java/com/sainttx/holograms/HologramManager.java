@@ -6,7 +6,6 @@ import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.Map;
 /**
  * Created by Matthew on 08/01/2015.
  */
-public class HologramManager extends JavaPlugin {
+public class HologramManager {
 
     /*
      * The HologramPlugin instance

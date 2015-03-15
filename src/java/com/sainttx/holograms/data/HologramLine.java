@@ -1,7 +1,8 @@
 package com.sainttx.holograms.data;
 
-import com.sainttx.holograms.nms.EntityNMSArmorStand;
-import com.sainttx.holograms.nms.NMSController;
+import com.sainttx.holograms.HologramPlugin;
+import com.sainttx.holograms.nms.NMSEntityBase;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
@@ -38,12 +39,7 @@ public class HologramLine {
     /*
      * The Entity with the custom name
      */
-    private EntityNMSArmorStand nmsNameable;
-
-    /*
-     * The Entity that the nameable is riding on
-     */
-    private EntityNMSArmorStand nmsRideable;
+    private NMSEntityBase nmsNameable;
 
     /**
      * Creates a HologramLine with a parent Hologram and a String of text
@@ -66,11 +62,12 @@ public class HologramLine {
         despawn();
 
         // Spawn the entities and set the horse and the skulls passenger
-        nmsNameable = NMSController.spawnArmorStand(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
+        HologramPlugin plugin = (HologramPlugin) Bukkit.getPluginManager().getPlugin("Holograms");
+        nmsNameable = plugin.getNMSController().spawnArmorStand(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
 
         // Set the text held by this object
         if (text != null && !text.isEmpty()) {
-            nmsNameable.setCustomNameNMS(text);
+            nmsNameable.setCustomName(text);
         }
 
         nmsNameable.setLockTick(true);
@@ -80,11 +77,6 @@ public class HologramLine {
      * Kills this HologramLine
      */
     public void despawn() {
-        if (nmsRideable != null) {
-            nmsRideable.die();
-            nmsRideable = null;
-        }
-
         if (nmsNameable != null) {
             nmsNameable.die();
             nmsNameable = null;
@@ -118,10 +110,20 @@ public class HologramLine {
         this.text = text;
     }
 
+    /**
+     * Returns the height of the line
+     *
+     * @return The hologram line height
+     */
     public final double getHeight() {
         return height;
     }
 
+    /**
+     * Returns the parent hologram
+     *
+     * @return The parent hologram
+     */
     public final Hologram getParent() {
         return parent;
     }

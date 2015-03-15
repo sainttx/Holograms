@@ -1,4 +1,4 @@
-package com.sainttx.holograms.nms;
+package com.sainttx.holograms.nms.v1_8_R2;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;

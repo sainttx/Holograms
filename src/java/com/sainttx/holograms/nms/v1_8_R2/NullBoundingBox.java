@@ -1,4 +1,4 @@
-package com.sainttx.holograms.nms;
+package com.sainttx.holograms.nms.v1_8_R2;
 
 import net.minecraft.server.v1_8_R2.AxisAlignedBB;
 import net.minecraft.server.v1_8_R2.MovingObjectPosition;

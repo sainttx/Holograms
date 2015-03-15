@@ -1,59 +1,36 @@
 package com.sainttx.holograms.nms;
 
 import com.sainttx.holograms.data.HologramLine;
-import net.minecraft.server.v1_8_R2.Entity;
-import net.minecraft.server.v1_8_R2.EntityTypes;
-import net.minecraft.server.v1_8_R2.WorldServer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-
-import java.lang.reflect.Field;
-import java.util.Map;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 
 /**
- * Created by Matthew on 08/01/2015.
+ * Created by Matthew on 15/03/2015.
  */
-public class NMSController {
+public interface NMSController {
 
-    public static void setup() {
-        try {
-            registerCustomEntity(EntityNMSArmorStand.class, "ArmorStand", 30);
-        } catch (Exception ex) {
-            Bukkit.getLogger().severe("Could not register Slime and ArmorStand properly");
-        }
-    }
+    /**
+     * Sets up the NMS environment
+     */
+    public void setup();
 
-    public static void registerCustomEntity(Class entityClass, String name, int id) throws Exception {
-        putInPrivateStaticMap(EntityTypes.class, "d", entityClass, name);
-        putInPrivateStaticMap(EntityTypes.class, "f", entityClass, Integer.valueOf(id));
-    }
+    /**
+     * Spawns a new Hologram in the world
+     *
+     * @param world       The world to spawn the entity in
+     * @param x           The x coordinate of the entity
+     * @param y           The y coordinate of the entity
+     * @param z           The z coordinate of the entity
+     * @param parentPiece The hologram piece for the hologram
+     * @return The spawned entity
+     */
+    public NMSEntityBase spawnArmorStand(World world, double x, double y, double z, HologramLine parentPiece);
 
-    public static void putInPrivateStaticMap(Class<?> clazz, String fieldName, Object key, Object value) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Map map = (Map) field.get(null);
-        map.put(key, value);
-    }
-
-    public static EntityNMSArmorStand spawnArmorStand(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
-        WorldServer nmsWorld = ((CraftWorld) world).getHandle();
-        EntityNMSArmorStand armorStand = new EntityNMSArmorStand(nmsWorld, parentPiece);
-        armorStand.setLocationNMS(x, y, z);
-        if (!addEntityToWorld(nmsWorld, armorStand)) {
-            System.out.print("Could not spawn armor stand");
-        }
-
-        return armorStand;
-    }
-
-    private static boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
-        return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-    }
-
-    public static NMSEntityBase getNMSEntityBase(org.bukkit.entity.Entity bukkitEntity) {
-        Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
-        return nmsEntity instanceof NMSEntityBase ? (NMSEntityBase) nmsEntity : null;
-    }
+    /**
+     * Returns the NMSEntityBase instance for a Bukkit entity
+     *
+     * @param bukkitEntity The bukkit entity
+     * @return The NMSEntityBase found, defaults to null
+     */
+    public NMSEntityBase getNMSEntityBase(Entity bukkitEntity);
 }
