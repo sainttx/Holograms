@@ -1,5 +1,4 @@
 # Holograms
-=========
 A Bukkit plugin that allows easy creation and management of text based Holograms
 
 Usage
