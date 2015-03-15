@@ -12,6 +12,6 @@ This subcommands for this plugin are as follows:
 * `/holograms insertline <hologramName> <index> <textToAdd>`
 * `/holograms list`
 * `/holograms movehere <hologramName>`
-* `/holograms near <radius>
+* `/holograms near <radius>`
 * `/holograms removeline <hologramName> <index>`
 
