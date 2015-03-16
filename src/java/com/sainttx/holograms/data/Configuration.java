@@ -112,7 +112,7 @@ public class Configuration extends YamlConfiguration {
 
             super.save(file);
         } catch (Exception ex) {
-            plugin.getLogger().log(Level.SEVERE, "Configuration" + this.file + " could not be saved!");
+            plugin.getLogger().log(Level.SEVERE, "Configuration \"" + this.file + "\" could not be saved!");
             ex.printStackTrace();
         }
     }

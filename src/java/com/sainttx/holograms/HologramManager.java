@@ -4,6 +4,7 @@ import com.sainttx.holograms.data.Configuration;
 import com.sainttx.holograms.data.Hologram;
 import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.util.LocationUtil;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -129,6 +130,7 @@ public class HologramManager {
      * @param hologram The Hologram to be added
      */
     public void addHologram(Hologram hologram) {
+        Validate.isTrue(activeHolograms.get(hologram.getName()) == null, "A Hologram with that name already exists.");
         activeHolograms.put(hologram.getName(), hologram);
     }
 

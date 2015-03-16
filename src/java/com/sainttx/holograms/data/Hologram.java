@@ -1,6 +1,7 @@
 package com.sainttx.holograms.data;
 
 import com.sainttx.holograms.HologramManager;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -51,18 +52,22 @@ public class Hologram {
      * @param lines    Any text to display with this Hologram
      */
     public Hologram(String name, Location location, boolean persist, String... lines) {
+        Validate.notNull(name, "Hologram name cannot be null");
+        Validate.notNull(location, "Hologram location cannot be null");
         this.name = name;
         this.location = location;
         this.persist = persist;
 
         // Create HologramLines
-        for (String line : lines) {
-            HologramLine holoLine = new HologramLine(this, line);
-            this.lines.add(holoLine);
+        if (lines != null && lines.length > 0) {
+            for (String line : lines) {
+                HologramLine holoLine = new HologramLine(this, line);
+                this.lines.add(holoLine);
+            }
         }
 
-        saveIfPersistent();
         HologramManager.getInstance().addHologram(this);
+        saveIfPersistent();
     }
 
     /**
