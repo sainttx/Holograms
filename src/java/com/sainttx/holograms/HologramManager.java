@@ -7,10 +7,7 @@ import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Matthew on 08/01/2015.
@@ -36,7 +33,7 @@ public class HologramManager {
      * A map containing all spawned Holograms
      * key is the holograms name
      */
-    private Map<String, Hologram> activeHolograms = new HashMap<String, Hologram>();
+    private Map<String, Hologram> activeHolograms = new TreeMap<String, Hologram>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * Singleton
@@ -112,7 +109,7 @@ public class HologramManager {
      * @return The hologram
      */
     public Hologram getHologramByName(String name) {
-        return activeHolograms.get(name.toLowerCase());
+        return activeHolograms.get(name);
     }
 
     /**
@@ -121,7 +118,9 @@ public class HologramManager {
      * @return A deep copy of the active holograms map
      */
     public Map<String, Hologram> getActiveHolograms() {
-        return new HashMap<String, Hologram>(activeHolograms);
+        Map<String, Hologram> ret = new TreeMap<String, Hologram>(String.CASE_INSENSITIVE_ORDER);
+        ret.putAll(activeHolograms);
+        return ret;
     }
 
     /**
@@ -130,7 +129,7 @@ public class HologramManager {
      * @param hologram The Hologram to be added
      */
     public void addHologram(Hologram hologram) {
-        activeHolograms.put(hologram.getName().toLowerCase(), hologram);
+        activeHolograms.put(hologram.getName(), hologram);
     }
 
     /**
@@ -139,7 +138,7 @@ public class HologramManager {
      * @param hologram The Hologram to be removed
      */
     public void removeHologram(Hologram hologram) {
-        activeHolograms.remove(hologram.getName().toLowerCase());
+        activeHolograms.remove(hologram.getName());
     }
 
     /**
