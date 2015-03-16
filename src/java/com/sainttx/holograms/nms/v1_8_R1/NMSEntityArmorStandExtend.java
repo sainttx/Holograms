@@ -1,21 +1,21 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_8_R1;
 
 import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.nms.NMSEntityBase;
-import net.minecraft.server.v1_8_R2.*;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
+import net.minecraft.server.v1_8_R1.*;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by Matthew on 28/01/2015.
  */
-public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBase {
+public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEntityBase {
 
     private boolean lockTick;
     private HologramLine parentPiece;
 
-    public EntityNMSArmorStand(World world, HologramLine parentPiece) {
+    public NMSEntityArmorStandExtend(World world, HologramLine parentPiece) {
         super(world);
         super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
@@ -57,7 +57,7 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
     @Override
     public boolean isInvulnerable(DamageSource source) {
         /*
-		 * The field Entity.invulnerable is private.
+         * The field Entity.invulnerable is private.
 		 * It's only used while saving NBTTags, but since the entity would be killed
 		 * on chunk unload, we prefer to override isInvulnerable().
 		 */
@@ -118,7 +118,7 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
     }
 
     @Override
-    public void t_() {
+    public void s_() {
         if (!lockTick) {
             super.s_();
         }
@@ -143,7 +143,7 @@ public class EntityNMSArmorStand extends EntityArmorStand implements NMSEntityBa
     @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
-            this.bukkitEntity = new NMSArmorStand(this.world.getServer(), this);
+            this.bukkitEntity = new CraftArmorStandExtend(this.world.getServer(), this);
         }
         return this.bukkitEntity;
     }

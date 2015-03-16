@@ -1,9 +1,9 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_8_R1;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
@@ -16,9 +16,9 @@ import java.util.Collection;
 /**
  * Created by Matthew on 28/01/2015.
  */
-public class NMSArmorStand extends CraftArmorStand {
+public class CraftArmorStandExtend extends CraftArmorStand {
 
-    public NMSArmorStand(CraftServer server, EntityNMSArmorStand entity) {
+    public CraftArmorStandExtend(CraftServer server, NMSEntityArmorStandExtend entity) {
         super(server, entity);
     }
 

@@ -22,7 +22,7 @@ public class NMSControllerImpl implements NMSController {
     @Override
     public void setup() {
         try {
-            registerCustomEntity(EntityNMSArmorStand.class, "ArmorStand", 30);
+            registerCustomEntity(NMSEntityArmorStandExtend.class, "ArmorStand", 30);
         } catch (Exception ex) {
             Bukkit.getLogger().severe("Could not register Slime and ArmorStand properly");
         }
@@ -41,9 +41,9 @@ public class NMSControllerImpl implements NMSController {
     }
 
     @Override
-    public EntityNMSArmorStand spawnArmorStand(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
+    public NMSEntityArmorStandExtend spawnArmorStand(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
-        EntityNMSArmorStand armorStand = new EntityNMSArmorStand(nmsWorld, parentPiece);
+        NMSEntityArmorStandExtend armorStand = new NMSEntityArmorStandExtend(nmsWorld, parentPiece);
         armorStand.setLocationNMS(x, y, z);
         if (!addEntityToWorld(nmsWorld, armorStand)) {
             System.out.print("Could not spawn armor stand");
