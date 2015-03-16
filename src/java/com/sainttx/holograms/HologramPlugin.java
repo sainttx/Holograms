@@ -31,11 +31,12 @@ public class HologramPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.manager = new HologramManager(this);
-        getCommand("holograms").setExecutor(new HologramCommands(this));
-        getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
 
-        setupController();
-        manager.load();
+        if (setupController()) {
+            manager.load();
+            getCommand("holograms").setExecutor(new HologramCommands(this));
+            getServer().getPluginManager().registerEvents(new HologramListener(manager), this);
+        }
     }
 
     @Override
@@ -44,28 +45,27 @@ public class HologramPlugin extends JavaPlugin {
             hologram.getValue().despawnEntities();
             manager.removeHologram(hologram.getValue());
         }
+
+        this.manager = null;
+        this.controller = null;
     }
 
     /*
      * Sets up the NMS Controller instance
      */
-    private void setupController() {
+    private boolean setupController() {
         try {
             Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "NMSControllerImpl");
             this.controller = (NMSController) nmsControllerClazz.newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        if (this.controller == null) {
+        } catch (Exception ex) {
+            /* Couldn't instantiate the nmsController - Spigot/CraftBukkit version isn't supported */
             getLogger().severe("The plugin couldn't create the NMS controller instance and has been disabled. This is likely" +
                     "due to no supported Hologram implementation for your CraftBukkit/Spigot version.");
             getServer().getPluginManager().disablePlugin(this);
+            return false;
         }
+
+        return true;
     }
 
     /**
