@@ -35,6 +35,7 @@ public class HologramCommands implements CommandExecutor {
         commands.put("addline", new CommandAddLine(plugin));
         commands.put("create", new CommandCreate(plugin));
         commands.put("delete", new CommandDelete(plugin));
+        commands.put("import", new CommandImport(plugin));
         commands.put("info", new CommandInfo(plugin));
         commands.put("insertline", new CommandInsertLine(plugin));
         commands.put("list", new CommandList(plugin));
@@ -74,6 +75,7 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(TextUtil.color("&e/holograms addline &f<name> <text>"));
         sender.sendMessage(TextUtil.color("&e/holograms create &f<name> <text>"));
         sender.sendMessage(TextUtil.color("&e/holograms delete &f<name>"));
+        sender.sendMessage(TextUtil.color("&e/holograms import &f<plugin>"));
         sender.sendMessage(TextUtil.color("&e/holograms info &f<name>"));
         sender.sendMessage(TextUtil.color("&e/holograms insertline &f<name> <index> <text>"));
         sender.sendMessage(TextUtil.color("&e/holograms list"));

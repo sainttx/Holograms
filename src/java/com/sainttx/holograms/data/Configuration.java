@@ -88,18 +88,6 @@ public class Configuration extends YamlConfiguration {
     }
 
     /**
-     * Saves the configuration asynchronously
-     */
-    public void saveAsynchronously() {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                saveConfiguration();
-            }
-        });
-    }
-
-    /**
      * Saves the configuration to file
      */
     public void saveConfiguration() {

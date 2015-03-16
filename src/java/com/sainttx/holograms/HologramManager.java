@@ -68,8 +68,9 @@ public class HologramManager {
                 Location location = LocationUtil.stringAsLocation(persistingHolograms.getString("holograms." + hologramName + ".location"));
 
                 // Create the Hologram
-                Hologram hologram = new Hologram(hologramName, location, true, uncoloredLines.toArray(new String[uncoloredLines.size()]));
+                Hologram hologram = new Hologram(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
                 hologram.refreshAll();
+                hologram.setPersistency(true);
             }
         }
     }
@@ -90,7 +91,7 @@ public class HologramManager {
 
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
         persistingHolograms.set("holograms." + hologramName + ".lines", uncoloredLines);
-        persistingHolograms.saveAsynchronously();
+        persistingHolograms.saveConfiguration();
     }
 
     /**
@@ -100,7 +101,7 @@ public class HologramManager {
      */
     public void deleteHologram(Hologram hologram) {
         persistingHolograms.set("holograms." + hologram.getName(), null);
-        persistingHolograms.saveAsynchronously();
+        persistingHolograms.saveConfiguration();
     }
 
     /**
