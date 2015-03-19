@@ -1,6 +1,5 @@
 package com.sainttx.holograms;
 
-import com.sainttx.holograms.nms.NMSEntityBase;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,30 +15,30 @@ public class HologramListener implements Listener {
     /*
      * The Holograms controller
      */
-    private HologramManager instance;
+    private HologramPlugin plugin;
 
     /**
      * Creates a HologramListener
      *
      * @param instance The running instance of the Holograms controller
      */
-    public HologramListener(HologramManager instance) {
-        this.instance = instance;
+    public HologramListener(HologramPlugin instance) {
+        this.plugin = instance;
     }
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
-        instance.onChunkLoad(event.getChunk());
+        plugin.getHologramManager().onChunkLoad(event.getChunk());
     }
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
-        instance.onChunkUnload(event.getChunk());
+        plugin.getHologramManager().onChunkUnload(event.getChunk());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.isCancelled() && event.getEntity() instanceof NMSEntityBase) {
+        if (event.isCancelled() && plugin.getNMSController().getNMSEntityBase(event.getEntity()) != null) {
             event.setCancelled(false);
         }
     }
