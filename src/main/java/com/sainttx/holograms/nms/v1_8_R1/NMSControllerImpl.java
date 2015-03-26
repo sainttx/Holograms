@@ -13,6 +13,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Created by Matthew on 08/01/2015.
@@ -46,7 +47,7 @@ public class NMSControllerImpl implements NMSController {
         NMSEntityArmorStandExtend armorStand = new NMSEntityArmorStandExtend(nmsWorld, parentPiece);
         armorStand.setLocationNMS(x, y, z);
         if (!addEntityToWorld(nmsWorld, armorStand)) {
-            System.out.print("Could not spawn armor stand");
+            Bukkit.getLogger().log(Level.WARNING, "Failed to add armor stand entity to the world");
         }
 
         return armorStand;
