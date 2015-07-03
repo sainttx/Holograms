@@ -14,7 +14,7 @@ public class HologramLine {
     /**
      * Y offset used in the position of the NMS entities
      */
-    public static final double OFFSET = -1.25;
+    public static final double OFFSET = 0; // -1.25;
 
     /*
      * The height of the line

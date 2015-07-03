@@ -4,6 +4,7 @@ import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.nms.NMSEntityBase;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.ArmorStand;
 
 import java.lang.reflect.Field;
 
@@ -23,12 +24,18 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
         setArms(false);
         setGravity(true);
         setBasePlate(true);
+        setMarker(true);
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
         } catch (Exception e) {
             // There's still the overridden method.
         }
+    }
+
+    public void setMarker(boolean marker) {
+        ArmorStand armorStand = (ArmorStand) getBukkitEntity();
+        armorStand.setMarker(marker);
     }
 
     @Override
