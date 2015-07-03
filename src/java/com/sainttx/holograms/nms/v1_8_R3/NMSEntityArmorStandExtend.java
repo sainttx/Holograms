@@ -1,9 +1,9 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_8_R3;
 
 import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.nms.NMSEntityBase;
-import net.minecraft.server.v1_8_R2.*;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 

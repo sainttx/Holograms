@@ -12,7 +12,7 @@ public interface NMSController {
     /**
      * Sets up the NMS environment
      */
-    public void setup();
+    void setup();
 
     /**
      * Spawns a new Hologram in the world
@@ -24,7 +24,7 @@ public interface NMSController {
      * @param parentPiece The hologram piece for the hologram
      * @return The spawned entity
      */
-    public NMSEntityBase spawnArmorStand(World world, double x, double y, double z, HologramLine parentPiece);
+    NMSEntityBase spawnArmorStand(World world, double x, double y, double z, HologramLine parentPiece);
 
     /**
      * Returns the NMSEntityBase instance for a Bukkit entity
@@ -32,5 +32,5 @@ public interface NMSController {
      * @param bukkitEntity The bukkit entity
      * @return The NMSEntityBase found, defaults to null
      */
-    public NMSEntityBase getNMSEntityBase(Entity bukkitEntity);
+    NMSEntityBase getNMSEntityBase(Entity bukkitEntity);
 }

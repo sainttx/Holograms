@@ -12,31 +12,31 @@ public interface NMSEntityBase {
      *
      * @return The hologram line
      */
-    public HologramLine getHologramLine();
+    HologramLine getHologramLine();
 
     /**
      * Kills the base hologram
      */
-    public void die();
+    void die();
 
     /**
      * Sets a new custom name for the entity base
      *
      * @param text The new custom name to set
      */
-    public void setCustomName(String text);
+    void setCustomName(String text);
 
     /**
      * Returns the bases custom name
      *
      * @return The custom name of the base
      */
-    public String getCustomName();
+    String getCustomName();
 
     /**
      * Sets the lock tick value for the entity
      *
      * @param lockTick The lock tick value
      */
-    public void setLockTick(boolean lockTick);
+    void setLockTick(boolean lockTick);
 }
