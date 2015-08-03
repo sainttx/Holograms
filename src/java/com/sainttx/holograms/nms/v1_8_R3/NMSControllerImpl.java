@@ -7,6 +7,7 @@ import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityTypes;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -53,6 +54,19 @@ public class NMSControllerImpl implements NMSController {
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
+        net.minecraft.server.v1_8_R3.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
+
+        if (nmsChunk != null) {
+            Chunk chunk = nmsChunk.bukkitChunk;
+
+            if (!chunk.isLoaded()) {
+                chunk.load();
+                System.out.print("Loaded chunk " + chunk + " for hologram");
+            }
+        } else {
+            System.out.print("Chunk not found for Hologram");
+        }
+
         return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
