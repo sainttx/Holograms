@@ -107,7 +107,7 @@ public class Hologram {
     public boolean isInChunk(Chunk chunk) {
         Chunk hologramChunk = location.getChunk();
 
-        return hologramChunk.getX() == chunk.getX() && hologramChunk.getZ() == chunk.getZ();
+        return hologramChunk.equals(chunk);
     }
 
     /**
