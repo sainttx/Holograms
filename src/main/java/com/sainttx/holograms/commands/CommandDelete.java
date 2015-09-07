@@ -1,6 +1,8 @@
 package com.sainttx.holograms.commands;
 
 import com.sainttx.holograms.HologramPlugin;
+import com.sainttx.holograms.util.TextUtil;
+import com.sainttx.holograms.HologramPlugin;
 import com.sainttx.holograms.data.Hologram;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
