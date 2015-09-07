@@ -1,11 +1,7 @@
 package com.sainttx.holograms.nms;
 
 import com.sainttx.holograms.data.HologramLine;
-<<<<<<< HEAD:src/java/com/sainttx/holograms/nms/NMSEntityBase.java
 import org.bukkit.entity.Entity;
-=======
-import com.sainttx.holograms.data.HologramLine;
->>>>>>> master:src/main/java/com/sainttx/holograms/nms/NMSEntityBase.java
 
 /**
  * Created by Matthew on 08/01/2015.
