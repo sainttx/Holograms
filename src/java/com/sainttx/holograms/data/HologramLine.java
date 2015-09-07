@@ -5,6 +5,7 @@ import com.sainttx.holograms.nms.NMSEntityBase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 
 /**
  * Created by Matthew on 08/01/2015.
@@ -49,7 +50,7 @@ public class HologramLine {
      */
     protected HologramLine(Hologram parent, String text) {
         this.parent = parent;
-        this.text = ChatColor.translateAlternateColorCodes('&', text);
+        this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
         this.originalText = text;
     }
 
@@ -71,6 +72,10 @@ public class HologramLine {
         }
 
         nmsNameable.setLockTick(true);
+    }
+
+    public Entity getEntity() {
+        return nmsNameable.getEntity();
     }
 
     /**

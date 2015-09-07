@@ -154,9 +154,10 @@ public class Hologram {
      *
      * @param line The hologram line
      */
-    public void addLine(HologramLine line) {
+    public HologramLine addLine(HologramLine line) {
         lines.add(line);
         saveIfPersistent();
+        return line;
     }
 
     /**
@@ -164,9 +165,9 @@ public class Hologram {
      *
      * @param text The text to add
      */
-    public void addLine(String text) {
+    public HologramLine addLine(String text) {
         HologramLine newLine = new HologramLine(this, text);
-        addLine(newLine);
+        return addLine(newLine);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.sainttx.holograms.nms;
 
 import com.sainttx.holograms.data.HologramLine;
+import org.bukkit.entity.Entity;
 
 /**
  * Created by Matthew on 08/01/2015.
@@ -39,4 +40,11 @@ public interface NMSEntityBase {
      * @param lockTick The lock tick value
      */
     void setLockTick(boolean lockTick);
+
+    /**
+     * Gets the armor stand entity
+     *
+     * @return
+     */
+    Entity getEntity();
 }

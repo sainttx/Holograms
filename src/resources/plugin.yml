@@ -4,6 +4,7 @@ description: A simple Hologram management plugin
 author: SainttX
 
 main: com.sainttx.holograms.HologramPlugin
+depend: [ Core ]
 
 commands:
   holograms:

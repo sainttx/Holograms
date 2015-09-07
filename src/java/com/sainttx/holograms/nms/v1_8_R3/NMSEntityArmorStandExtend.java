@@ -4,7 +4,8 @@ import com.sainttx.holograms.data.HologramLine;
 import com.sainttx.holograms.nms.NMSEntityBase;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 
 import java.lang.reflect.Field;
 
@@ -139,6 +140,11 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
     @Override
     public void setLockTick(boolean lock) {
         lockTick = lock;
+    }
+
+    @Override
+    public Entity getEntity() {
+        return getBukkitEntity();
     }
 
     @Override
