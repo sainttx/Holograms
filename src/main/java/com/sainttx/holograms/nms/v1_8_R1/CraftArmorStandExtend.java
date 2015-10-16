@@ -119,7 +119,7 @@ public class CraftArmorStandExtend extends CraftArmorStand {
     public void setVelocity(Vector vel) {
     }
 
-    @Override
+    /* @Override
     public boolean teleport(Location loc) {
         return false;
     }
@@ -137,7 +137,7 @@ public class CraftArmorStandExtend extends CraftArmorStand {
     @Override
     public boolean teleport(Entity entity, TeleportCause cause) {
         return false;
-    }
+    } */
 
     @Override
     public void setFireTicks(int ticks) {

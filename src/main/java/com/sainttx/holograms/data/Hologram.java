@@ -276,9 +276,28 @@ public class Hologram {
      * @param location The new location of this Hologram
      */
     public void teleport(Location location) {
-        if (!this.location.equals(location)) {
-            this.location = location;
+        if (this.location.equals(location)) {
+            return;
         }
+
+        // Move all the hologram lines
+        this.location = location;
+        double currentY = this.location.getY();
+        boolean first = true;
+
+        for (HologramLine line : lines) {
+            if (first) {
+                first = false;
+            } else {
+                currentY -= line.getHeight();
+                currentY -= 0.02;
+            }
+
+            Location nextLocation = this.location.clone();
+            nextLocation.setY(currentY);
+            line.getEntity().teleport(nextLocation);
+        }
+
         saveIfPersistent();
     }
 }
