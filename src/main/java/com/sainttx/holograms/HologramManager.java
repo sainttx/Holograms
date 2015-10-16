@@ -71,6 +71,11 @@ public class HologramManager {
                 List<String> uncoloredLines = persistingHolograms.getStringList("holograms." + hologramName + ".lines");
                 Location location = LocationUtil.stringAsLocation(persistingHolograms.getString("holograms." + hologramName + ".location"));
 
+                if (location == null) {
+                    plugin.getLogger().warning("Hologram \"" + hologramName + "\" has an invalid location");
+                    continue;
+                }
+
                 // Create the Hologram
                 Hologram hologram = new Hologram(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
                 hologram.refreshAll();
@@ -155,6 +160,10 @@ public class HologramManager {
      */
     public void onChunkLoad(Chunk chunk) {
         for (Hologram hologram : activeHolograms.values()) {
+            if (hologram == null) {
+                continue;
+            }
+
             if (hologram.isInChunk(chunk)) {
                 hologram.spawnEntities();
             }
@@ -168,6 +177,10 @@ public class HologramManager {
      */
     public void onChunkUnload(Chunk chunk) {
         for (Hologram hologram : activeHolograms.values()) {
+            if (hologram == null) {
+                continue;
+            }
+
             if (hologram.isInChunk(chunk)) {
                 hologram.despawnEntities();
             }

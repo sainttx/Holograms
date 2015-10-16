@@ -28,11 +28,17 @@ public class HologramListener implements Listener {
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
+        if (event.getChunk() == null) {
+            return;
+        }
         plugin.getHologramManager().onChunkLoad(event.getChunk());
     }
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
+        if (event.getChunk() == null) {
+            return;
+        }
         plugin.getHologramManager().onChunkUnload(event.getChunk());
     }
 

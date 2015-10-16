@@ -264,7 +264,9 @@ public class Hologram {
      */
     public void despawnEntities() {
         for (HologramLine piece : lines) {
-            piece.despawn();
+            if (piece != null) {
+                piece.despawn();
+            }
         }
     }
 
