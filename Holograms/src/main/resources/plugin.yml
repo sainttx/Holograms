@@ -1,0 +1,53 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+author: SainttX
+
+main: com.sainttx.holograms.HologramPlugin
+
+commands:
+  holograms:
+    description: All commands for Hologram
+    aliases: [hologram, holo, h]
+    permission-message: You do not have sufficient permissions to use this command
+
+permissions:
+  hologram.*:
+    description: Gives access to all Auction commands
+    children:
+      hologram.create: true
+      hologram.delete: true
+      hologram.list: true
+      hologram.near: true
+      hologram.movehere: true
+      hologram.addline: true
+      hologram.removeline: true
+      hologram.insertline: true
+      hologram.info: true
+  hologram.create:
+    description: Allows players to create holograms
+    default: op
+  hologram.delete:
+    description: Allows players to delete holograms
+    default: op
+  hologram.list:
+    description: Allows players to list holograms
+    default: op
+  hologram.near:
+    description: Allows players to view nearby holograms
+    default: op
+  hologram.movehere:
+    description: Allows players to move holograms
+    default: op
+  hologram.addline:
+    description: Allows players to add lines to holograms
+    default: true
+  hologram.removeline:
+    description: Allows players to remove lines from holograms
+    default: true
+  hologram.insertline:
+    description: Allows players to insert lines into holograms
+    default: op
+  hologram.info:
+    description: Allows players to view a holograms info
+    default: op
