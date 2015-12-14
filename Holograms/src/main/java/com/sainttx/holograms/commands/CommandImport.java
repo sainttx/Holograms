@@ -1,7 +1,7 @@
 package com.sainttx.holograms.commands;
 
 import com.sainttx.holograms.HologramPlugin;
-import com.sainttx.holograms.data.Configuration;
+import com.sainttx.holograms.Configuration;
 import com.sainttx.holograms.internal.HologramImpl;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.Bukkit;

@@ -2,7 +2,6 @@ package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.data.Configuration;
 import com.sainttx.holograms.internal.HologramImpl;
 import com.sainttx.holograms.internal.HologramLineImpl;
 import com.sainttx.holograms.util.LocationUtil;

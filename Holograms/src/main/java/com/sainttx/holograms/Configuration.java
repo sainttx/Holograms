@@ -1,4 +1,4 @@
-package com.sainttx.holograms.data;
+package com.sainttx.holograms;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
