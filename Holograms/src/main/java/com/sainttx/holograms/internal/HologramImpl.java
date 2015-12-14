@@ -95,7 +95,7 @@ public class HologramImpl implements Hologram {
 
     @Override
     public void addLine(HologramLine line) {
-        this.addLine(line, lines.size() - 1);
+        this.addLine(line, lines.size());
     }
 
     @Override

@@ -43,8 +43,8 @@ public class CommandInsertLine implements CommandExecutor {
                 }
 
                 Collection<HologramLine> lines = hologram.getLines();
-                if (index < 0 || index >= lines.size()) {
-                    sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + (lines.size() - 1) + ".");
+                if (index < 0 || index > lines.size()) {
+                    sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + lines.size() + ".");
                 } else {
                     String text = TextUtil.implode(3, args);
                     HologramLine line = new HologramLineImpl(hologram, text);
