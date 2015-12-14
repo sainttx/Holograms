@@ -55,6 +55,11 @@ public class CommandRemoveLine implements CommandExecutor {
                         sender.sendMessage(TextUtil.color("&7Removed line at position &f\"" + index + "&f\" &7from hologram &f\""
                                 + hologram.getName() + "\"."));
                     }
+
+                    if (hologram.getLines().size() == 0) {
+                        hologram.remove();
+                        sender.sendMessage(TextUtil.color("&7Hologram &f\"" + hologram.getName() + "\" &7was removed."));
+                    }
                 }
             }
         }
