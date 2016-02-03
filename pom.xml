@@ -16,11 +16,11 @@
 
     <distributionManagement>
         <repository>
-            <id>repo.sainttx.com</id>
+            <id>maven.sainttx.com</id>
             <url>http://repo.sainttx.com/artifactory/libs-release-local</url>
         </repository>
         <snapshotRepository>
-            <id>repo.sainttx.com-snapshot</id>
+            <id>maven.sainttx.com-snapshot</id>
             <url>http://repo.sainttx.com/artifactory/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
