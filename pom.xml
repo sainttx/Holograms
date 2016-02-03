@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sainttx</groupId>
+    <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.8.8c</version>
@@ -13,6 +13,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>repo.sainttx.com</id>
+            <url>http://repo.sainttx.com/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>repo.sainttx.com-snapshot</id>
+            <url>http://repo.sainttx.com/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <modules>
         <module>Holograms-API</module>

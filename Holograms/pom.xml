@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.sainttx</groupId>
+        <groupId>com.sainttx.holograms</groupId>
         <artifactId>holograms-parent</artifactId>
         <version>1.8.8c</version>
     </parent>
