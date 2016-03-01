@@ -1,8 +1,7 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.internal.HologramImpl;
+import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -36,8 +35,8 @@ public class CommandCreate implements CommandExecutor {
             } else {
                 Player player = (Player) sender;
                 String text = TextUtil.implode(2, args);
-                HologramImpl newHologram = new HologramImpl(hologramName, player.getLocation(), true, text);
-                newHologram.refresh();
+                Hologram holo = new Hologram(hologramName, player.getLocation(), true, text);
+                holo.refresh();
                 sender.sendMessage(TextUtil.color("&7Created a new hologram &f\"" + hologramName + "\" &7with line &f\"" + text + "&f\"."));
             }
         }

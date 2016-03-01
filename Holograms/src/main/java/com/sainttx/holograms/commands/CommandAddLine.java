@@ -1,9 +1,9 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.internal.HologramLineImpl;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.line.TextLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,7 +33,7 @@ public class CommandAddLine implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
             } else {
                 String text = TextUtil.implode(2, args);
-                HologramLine line = new HologramLineImpl(hologram, text);
+                HologramLine line = new TextLine(hologram, text);
                 hologram.addLine(line);
                 hologram.refresh();
                 sender.sendMessage(TextUtil.color("&7Added line &f\"" + text + "\" &7to hologram &f\"" + hologram.getName() + "&f\"."));

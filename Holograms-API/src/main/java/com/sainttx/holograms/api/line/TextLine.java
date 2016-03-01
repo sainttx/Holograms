@@ -1,18 +1,13 @@
-package com.sainttx.holograms.internal;
+package com.sainttx.holograms.api.line;
 
-import com.sainttx.holograms.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramEntity;
-import com.sainttx.holograms.api.line.TextualHologramLine;
-import com.sainttx.holograms.util.TextUtil;
-import org.bukkit.Bukkit;
+import com.sainttx.holograms.api.HologramPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * Created by Matthew on 08/01/2015.
- */
-public class HologramLineImpl implements TextualHologramLine {
+public class TextLine implements TextualHologramLine {
 
     private static final double OFFSET = 0; // Y offset used in the position of the NMS entities
     private static final double height = 0.23; // Height of the line
@@ -22,7 +17,7 @@ public class HologramLineImpl implements TextualHologramLine {
     private String originalText;
     private HologramEntity nmsNameable;
 
-    public HologramLineImpl(Hologram parent, String text) {
+    public TextLine(Hologram parent, String text) {
         this.parent = parent;
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
         this.originalText = text;
@@ -33,7 +28,7 @@ public class HologramLineImpl implements TextualHologramLine {
         despawn();
 
         // Spawn the entities and set the horse and the skulls passenger
-        HologramPlugin plugin = (HologramPlugin) Bukkit.getPluginManager().getPlugin("Holograms");
+        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
 
         // Set the text held by this object
@@ -73,7 +68,7 @@ public class HologramLineImpl implements TextualHologramLine {
 
     @Override
     public void setText(String text) {
-        this.text = TextUtil.color(text);
+        this.text = ChatColor.translateAlternateColorCodes('&', text);
         this.originalText = text;
     }
 

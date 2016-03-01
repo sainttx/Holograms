@@ -1,8 +1,8 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.Configuration;
-import com.sainttx.holograms.internal.HologramImpl;
+import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -66,7 +66,7 @@ public class CommandImport implements CommandExecutor {
                                     holoName = holoName + randomInt;
                                 }
 
-                                HologramImpl hologram = new HologramImpl(holoName, location, true, lines.toArray(new String[lines.size()]));
+                                Hologram hologram = new Hologram(holoName, location, true, lines.toArray(new String[lines.size()]));
                                 hologram.refresh();
                                 sender.sendMessage(TextUtil.color("&a&oSuccessfully converted HolographicDisplays hologram \"" + holoName + "\"."));
                             }

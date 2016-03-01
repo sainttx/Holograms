@@ -3,8 +3,7 @@ package com.sainttx.holograms;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.internal.HologramImpl;
-import com.sainttx.holograms.internal.HologramLineImpl;
+import com.sainttx.holograms.api.line.TextLine;
 import com.sainttx.holograms.util.LocationUtil;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
@@ -60,7 +59,7 @@ public class ManagerImpl implements HologramManager {
                 }
 
                 // Create the Hologram
-                Hologram hologram = new HologramImpl(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
+                Hologram hologram = new Hologram(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
                 hologram.refresh();
                 hologram.setPersistent(true);
             }
@@ -74,7 +73,7 @@ public class ManagerImpl implements HologramManager {
         List<String> uncoloredLines = new ArrayList<String>();
 
         for (HologramLine line : holoLines) {
-            uncoloredLines.add(((HologramLineImpl) line).getOriginalText());
+            uncoloredLines.add(((TextLine) line).getOriginalText());
         }
 
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
