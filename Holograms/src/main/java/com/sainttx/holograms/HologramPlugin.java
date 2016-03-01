@@ -1,13 +1,10 @@
 package com.sainttx.holograms;
 
-import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.util.ReflectionUtil;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Map;
 
 /**
  * Created by Matthew on 14/03/2015.
@@ -41,11 +38,7 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
 
     @Override
     public void onDisable() {
-        for (Map.Entry<String, Hologram> hologram : manager.getActiveHolograms().entrySet()) {
-            hologram.getValue().despawn();
-            manager.removeActiveHologram(hologram.getValue());
-        }
-
+        manager.clear();
         this.manager = null;
         this.controller = null;
     }
