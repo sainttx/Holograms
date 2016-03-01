@@ -48,6 +48,7 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
         try {
             Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "HologramEntityControllerImpl");
             this.controller = (HologramEntityController) nmsControllerClazz.newInstance();
+            getLogger().info("HologramEntityController set to: " + controller.getClass().getCanonicalName());
         } catch (Exception ex) {
             /* Couldn't instantiate the nmsController - Spigot/CraftBukkit version isn't supported */
             getLogger().severe("The plugin couldn't create the NMS controller instance and has been disabled. This is likely" +
