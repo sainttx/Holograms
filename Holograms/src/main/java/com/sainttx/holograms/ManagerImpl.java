@@ -99,6 +99,8 @@ public class ManagerImpl implements HologramManager {
 
     @Override
     public void deleteHologram(Hologram hologram) {
+        hologram.despawn();
+        removeActiveHologram(hologram);
         persistingHolograms.set("holograms." + hologram.getName(), null);
         persistingHolograms.saveConfiguration();
     }

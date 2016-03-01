@@ -12,7 +12,8 @@ public interface HologramManager {
     void saveHologram(Hologram hologram);
 
     /**
-     * Permanently deletes a {@link Hologram}.
+     * Permanently deletes a {@link Hologram}. This method will despawn
+     * and remove the hologram as active.
      *
      * @param hologram the hologram
      */

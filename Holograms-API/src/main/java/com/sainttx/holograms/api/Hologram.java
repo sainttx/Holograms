@@ -38,11 +38,6 @@ public interface Hologram {
     Location getLocation();
 
     /**
-     * Permanently removes this Hologram.
-     */
-    void remove();
-
-    /**
      * De-spawns all of the lines in this Hologram.
      */
     void despawn();

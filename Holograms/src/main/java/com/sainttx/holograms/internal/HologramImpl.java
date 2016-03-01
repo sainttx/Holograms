@@ -64,22 +64,6 @@ public class HologramImpl implements Hologram {
         return this.location;
     }
 
-    @Override
-    public void remove() {
-        this.removeAllLines();
-        ManagerImpl.getInstance().removeActiveHologram(this);
-
-        if (this.persist) {
-            ManagerImpl.getInstance().deleteHologram(this);
-        }
-    }
-
-    // Removes all lines from this hologram
-    private void removeAllLines() {
-        this.despawn();
-        lines.clear();
-    }
-
     // Saves this hologram only if it is persistent
     private void saveIfPersistent() {
         if (this.isPersistent()) {

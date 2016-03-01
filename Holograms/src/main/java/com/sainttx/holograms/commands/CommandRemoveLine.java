@@ -54,7 +54,7 @@ public class CommandRemoveLine implements CommandExecutor {
                     }
 
                     if (hologram.getLines().size() == 0) {
-                        hologram.remove();
+                        plugin.getHologramManager().deleteHologram(hologram);
                         sender.sendMessage(TextUtil.color("&7Hologram &f\"" + hologram.getName() + "\" &7was removed."));
                     }
                 }
