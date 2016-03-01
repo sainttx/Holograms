@@ -4,6 +4,7 @@ import com.sainttx.holograms.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramEntity;
 import com.sainttx.holograms.api.line.TextualHologramLine;
+import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -72,7 +73,8 @@ public class HologramLineImpl implements TextualHologramLine {
 
     @Override
     public void setText(String text) {
-        this.text = text;
+        this.text = TextUtil.color(text);
+        this.originalText = text;
     }
 
     @Override

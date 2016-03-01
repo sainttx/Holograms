@@ -43,6 +43,7 @@ public class HologramCommands implements CommandExecutor {
         commands.put("near", new CommandNear(plugin));
         commands.put("removeline", new CommandRemoveLine(plugin));
         commands.put("refresh", new CommandRefresh(plugin));
+        commands.put("setline", new CommandSetLine(plugin));
     }
 
     @Override
@@ -84,6 +85,7 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(TextUtil.color("&e/holograms near &f<radius>"));
         sender.sendMessage(TextUtil.color("&e/holograms removeline &f<name> <index>"));
         sender.sendMessage(TextUtil.color("&e/holograms refresh"));
+        sender.sendMessage(TextUtil.color("&e/holograms setline &f<name> <index> <text>"));
         sender.sendMessage(TextUtil.color("&7&oHolograms v" + plugin.getDescription().getVersion() + " by SainttX"));
     }
 }
