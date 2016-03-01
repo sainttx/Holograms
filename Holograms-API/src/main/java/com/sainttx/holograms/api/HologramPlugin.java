@@ -1,15 +1,15 @@
 package com.sainttx.holograms.api;
 
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public interface HologramPlugin extends Plugin {
+public abstract class HologramPlugin extends JavaPlugin {
 
     /**
      * Returns the current active {@link HologramManager} implementation.
      *
      * @return the manager
      */
-    HologramManager getHologramManager();
+    public abstract HologramManager getHologramManager();
 
     /**
      * Returns the entity controller instance for the currently active
@@ -17,5 +17,5 @@ public interface HologramPlugin extends Plugin {
      *
      * @return the entity controller
      */
-    HologramEntityController getNMSController();
+    public abstract HologramEntityController getNMSController();
 }

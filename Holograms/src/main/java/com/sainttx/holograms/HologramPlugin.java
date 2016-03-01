@@ -4,14 +4,13 @@ import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.util.ReflectionUtil;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Constructor;
 
 /**
  * Created by Matthew on 14/03/2015.
  */
-public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.api.HologramPlugin {
+public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     /**
      * The path to the package that contains our NMS implementations
