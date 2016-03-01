@@ -9,12 +9,6 @@ import org.bukkit.entity.Entity;
 public interface NMSController {
 
     /**
-     * Sets up the NMS environment
-     * // TODO: This is not used/needed apparently
-     */
-    void setup();
-
-    /**
      * Spawns a new entity at a specific location for a HologramLine
      * to modify displayed text.
      *
