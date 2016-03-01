@@ -10,26 +10,29 @@ public interface NMSController {
 
     /**
      * Sets up the NMS environment
+     * // TODO: This is not used/needed apparently
      */
     void setup();
 
     /**
-     * Spawns a new Hologram in the world
+     * Spawns a new entity at a specific location for a HologramLine
+     * to modify displayed text.
      *
-     * @param world       The world to spawn the entity in
-     * @param x           The x coordinate of the entity
-     * @param y           The y coordinate of the entity
-     * @param z           The z coordinate of the entity
-     * @param parentPiece The hologram piece for the hologram
-     * @return The spawned entity
+     * @param world the world
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
+     * @param parentPiece the parenting hologram line for the entity
+     * @return the resulting entity that was spanwned
      */
     NMSEntityBase spawnArmorStand(World world, double x, double y, double z, HologramLine parentPiece);
 
     /**
-     * Returns the NMSEntityBase instance for a Bukkit entity
+     * Returns the {@link NMSEntityBase} of a hologram entity. If the
+     * entity is not a Hologram <code>null</code> is returned.
      *
-     * @param bukkitEntity The bukkit entity
-     * @return The NMSEntityBase found, defaults to null
+     * @param bukkitEntity the Bukkit entity
+     * @return the base entity
      */
     NMSEntityBase getNMSEntityBase(Entity bukkitEntity);
 }

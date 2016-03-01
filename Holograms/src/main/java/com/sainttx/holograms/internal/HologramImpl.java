@@ -54,7 +54,7 @@ public class HologramImpl implements Hologram {
     }
 
     @Override
-    public void setIsPersistent(boolean persist) {
+    public void setPersistent(boolean persist) {
         this.persist = persist;
         saveIfPersistent();
     }

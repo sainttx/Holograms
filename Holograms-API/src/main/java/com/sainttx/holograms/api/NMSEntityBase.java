@@ -8,42 +8,42 @@ import org.bukkit.entity.Entity;
 public interface NMSEntityBase {
 
     /**
-     * Returns the HologramLine associated with the entity base
+     * Returns the parenting {@link HologramLine} of this base.
      *
-     * @return The hologram line
+     * @return the base line
      */
     HologramLine getHologramLine();
 
     /**
-     * Kills the base hologram
+     * Permanently removes this entity.
      */
     void die();
 
     /**
-     * Sets a new custom name for the entity base
+     * Sets a new custom name for the hologram line.
      *
-     * @param text The new custom name to set
+     * @param text the new text
      */
     void setCustomName(String text);
 
     /**
-     * Returns the bases custom name
+     * Returns the current custom name/text for the hologram line.
      *
-     * @return The custom name of the base
+     * @return the current text.
      */
     String getCustomName();
 
     /**
-     * Sets the lock tick value for the entity
+     * Locks this entity from being ticked and updated.
      *
-     * @param lockTick The lock tick value
+     * @param lockTick the new value
      */
     void setLockTick(boolean lockTick);
 
     /**
-     * Gets the armor stand entity
+     * Gets the Bukkit entity for this hologram line.
      *
-     * @return
+     * @return the entity
      */
     Entity getBukkitEntity();
 }

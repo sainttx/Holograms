@@ -8,42 +8,40 @@ import org.bukkit.Location;
 public interface HologramLine {
 
     /**
-     * Displays the line at a specific location
+     * Spawns this line at a specific {@link Location}.
      *
-     * TODO: IllegalStateException if already spawned, rename to display
-     *
-     * @param location the location to spawn the Hologram at
+     * @param location where to spawn
      */
     void spawn(Location location);
 
     /**
-     * Hides this hologram line from being shown
+     * Despawns this line.
      */
     void despawn();
 
     /**
-     * Returns the height of the line
+     * Returns the height of the line.
      *
      * @return the height
      */
     double getHeight();
 
     /**
-     * Returns the entity that is used to display this line
+     * Returns the {@link NMSEntityBase} being used to display this line.
      *
      * @return the entity
      */
     NMSEntityBase getEntity();
 
     /**
-     * Returns the parent hologram that contains this line
+     * Returns the parent {@link Hologram} that contains this line.
      *
      * @return the parent hologram
      */
     Hologram getHologram();
 
     /**
-     * Represents a Hologram line that displays a string to players
+     * Represents a line that displays a simple string.
      */
     interface Textual extends HologramLine {
 

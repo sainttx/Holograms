@@ -5,50 +5,58 @@ import java.util.Map;
 public interface HologramManager {
 
     /**
-     * Saves a Hologram for persistence through server restarts
+     * Saves a {@link Hologram} for persistence through server restarts.
      *
-     * @param hologram The Hologram to be saved
+     * @param hologram the hologram
      */
     void saveHologram(Hologram hologram);
 
     /**
-     * Deletes a Hologram for persistence through server restarts
+     * Permanently deletes a {@link Hologram}.
      *
-     * @param hologram The Hologram to be deleted
+     * @param hologram the hologram
      */
     void deleteHologram(Hologram hologram);
 
     /**
-     * Returns a Hologram by its name
+     * Gets a {@link Hologram} by its unique name. If the hologram does not
+     * exist then <code>null</code> will be returned.
      *
-     * @param name The name of the Hologram
-     * @return The hologram
+     * @param name the name of the hologram
+     * @return the obtained hologram
      */
     Hologram getHologram(String name);
 
     /**
-     * Returns a map of the currently active holograms
+     * Gets all currently {@link Hologram}s. The map returned is a shallow copy.
      *
-     * @return all active holograms
+     * @return all holograms
      */
     Map<String, Hologram> getActiveHolograms();
 
     /**
-     * Adds an active Hologram
+     * Registers a {@link Hologram} to the manager. If the user wishes for
+     * the hologram to have persistence, then the {@link #saveHologram(Hologram)} method
+     * should be called.
+     * <p>
+     * This method does not call the {@link Hologram#refresh()} method
+     * and thus displaying the holograms entities is up to the user.
+     * The hologram will be available in {@link #getActiveHolograms()} after
+     * calling this method.
      *
-     * @param hologram The Hologram to be added
+     * @param hologram the hologram
      */
     void addHologram(Hologram hologram);
 
     /**
-     * Removes an active Hologram
+     * Unregisters a {@link Hologram} from the map of active holograms.
      *
-     * @param hologram The Hologram to be removed
+     * @param hologram the hologram
      */
     void removeHologram(Hologram hologram);
 
     /**
-     * Removes all active Holograms
+     * Despawns and removes all active holograms.
      */
     void clear();
 }

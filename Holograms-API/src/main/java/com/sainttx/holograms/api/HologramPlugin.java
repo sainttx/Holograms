@@ -5,16 +5,17 @@ import org.bukkit.plugin.Plugin;
 public interface HologramPlugin extends Plugin {
 
     /**
-     * Returns the Hologram manager
+     * Returns the current active {@link HologramManager} implementation.
      *
-     * @return The hologram manager
+     * @return the manager
      */
     HologramManager getHologramManager();
 
     /**
-     * Returns the NMS controller instance
+     * Returns the entity controller instance for the currently active
+     * version of CraftBukkit software.
      *
-     * @return The NMS Controller
+     * @return the entity controller
      */
     NMSController getNMSController();
 }

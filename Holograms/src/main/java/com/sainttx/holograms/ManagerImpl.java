@@ -77,7 +77,7 @@ public class ManagerImpl implements HologramManager {
                 // Create the Hologram
                 Hologram hologram = new HologramImpl(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
                 hologram.refresh();
-                hologram.setIsPersistent(true);
+                hologram.setPersistent(true);
             }
         }
     }
