@@ -3,8 +3,10 @@ package com.sainttx.holograms.internal;
 import com.sainttx.holograms.ManagerImpl;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.HologramPlugin;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +41,8 @@ public class HologramImpl implements Hologram {
             }
         }
 
-        ManagerImpl.getInstance().addActiveHologram(this);
+        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+        plugin.getHologramManager().addActiveHologram(this);
         saveIfPersistent();
     }
 
@@ -67,7 +70,8 @@ public class HologramImpl implements Hologram {
     // Saves this hologram only if it is persistent
     private void saveIfPersistent() {
         if (this.isPersistent()) {
-            ManagerImpl.getInstance().saveHologram(this);
+            HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+            plugin.getHologramManager().saveHologram(this);
         }
     }
 

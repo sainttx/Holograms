@@ -26,11 +26,6 @@ public class ManagerImpl implements HologramManager {
     private HologramPlugin plugin;
 
     /*
-     * The only Holograms instance - Singleton
-     */
-    private static ManagerImpl instance; // TODO: Remove
-
-    /*
      * The file that stores saved Hologram information
      */
     private Configuration persistingHolograms;
@@ -43,16 +38,6 @@ public class ManagerImpl implements HologramManager {
 
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
-        instance = this;
-    }
-
-    /**
-     * Returns the Holograms controller instance
-     *
-     * @return The running instance of the Holograms controller class
-     */
-    public static ManagerImpl getInstance() {
-        return instance;
     }
 
     /**
