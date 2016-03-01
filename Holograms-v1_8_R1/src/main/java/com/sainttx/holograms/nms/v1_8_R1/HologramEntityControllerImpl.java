@@ -1,12 +1,11 @@
 package com.sainttx.holograms.nms.v1_8_R1;
 
-import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramEntity;
+import com.sainttx.holograms.api.HologramEntityController;
+import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
 import net.minecraft.server.v1_8_R1.Entity;
 import net.minecraft.server.v1_8_R1.WorldServer;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -30,7 +29,8 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         EntityHologram armorStand = new EntityHologram(nmsWorld, parentPiece);
         armorStand.setLocationNMS(x, y, z);
         if (!addEntityToWorld(nmsWorld, armorStand)) {
-            Bukkit.getLogger().log(Level.WARNING, "Failed to add armor stand entity to the world");
+            plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + world.getName()
+                    + " at x:" + x + " y:" + y + " z:" + z);
         }
 
         return armorStand;
