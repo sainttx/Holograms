@@ -3,6 +3,7 @@ package com.sainttx.holograms.commands;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.line.TextualHologramLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -45,8 +46,8 @@ public class CommandRemoveLine implements CommandExecutor {
                     HologramLine line = hologram.getLine(index);
                     hologram.removeLine(line);
                     hologram.refresh();
-                    if (line instanceof HologramLine.Textual) {
-                        sender.sendMessage(TextUtil.color("&7Removed line &f\"" + ((HologramLine.Textual) line).getText()
+                    if (line instanceof TextualHologramLine) {
+                        sender.sendMessage(TextUtil.color("&7Removed line &f\"" + ((TextualHologramLine) line).getText()
                                 + "&f\" &7from hologram &f\"" + hologram.getName() + "\"."));
                     } else {
                         sender.sendMessage(TextUtil.color("&7Removed line at position &f\"" + index + "&f\" &7from hologram &f\""

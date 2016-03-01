@@ -2,8 +2,8 @@ package com.sainttx.holograms.internal;
 
 import com.sainttx.holograms.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramEntity;
+import com.sainttx.holograms.api.line.TextualHologramLine;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,7 +11,7 @@ import org.bukkit.Location;
 /**
  * Created by Matthew on 08/01/2015.
  */
-public class HologramLineImpl implements HologramLine.Textual {
+public class HologramLineImpl implements TextualHologramLine {
 
     private static final double OFFSET = 0; // Y offset used in the position of the NMS entities
     private static final double height = 0.23; // Height of the line

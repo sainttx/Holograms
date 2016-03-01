@@ -39,24 +39,4 @@ public interface HologramLine {
      * @return the parent hologram
      */
     Hologram getHologram();
-
-    /**
-     * Represents a line that displays a simple string.
-     */
-    interface Textual extends HologramLine {
-
-        /**
-         * Returns the text displayed by the line
-         *
-         * @return the text
-         */
-        String getText();
-
-        /**
-         * Sets the text to be displayed by the line
-         *
-         * @param text the new text
-         */
-        void setText(String text);
-    }
 }
