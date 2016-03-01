@@ -104,7 +104,7 @@ public class ManagerImpl implements HologramManager {
     }
 
     @Override
-    public Hologram getHologramByName(String name) {
+    public Hologram getHologram(String name) {
         return activeHolograms.get(name);
     }
 

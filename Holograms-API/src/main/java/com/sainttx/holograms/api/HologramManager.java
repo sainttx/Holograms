@@ -24,14 +24,14 @@ public interface HologramManager {
      * @param name The name of the Hologram
      * @return The hologram
      */
-    Hologram getHologramByName(String name);
+    Hologram getHologram(String name);
 
     /**
      * Returns a map of the currently active holograms
      *
      * @return all active holograms
      */
-    Map<String, Hologram> getActiveHolograms(); // TODO: Remove
+    Map<String, Hologram> getActiveHolograms();
 
     /**
      * Adds an active Hologram

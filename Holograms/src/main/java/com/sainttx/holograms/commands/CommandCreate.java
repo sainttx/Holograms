@@ -29,7 +29,7 @@ public class CommandCreate implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Usage: /hologram create <name> <text>");
         } else {
             String hologramName = args[1];
-            Hologram hologram = plugin.getHologramManager().getHologramByName(hologramName);
+            Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram != null) {
                 sender.sendMessage(ChatColor.RED + "A hologram with that name already exists.");

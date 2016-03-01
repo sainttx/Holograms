@@ -60,7 +60,7 @@ public class CommandImport implements CommandExecutor {
                                 if (lines == null || lines.isEmpty()) {
                                     sender.sendMessage(TextUtil.color("&c&oHologram \"" + holoName + "\" has no lines and was skipped"));
                                     continue;
-                                } else if (plugin.getHologramManager().getHologramByName(holoName) != null) {
+                                } else if (plugin.getHologramManager().getHologram(holoName) != null) {
                                     int randomInt = random.nextInt(1000);
                                     sender.sendMessage(TextUtil.color("&e&oHologram \"" + holoName + "\" was renamed to \"" + (holoName + randomInt) + "\" (already existed)"));
                                     holoName = holoName + randomInt;
