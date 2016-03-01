@@ -6,6 +6,7 @@ import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
 import net.minecraft.server.v1_8_R1.Entity;
 import net.minecraft.server.v1_8_R1.WorldServer;
+import org.bukkit.Chunk;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -39,6 +40,17 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
+        net.minecraft.server.v1_8_R1.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
+
+        if (nmsChunk != null) {
+            Chunk chunk = nmsChunk.bukkitChunk;
+
+            if (!chunk.isLoaded()) {
+                chunk.load();
+                plugin.getLogger().info("Loaded chunk (x:" + chunk.getX() + " z:" + chunk.getZ() + ") to spawn a Hologram");
+            }
+        }
+
         return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
