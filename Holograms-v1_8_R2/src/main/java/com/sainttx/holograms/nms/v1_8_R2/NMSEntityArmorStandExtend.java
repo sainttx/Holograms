@@ -23,12 +23,24 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
         setArms(false);
         setGravity(true);
         setBasePlate(true);
+        setMarker(true);
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
         } catch (Exception e) {
             // There's still the overridden method.
         }
+    }
+
+    private void setMarker(boolean flag) {
+        byte b0 = this.datawatcher.getByte(10);
+        if(flag) {
+            b0 = (byte)(b0 | 16);
+        } else {
+            b0 &= -17;
+        }
+
+        this.datawatcher.watch(10, b0);
     }
 
     @Override

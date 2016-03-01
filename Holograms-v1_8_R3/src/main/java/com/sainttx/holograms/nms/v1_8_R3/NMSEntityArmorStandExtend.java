@@ -23,6 +23,7 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
         setArms(false);
         setGravity(true);
         setBasePlate(true);
+        n(true); // setMarker
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
