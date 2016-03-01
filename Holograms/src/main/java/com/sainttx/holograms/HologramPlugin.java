@@ -6,6 +6,8 @@ import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.util.ReflectionUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Constructor;
+
 /**
  * Created by Matthew on 14/03/2015.
  */
@@ -47,7 +49,8 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
     private boolean setupController() {
         try {
             Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "HologramEntityControllerImpl");
-            this.controller = (HologramEntityController) nmsControllerClazz.newInstance();
+            Constructor<?> constructor = nmsControllerClazz.getConstructor(com.sainttx.holograms.api.HologramPlugin.class);
+            this.controller = (HologramEntityController) constructor.newInstance(this);
             getLogger().info("HologramEntityController set to: " + controller.getClass().getCanonicalName());
         } catch (Exception ex) {
             /* Couldn't instantiate the nmsController - Spigot/CraftBukkit version isn't supported */
