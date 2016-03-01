@@ -17,5 +17,5 @@ public interface HologramPlugin extends Plugin {
      *
      * @return the entity controller
      */
-    NMSController getNMSController();
+    HologramEntityController getNMSController();
 }

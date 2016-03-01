@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 /**
  * Created by Matthew on 15/03/2015.
  */
-public interface NMSController {
+public interface HologramEntityController {
 
     /**
      * Spawns a new entity at a specific location for a HologramLine

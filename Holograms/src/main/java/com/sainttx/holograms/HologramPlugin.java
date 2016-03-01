@@ -1,8 +1,8 @@
 package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.api.NMSController;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.util.ReflectionUtil;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +26,7 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
     /*
      * The entity controller
      */
-    private NMSController controller;
+    private HologramEntityController controller;
 
     @Override
     public void onEnable() {
@@ -53,8 +53,8 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
     // Sets up the entity controller
     private boolean setupController() {
         try {
-            Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "NMSControllerImpl");
-            this.controller = (NMSController) nmsControllerClazz.newInstance();
+            Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "HologramEntityControllerImpl");
+            this.controller = (HologramEntityController) nmsControllerClazz.newInstance();
         } catch (Exception ex) {
             /* Couldn't instantiate the nmsController - Spigot/CraftBukkit version isn't supported */
             getLogger().severe("The plugin couldn't create the NMS controller instance and has been disabled. This is likely" +
@@ -72,7 +72,7 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
     }
 
     @Override
-    public NMSController getNMSController() {
+    public HologramEntityController getNMSController() {
         return controller;
     }
 }

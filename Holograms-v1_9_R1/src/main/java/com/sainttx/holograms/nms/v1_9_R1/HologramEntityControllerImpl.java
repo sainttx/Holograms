@@ -1,7 +1,7 @@
 package com.sainttx.holograms.nms.v1_9_R1;
 
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.NMSController;
+import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.NMSEntityBase;
 import net.minecraft.server.v1_9_R1.Entity;
 import net.minecraft.server.v1_9_R1.WorldServer;
@@ -13,7 +13,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 /**
  * Created by Matthew on 08/01/2015.
  */
-public class NMSControllerImpl implements NMSController {
+public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public NMSEntityArmorStandExtend spawnArmorStand(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
