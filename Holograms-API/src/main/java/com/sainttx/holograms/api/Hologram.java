@@ -43,7 +43,7 @@ public interface Hologram {
     void despawn();
 
     /**
-     * Refreshes this Holograms line(s).
+     * Refreshes and respawns this Holograms line(s).
      */
     void refresh();
 
