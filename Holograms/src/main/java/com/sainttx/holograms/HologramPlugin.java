@@ -43,7 +43,7 @@ public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.
     public void onDisable() {
         for (Map.Entry<String, Hologram> hologram : manager.getActiveHolograms().entrySet()) {
             hologram.getValue().despawn();
-            manager.removeHologram(hologram.getValue());
+            manager.removeActiveHologram(hologram.getValue());
         }
 
         this.manager = null;

@@ -46,14 +46,14 @@ public interface HologramManager {
      *
      * @param hologram the hologram
      */
-    void addHologram(Hologram hologram);
+    void addActiveHologram(Hologram hologram);
 
     /**
      * Unregisters a {@link Hologram} from the map of active holograms.
      *
      * @param hologram the hologram
      */
-    void removeHologram(Hologram hologram);
+    void removeActiveHologram(Hologram hologram);
 
     /**
      * Despawns and removes all active holograms.

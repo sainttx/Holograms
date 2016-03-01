@@ -39,7 +39,7 @@ public class HologramImpl implements Hologram {
             }
         }
 
-        ManagerImpl.getInstance().addHologram(this);
+        ManagerImpl.getInstance().addActiveHologram(this);
         saveIfPersistent();
     }
 
@@ -67,7 +67,7 @@ public class HologramImpl implements Hologram {
     @Override
     public void remove() {
         this.removeAllLines();
-        ManagerImpl.getInstance().removeHologram(this);
+        ManagerImpl.getInstance().removeActiveHologram(this);
 
         if (this.persist) {
             ManagerImpl.getInstance().deleteHologram(this);

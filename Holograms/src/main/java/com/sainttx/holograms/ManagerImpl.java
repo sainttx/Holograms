@@ -114,13 +114,13 @@ public class ManagerImpl implements HologramManager {
     }
 
     @Override
-    public void addHologram(Hologram hologram) {
+    public void addActiveHologram(Hologram hologram) {
         Validate.isTrue(activeHolograms.get(hologram.getName()) == null, "A Hologram with that name already exists.");
         activeHolograms.put(hologram.getName(), hologram);
     }
 
     @Override
-    public void removeHologram(Hologram hologram) {
+    public void removeActiveHologram(Hologram hologram) {
         activeHolograms.remove(hologram.getName());
     }
 
