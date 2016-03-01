@@ -1,21 +1,21 @@
-package com.sainttx.holograms.nms.v1_8_R3;
+package com.sainttx.holograms.nms.v1_9_R1;
 
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.NMSEntityBase;
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import com.sainttx.holograms.api.HologramEntity;
+import net.minecraft.server.v1_9_R1.*;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by Matthew on 28/01/2015.
  */
-public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEntityBase {
+public class EntityHologram extends EntityArmorStand implements HologramEntity {
 
     private boolean lockTick;
     private HologramLine parentPiece;
 
-    public NMSEntityArmorStandExtend(World world, HologramLine parentPiece) {
+    public EntityHologram(World world, HologramLine parentPiece) {
         super(world);
         super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
@@ -23,7 +23,7 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
         setArms(false);
         setGravity(true);
         setBasePlate(true);
-        n(true); // setMarker
+        setMarker(true);
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
@@ -85,20 +85,15 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
     }
 
     @Override
-    public boolean a(EntityHuman human, Vec3D vec3d) {
+    public EnumInteractionResult a(EntityHuman entityhuman, Vec3D vec3d, ItemStack itemstack, EnumHand enumhand) {
         // Prevent stand being equipped
-        return true;
+        return EnumInteractionResult.FAIL;
     }
 
     @Override
-    public boolean d(int i, ItemStack item) {
+    public boolean c(int i, ItemStack item) {
         // Prevent stand being equipped
         return false;
-    }
-
-    @Override
-    public void setEquipment(int i, ItemStack item) {
-        // Prevent stand being equipped
     }
 
     @Override
@@ -119,14 +114,14 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
     }
 
     @Override
-    public void t_() {
+    public void m() {
         if (!lockTick) {
-            super.s_();
+            super.playStepSound();
         }
     }
 
     @Override
-    public void makeSound(String sound, float f1, float f2) {
+    public void a(SoundEffect soundeffect, float f, float f1) {
         // Remove sounds.
     }
 
@@ -144,7 +139,7 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
     @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftArmorStandExtend(this.world.getServer(), this);
+            this.bukkitEntity = new CraftHologram(this.world.getServer(), this);
         }
         return this.bukkitEntity;
     }

@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 /**
  * Created by Matthew on 08/01/2015.
  */
-public interface NMSEntityBase {
+public interface HologramEntity {
 
     /**
      * Returns the parenting {@link HologramLine} of this base.

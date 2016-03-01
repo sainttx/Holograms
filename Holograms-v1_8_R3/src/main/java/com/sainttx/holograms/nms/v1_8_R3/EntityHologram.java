@@ -1,21 +1,21 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_8_R3;
 
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.NMSEntityBase;
-import net.minecraft.server.v1_8_R2.*;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
+import com.sainttx.holograms.api.HologramEntity;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by Matthew on 28/01/2015.
  */
-public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEntityBase {
+public class EntityHologram extends EntityArmorStand implements HologramEntity {
 
     private boolean lockTick;
     private HologramLine parentPiece;
 
-    public NMSEntityArmorStandExtend(World world, HologramLine parentPiece) {
+    public EntityHologram(World world, HologramLine parentPiece) {
         super(world);
         super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
@@ -23,24 +23,13 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
         setArms(false);
         setGravity(true);
         setBasePlate(true);
-        setMarker(true);
+        n(true); // setMarker
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
         } catch (Exception e) {
             // There's still the overridden method.
         }
-    }
-
-    private void setMarker(boolean flag) {
-        byte b0 = this.datawatcher.getByte(10);
-        if(flag) {
-            b0 = (byte)(b0 | 16);
-        } else {
-            b0 &= -17;
-        }
-
-        this.datawatcher.watch(10, b0);
     }
 
     @Override
@@ -155,7 +144,7 @@ public class NMSEntityArmorStandExtend extends EntityArmorStand implements NMSEn
     @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftArmorStandExtend(this.world.getServer(), this);
+            this.bukkitEntity = new CraftHologram(this.world.getServer(), this);
         }
         return this.bukkitEntity;
     }

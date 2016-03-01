@@ -3,7 +3,7 @@ package com.sainttx.holograms.internal;
 import com.sainttx.holograms.HologramPlugin;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.NMSEntityBase;
+import com.sainttx.holograms.api.HologramEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ public class HologramLineImpl implements HologramLine.Textual {
     private Hologram parent;
     private String text;
     private String originalText;
-    private NMSEntityBase nmsNameable;
+    private HologramEntity nmsNameable;
 
     public HologramLineImpl(Hologram parent, String text) {
         this.parent = parent;
@@ -33,7 +33,7 @@ public class HologramLineImpl implements HologramLine.Textual {
 
         // Spawn the entities and set the horse and the skulls passenger
         HologramPlugin plugin = (HologramPlugin) Bukkit.getPluginManager().getPlugin("Holograms");
-        nmsNameable = plugin.getNMSController().spawnArmorStand(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
+        nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
 
         // Set the text held by this object
         if (text != null && !text.isEmpty()) {
@@ -44,7 +44,7 @@ public class HologramLineImpl implements HologramLine.Textual {
     }
 
     @Override
-    public NMSEntityBase getEntity() {
+    public HologramEntity getEntity() {
         return nmsNameable;
     }
 

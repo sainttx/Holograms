@@ -27,11 +27,11 @@ public interface HologramLine {
     double getHeight();
 
     /**
-     * Returns the {@link NMSEntityBase} being used to display this line.
+     * Returns the {@link HologramEntity} being used to display this line.
      *
      * @return the entity
      */
-    NMSEntityBase getEntity();
+    HologramEntity getEntity();
 
     /**
      * Returns the parent {@link Hologram} that contains this line.

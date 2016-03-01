@@ -1,8 +1,8 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_9_R1;
 
 import org.bukkit.EntityEffect;
-import org.bukkit.craftbukkit.v1_8_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -14,9 +14,9 @@ import java.util.Collection;
 /**
  * Created by Matthew on 28/01/2015.
  */
-public class CraftArmorStandExtend extends CraftArmorStand {
+public class CraftHologram extends CraftArmorStand {
 
-    public CraftArmorStandExtend(CraftServer server, NMSEntityArmorStandExtend entity) {
+    public CraftHologram(CraftServer server, EntityHologram entity) {
         super(server, entity);
     }
 
