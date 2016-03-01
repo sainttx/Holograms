@@ -46,7 +46,7 @@ public class CommandSetLine implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Line " + index + " of that Hologram is not a text line and cannot be modified.");
                     } else {
                         String text = TextUtil.implode(3, args);
-                        ((TextualHologramLine) line).setText(text);
+                        ((TextualHologramLine) line).setText(TextUtil.color(text));
                         line.getHologram().refresh();
                         sender.sendMessage(TextUtil.color("&7Set the text at position &f" + index + " &7of hologram &f\""
                                 + hologram.getName() + "\""));

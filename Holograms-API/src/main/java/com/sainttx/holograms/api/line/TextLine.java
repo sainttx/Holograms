@@ -14,13 +14,11 @@ public class TextLine implements TextualHologramLine {
 
     private Hologram parent;
     private String text;
-    private String originalText;
     private HologramEntity nmsNameable;
 
     public TextLine(Hologram parent, String text) {
         this.parent = parent;
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
-        this.originalText = text;
     }
 
     @Override
@@ -57,19 +55,9 @@ public class TextLine implements TextualHologramLine {
         return this.text;
     }
 
-    /**
-     * Returns the String of text this line contains (unformatted)
-     *
-     * @return The text pre-formatting that is displayed by this line
-     */
-    public String getOriginalText() {
-        return this.originalText;
-    }
-
     @Override
     public void setText(String text) {
-        this.text = ChatColor.translateAlternateColorCodes('&', text);
-        this.originalText = text;
+        this.text = text;
     }
 
     @Override

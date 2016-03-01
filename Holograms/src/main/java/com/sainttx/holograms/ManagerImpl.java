@@ -3,9 +3,10 @@ package com.sainttx.holograms;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.api.line.TextLine;
+import com.sainttx.holograms.api.line.TextualHologramLine;
 import com.sainttx.holograms.util.LocationUtil;
 import org.apache.commons.lang.Validate;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class ManagerImpl implements HologramManager {
         List<String> uncoloredLines = new ArrayList<String>();
 
         for (HologramLine line : holoLines) {
-            uncoloredLines.add(((TextLine) line).getOriginalText());
+            if (line instanceof TextualHologramLine) {
+                uncoloredLines.add(((TextualHologramLine) line).getText().replace(ChatColor.COLOR_CHAR, '&'));
+            }
         }
 
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
