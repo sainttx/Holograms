@@ -1,8 +1,8 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.HologramManager;
-import com.sainttx.holograms.HologramPlugin;
-import com.sainttx.holograms.internal.HologramImpl;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -44,8 +44,8 @@ public class CommandNear implements CommandExecutor {
 
             Player player = (Player) sender;
             HologramManager manager = plugin.getHologramManager();
-            Map<HologramImpl, Double> nearby = new HashMap<HologramImpl, Double>();
-            for (HologramImpl hologram : manager.getActiveHolograms().values()) {
+            Map<Hologram, Double> nearby = new HashMap<>();
+            for (Hologram hologram : manager.getActiveHolograms().values()) {
                 if (hologram.getLocation().getWorld().equals(player.getWorld())) {
                     double distance = hologram.getLocation().distance(player.getLocation());
                     if (distance <= radius) {
@@ -58,8 +58,8 @@ public class CommandNear implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "There are no nearby holograms within radius " + radius);
             } else {
                 sender.sendMessage(TextUtil.color("&7Holograms within a radius of &f" + radius + "&7:"));
-                for (Map.Entry<HologramImpl, Double> near : nearby.entrySet()) {
-                    HologramImpl holo = near.getKey();
+                for (Map.Entry<Hologram, Double> near : nearby.entrySet()) {
+                    Hologram holo = near.getKey();
                     sender.sendMessage(" - \"" + holo.getName() + "\" at " + TextUtil.locationAsString(holo.getLocation()) + " (dist: " + TextUtil.formatDouble(near.getValue()) + ")");
                 }
             }

@@ -1,7 +1,7 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.HologramPlugin;
-import com.sainttx.holograms.internal.HologramImpl;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.Hologram;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +20,7 @@ public class CommandRefresh implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        for (HologramImpl hologram : plugin.getHologramManager().getActiveHolograms().values()) {
+        for (Hologram hologram : plugin.getHologramManager().getActiveHolograms().values()) {
             hologram.refresh();
         }
 

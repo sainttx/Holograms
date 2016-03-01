@@ -1,8 +1,8 @@
 package com.sainttx.holograms.commands;
 
-import com.sainttx.holograms.HologramManager;
-import com.sainttx.holograms.HologramPlugin;
-import com.sainttx.holograms.internal.HologramImpl;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -25,10 +25,10 @@ public class CommandList implements CommandExecutor {
         HologramManager manager = plugin.getHologramManager();
 
         sender.sendMessage(ChatColor.GRAY + "All holograms:");
-        for (HologramImpl hologram : manager.getActiveHolograms().values()) {
+        for (Hologram hologram : manager.getActiveHolograms().values()) {
             int lines = hologram.getLines().size();
             sender.sendMessage(" - \"" + hologram.getName() + "\" at " + TextUtil.locationAsString(hologram.getLocation()) + " (" + lines + " lines)");
         }
-        return false;
+        return true;
     }
 }

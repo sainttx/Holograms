@@ -1,5 +1,6 @@
 package com.sainttx.holograms;
 
+import com.sainttx.holograms.api.Hologram;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,7 +32,11 @@ public class HologramListener implements Listener {
         if (event.getChunk() == null) {
             return;
         }
-        plugin.getHologramManager().onChunkLoad(event.getChunk());
+        for (Hologram holo : plugin.getHologramManager().getActiveHolograms().values()) {
+            if (holo.getLocation().getChunk().equals(event.getChunk())) {
+                holo.refresh();
+            }
+        }
     }
 
     @EventHandler
@@ -39,7 +44,11 @@ public class HologramListener implements Listener {
         if (event.getChunk() == null) {
             return;
         }
-        plugin.getHologramManager().onChunkUnload(event.getChunk());
+        for (Hologram holo : plugin.getHologramManager().getActiveHolograms().values()) {
+            if (holo.getLocation().getChunk().equals(event.getChunk())) {
+                holo.despawn();
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

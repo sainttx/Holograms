@@ -2,19 +2,23 @@ package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.internal.HologramImpl;
 import com.sainttx.holograms.internal.HologramLineImpl;
 import com.sainttx.holograms.util.LocationUtil;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Matthew on 08/01/2015.
  */
-public class HologramManager {
+public class ManagerImpl implements HologramManager {
 
     /*
      * The HologramPlugin instance
@@ -24,7 +28,7 @@ public class HologramManager {
     /*
      * The only Holograms instance - Singleton
      */
-    private static HologramManager instance;
+    private static ManagerImpl instance; // TODO: Remove
 
     /*
      * The file that stores saved Hologram information
@@ -35,12 +39,9 @@ public class HologramManager {
      * A map containing all spawned Holograms
      * key is the holograms name
      */
-    private Map<String, HologramImpl> activeHolograms = new TreeMap<String, HologramImpl>(String.CASE_INSENSITIVE_ORDER);
+    private Map<String, Hologram> activeHolograms = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-    /**
-     * Singleton
-     */
-    protected HologramManager(HologramPlugin plugin) {
+    ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
         instance = this;
     }
@@ -50,14 +51,14 @@ public class HologramManager {
      *
      * @return The running instance of the Holograms controller class
      */
-    public static HologramManager getInstance() {
+    public static ManagerImpl getInstance() {
         return instance;
     }
 
     /**
      * Loads all saved Holograms
      */
-    public void load() {
+    void load() {
         if (persistingHolograms == null) {
             persistingHolograms = new Configuration(plugin, "holograms.yml");
         }
@@ -81,12 +82,8 @@ public class HologramManager {
         }
     }
 
-    /**
-     * Saves a Hologram for persistence through server restarts
-     *
-     * @param hologram The Hologram to be saved
-     */
-    public void saveHologram(HologramImpl hologram) {
+    @Override
+    public void saveHologram(Hologram hologram) {
         String hologramName = hologram.getName();
         Collection<HologramLine> holoLines = hologram.getLines();
         List<String> uncoloredLines = new ArrayList<String>();
@@ -100,99 +97,38 @@ public class HologramManager {
         persistingHolograms.saveConfiguration();
     }
 
-    /**
-     * Deletes a Hologram for persistence through server restarts
-     *
-     * @param hologram The Hologram to be deleted
-     */
-    public void deleteHologram(HologramImpl hologram) {
+    @Override
+    public void deleteHologram(Hologram hologram) {
         persistingHolograms.set("holograms." + hologram.getName(), null);
         persistingHolograms.saveConfiguration();
     }
 
-    /**
-     * Returns a Hologram by its name
-     *
-     * @param name The name of the Hologram
-     * @return The hologram
-     */
-    public HologramImpl getHologramByName(String name) {
+    @Override
+    public Hologram getHologramByName(String name) {
         return activeHolograms.get(name);
     }
 
-    /**
-     * Returns a map of the active holograms
-     *
-     * @return A deep copy of the active holograms map
-     */
-    public Map<String, HologramImpl> getActiveHolograms() {
-        Map<String, HologramImpl> ret = new TreeMap<String, HologramImpl>(String.CASE_INSENSITIVE_ORDER);
-        ret.putAll(activeHolograms);
-        return ret;
+    @Override
+    public Map<String, Hologram> getActiveHolograms() {
+        return activeHolograms;
     }
 
-    /**
-     * Adds an active Hologram
-     *
-     * @param hologram The Hologram to be added
-     */
-    public void addHologram(HologramImpl hologram) {
+    @Override
+    public void addHologram(Hologram hologram) {
         Validate.isTrue(activeHolograms.get(hologram.getName()) == null, "A Hologram with that name already exists.");
         activeHolograms.put(hologram.getName(), hologram);
     }
 
-    /**
-     * Removes an active Hologram
-     *
-     * @param hologram The Hologram to be removed
-     */
-    public void removeHologram(HologramImpl hologram) {
+    @Override
+    public void removeHologram(Hologram hologram) {
         activeHolograms.remove(hologram.getName());
     }
 
-    /**
-     * Handles chunk loading
-     *
-     * @param chunk The chunk that just loaded
-     */
-    public void onChunkLoad(Chunk chunk) {
-        for (HologramImpl hologram : activeHolograms.values()) {
-            if (hologram == null) {
-                continue;
-            }
-
-            if (hologram.getLocation().getChunk().equals(chunk)) {
-                hologram.spawnEntities();
-            }
-        }
-    }
-
-    /**
-     * Handles chunk unloading
-     *
-     * @param chunk The chunk that just unloaded
-     */
-    public void onChunkUnload(Chunk chunk) {
-        for (HologramImpl hologram : activeHolograms.values()) {
-            if (hologram == null) {
-                continue;
-            }
-
-            if (hologram.getLocation().getChunk().equals(chunk)) {
-                hologram.despawn();
-            }
-        }
-    }
-
-    /**
-     * Removes all active Holograms
-     */
+    @Override
     public void clear() {
-        Map<String, HologramImpl> copyActive = getActiveHolograms();
-        activeHolograms.clear();
-
-        for (HologramImpl hologram : copyActive.values()) {
-            hologram.despawn();
+        for (Hologram holo : getActiveHolograms().values()) {
+            holo.despawn();
         }
+        getActiveHolograms().clear();
     }
 }

@@ -1,10 +1,9 @@
 package com.sainttx.holograms.internal;
 
-import com.sainttx.holograms.HologramManager;
+import com.sainttx.holograms.ManagerImpl;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class HologramImpl implements Hologram {
             }
         }
 
-        HologramManager.getInstance().addHologram(this);
+        ManagerImpl.getInstance().addHologram(this);
         saveIfPersistent();
     }
 
@@ -68,10 +67,10 @@ public class HologramImpl implements Hologram {
     @Override
     public void remove() {
         this.removeAllLines();
-        HologramManager.getInstance().removeHologram(this);
+        ManagerImpl.getInstance().removeHologram(this);
 
         if (this.persist) {
-            HologramManager.getInstance().deleteHologram(this);
+            ManagerImpl.getInstance().deleteHologram(this);
         }
     }
 
@@ -84,7 +83,7 @@ public class HologramImpl implements Hologram {
     // Saves this hologram only if it is persistent
     private void saveIfPersistent() {
         if (this.isPersistent()) {
-            HologramManager.getInstance().saveHologram(this);
+            ManagerImpl.getInstance().saveHologram(this);
         }
     }
 
@@ -124,10 +123,8 @@ public class HologramImpl implements Hologram {
         }
     }
 
-    /**
-     * Forces the entities to spawn, without checking if the chunk is loaded.
-     */
-    public void spawnEntities() {
+    // Forces the entities to spawn
+    private void spawnEntities() {
         this.despawn();
 
         double currentY = this.location.getY();

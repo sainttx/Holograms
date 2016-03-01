@@ -1,8 +1,9 @@
 package com.sainttx.holograms;
 
+import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.NMSController;
 import com.sainttx.holograms.commands.HologramCommands;
-import com.sainttx.holograms.internal.HologramImpl;
 import com.sainttx.holograms.util.ReflectionUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Matthew on 14/03/2015.
  */
-public class HologramPlugin extends JavaPlugin {
+public class HologramPlugin extends JavaPlugin implements com.sainttx.holograms.api.HologramPlugin {
 
     /**
      * The path to the package that contains our NMS implementations
@@ -22,26 +23,25 @@ public class HologramPlugin extends JavaPlugin {
      * The Hologram manager instance
      */
     private HologramManager manager;
-
     /*
-     * The NMSController instance
+     * The entity controller
      */
     private NMSController controller;
 
     @Override
     public void onEnable() {
-        this.manager = new HologramManager(this);
+        this.manager = new ManagerImpl(this);
 
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
             getCommand("holograms").setExecutor(new HologramCommands(this));
-            manager.load();
+            ((ManagerImpl) manager).load();
         }
     }
 
     @Override
     public void onDisable() {
-        for (Map.Entry<String, HologramImpl> hologram : manager.getActiveHolograms().entrySet()) {
+        for (Map.Entry<String, Hologram> hologram : manager.getActiveHolograms().entrySet()) {
             hologram.getValue().despawn();
             manager.removeHologram(hologram.getValue());
         }
@@ -50,9 +50,7 @@ public class HologramPlugin extends JavaPlugin {
         this.controller = null;
     }
 
-    /*
-     * Sets up the NMS Controller instance
-     */
+    // Sets up the entity controller
     private boolean setupController() {
         try {
             Class<?> nmsControllerClazz = Class.forName(NMS_PACKAGE_PATH + "NMSControllerImpl");
@@ -68,20 +66,12 @@ public class HologramPlugin extends JavaPlugin {
         return true;
     }
 
-    /**
-     * Returns the Hologram manager
-     *
-     * @return The hologram manager
-     */
+    @Override
     public HologramManager getHologramManager() {
         return manager;
     }
 
-    /**
-     * Returns the NMS controller instance
-     *
-     * @return The NMS Controller
-     */
+    @Override
     public NMSController getNMSController() {
         return controller;
     }
