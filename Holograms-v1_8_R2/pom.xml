@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.sainttx.holograms</groupId>
         <artifactId>holograms-parent</artifactId>
-        <version>1.9a</version>
+        <version>1.9b</version>
     </parent>
 
     <artifactId>holograms-v1_8_R2</artifactId>
