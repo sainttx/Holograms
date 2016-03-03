@@ -159,25 +159,26 @@ public class Hologram {
     // Reorganizes holograms after an initial index
     private void reorganize(int index) {
         HologramLine previous = getLine(index - 1);
-        Location location = previous == null ? getLocation() : previous.getEntity().getBukkitEntity().getLocation().clone(); // TODO: Better way to get previous location
+        Location location = previous == null ? getLocation() : previous.getLocation();
         double y = location.getY();
 
         // Spawn the first line and then start decrementing the y
         HologramLine first = getLine(index);
-        first.spawn(location);
+        first.setLocation(location);
 
         for (int i = index + 1 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
-            if (line != null) {
+            if (line != null && !line.isHidden()) {
                 y -= line.getHeight();
                 // TODO: y -= 0.02 (include in height?)
                 location.setY(y);
-                line.spawn(location); // TODO: isHidden check change
+                line.setLocation(location);
             }
         }
     }
 
     // Forces the entities to spawn
+    // TODO: Remove this method or something
     private void spawnEntities() {
         this.despawn();
 
@@ -194,7 +195,7 @@ public class Hologram {
 
             Location location = this.location.clone();
             location.setY(currentY);
-            line.spawn(location);
+            line.setLocation(location);
         }
     }
 
