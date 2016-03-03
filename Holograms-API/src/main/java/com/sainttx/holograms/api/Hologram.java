@@ -1,10 +1,10 @@
 package com.sainttx.holograms.api;
 
-import com.sainttx.holograms.api.line.TextLine;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.beans.ConstructorProperties;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,42 +14,37 @@ import java.util.List;
  */
 public class Hologram {
 
-    private final String name;
+    private final String id;
     private Location location;
     private boolean persist;
     private List<HologramLine> lines = new ArrayList<>();
 
-    public Hologram(String name, Location location, String... lines) {
-        this(name, location, false, lines);
+    @ConstructorProperties({ "id", "location" })
+    public Hologram(String id, Location location) {
+        this(id, location, false);
     }
 
-    public Hologram(String name, Location location, boolean persist, String... lines) {
-        Validate.notNull(name, "Hologram name cannot be null");
+    @ConstructorProperties({ "id", "location", "persist" })
+    public Hologram(String id, Location location, boolean persist) {
+        Validate.notNull(id, "Hologram id cannot be null");
         Validate.notNull(location, "Hologram location cannot be null");
-        this.name = name;
+        this.id = id;
         this.location = location;
         this.persist = persist;
 
-        // Create HologramLines
-        if (lines != null && lines.length > 0) {
-            for (String line : lines) {
-                HologramLine holoLine = new TextLine(this, line);
-                this.lines.add(holoLine);
-            }
-        }
-
+        // TODO: Remove this
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         plugin.getHologramManager().addActiveHologram(this);
         saveIfPersistent();
     }
 
     /**
-     * Returns the unique ID name of this Hologram.
+     * Returns the unique ID id of this Hologram.
      *
-     * @return the holograms name
+     * @return the holograms id
      */
-    public String getName() {
-        return this.name;
+    public String getId() {
+        return this.id;
     }
 
     /**
@@ -109,7 +104,7 @@ public class Hologram {
     /**
      * Inserts a new {@link HologramLine} to this Hologram at a specific index.
      *
-     * @param line  the line
+     * @param line the line
      * @param index the index to add the line at
      */
     public void addLine(HologramLine line, int index) {

@@ -34,7 +34,7 @@ public class CommandInfo implements CommandExecutor {
             if (hologram == null) {
                 sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
             } else {
-                sender.sendMessage(TextUtil.color("&7Hologram information for &f\"" + hologram.getName() + "\"&7:"));
+                sender.sendMessage(TextUtil.color("&7Hologram information for &f\"" + hologram.getId() + "\"&7:"));
                 Collection<HologramLine> lines = hologram.getLines();
                 sender.sendMessage(TextUtil.color("&7Location: &f" + TextUtil.locationAsString(hologram.getLocation())));
                 if (lines.isEmpty()) {

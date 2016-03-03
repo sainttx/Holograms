@@ -60,7 +60,7 @@ public class CommandNear implements CommandExecutor {
                 sender.sendMessage(TextUtil.color("&7Holograms within a radius of &f" + radius + "&7:"));
                 for (Map.Entry<Hologram, Double> near : nearby.entrySet()) {
                     Hologram holo = near.getKey();
-                    sender.sendMessage(" - \"" + holo.getName() + "\" at " + TextUtil.locationAsString(holo.getLocation()) + " (dist: " + TextUtil.formatDouble(near.getValue()) + ")");
+                    sender.sendMessage(" - \"" + holo.getId() + "\" at " + TextUtil.locationAsString(holo.getLocation()) + " (dist: " + TextUtil.formatDouble(near.getValue()) + ")");
                 }
             }
         }

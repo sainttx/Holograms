@@ -3,9 +3,9 @@ package com.sainttx.holograms;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramManager;
+import com.sainttx.holograms.api.line.TextLine;
 import com.sainttx.holograms.api.line.TextualHologramLine;
 import com.sainttx.holograms.util.LocationUtil;
-import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
@@ -60,7 +60,12 @@ public class ManagerImpl implements HologramManager {
                 }
 
                 // Create the Hologram
-                Hologram hologram = new Hologram(hologramName, location, false, uncoloredLines.toArray(new String[uncoloredLines.size()]));
+                Hologram hologram = new Hologram(hologramName, location, false);
+                // Add the lines
+                for (String string : uncoloredLines) {
+                    TextLine line = new TextLine(hologram, string);
+                    hologram.addLine(line);
+                }
                 hologram.refresh();
                 hologram.setPersistent(true);
             }
@@ -69,7 +74,7 @@ public class ManagerImpl implements HologramManager {
 
     @Override
     public void saveHologram(Hologram hologram) {
-        String hologramName = hologram.getName();
+        String hologramName = hologram.getId();
         Collection<HologramLine> holoLines = hologram.getLines();
         List<String> uncoloredLines = new ArrayList<String>();
 
@@ -88,7 +93,7 @@ public class ManagerImpl implements HologramManager {
     public void deleteHologram(Hologram hologram) {
         hologram.despawn();
         removeActiveHologram(hologram);
-        persistingHolograms.set("holograms." + hologram.getName(), null);
+        persistingHolograms.set("holograms." + hologram.getId(), null);
         persistingHolograms.saveConfiguration();
     }
 
@@ -104,12 +109,12 @@ public class ManagerImpl implements HologramManager {
 
     @Override
     public void addActiveHologram(Hologram hologram) {
-        activeHolograms.put(hologram.getName(), hologram);
+        activeHolograms.put(hologram.getId(), hologram);
     }
 
     @Override
     public void removeActiveHologram(Hologram hologram) {
-        activeHolograms.remove(hologram.getName());
+        activeHolograms.remove(hologram.getId());
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CommandInsertLine implements CommandExecutor {
                     hologram.addLine(line, index);
                     hologram.refresh();
                     sender.sendMessage(TextUtil.color("&7Inserted line &f\"" + text + "&f\" &7into hologram &f\""
-                            + hologram.getName() + "\" &7at index &f" + index + "."));
+                            + hologram.getId() + "\" &7at index &f" + index + "."));
                 }
             }
         }

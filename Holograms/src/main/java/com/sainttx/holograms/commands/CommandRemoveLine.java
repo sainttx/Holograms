@@ -48,15 +48,15 @@ public class CommandRemoveLine implements CommandExecutor {
                     hologram.refresh();
                     if (line instanceof TextualHologramLine) {
                         sender.sendMessage(TextUtil.color("&7Removed line &f\"" + ((TextualHologramLine) line).getText()
-                                + "&f\" &7from hologram &f\"" + hologram.getName() + "\"."));
+                                + "&f\" &7from hologram &f\"" + hologram.getId() + "\"."));
                     } else {
                         sender.sendMessage(TextUtil.color("&7Removed line at position &f\"" + index + "&f\" &7from hologram &f\""
-                                + hologram.getName() + "\"."));
+                                + hologram.getId() + "\"."));
                     }
 
                     if (hologram.getLines().size() == 0) {
                         plugin.getHologramManager().deleteHologram(hologram);
-                        sender.sendMessage(TextUtil.color("&7Hologram &f\"" + hologram.getName() + "\" &7was removed."));
+                        sender.sendMessage(TextUtil.color("&7Hologram &f\"" + hologram.getId() + "\" &7was removed."));
                     }
                 }
             }

@@ -36,7 +36,7 @@ public class CommandAddLine implements CommandExecutor {
                 HologramLine line = new TextLine(hologram, text);
                 hologram.addLine(line);
                 hologram.refresh();
-                sender.sendMessage(TextUtil.color("&7Added line &f\"" + text + "\" &7to hologram &f\"" + hologram.getName() + "&f\"."));
+                sender.sendMessage(TextUtil.color("&7Added line &f\"" + text + "\" &7to hologram &f\"" + hologram.getId() + "&f\"."));
             }
         }
 

@@ -27,7 +27,7 @@ public class CommandList implements CommandExecutor {
         sender.sendMessage(ChatColor.GRAY + "All holograms:");
         for (Hologram hologram : manager.getActiveHolograms().values()) {
             int lines = hologram.getLines().size();
-            sender.sendMessage(" - \"" + hologram.getName() + "\" at " + TextUtil.locationAsString(hologram.getLocation()) + " (" + lines + " lines)");
+            sender.sendMessage(" - \"" + hologram.getId() + "\" at " + TextUtil.locationAsString(hologram.getLocation()) + " (" + lines + " lines)");
         }
         return true;
     }
