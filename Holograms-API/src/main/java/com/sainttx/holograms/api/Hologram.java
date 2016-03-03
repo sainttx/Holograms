@@ -86,7 +86,7 @@ public class Hologram {
      * @return the holograms location
      */
     public Location getLocation() {
-        return this.location;
+        return this.location.clone();
     }
 
     /**
