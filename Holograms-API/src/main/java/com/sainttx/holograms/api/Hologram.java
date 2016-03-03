@@ -104,7 +104,7 @@ public class Hologram {
      * @param line the line
      */
     public void addLine(HologramLine line) {
-        this.addLine(line, lines.size());
+        addLine(line, lines.size());
     }
 
     /**
@@ -115,16 +115,21 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
+        reorganize(index);
         setDirty(true);
     }
 
     /**
-     * Removes a {@link HologramLine} from this Hologram.
+     * Removes a {@link HologramLine} from this Hologram and de-spawns it.
      *
      * @param line the line
+     * @throws IllegalArgumentException if the line is not part of this hologram
      */
     public void removeLine(HologramLine line) {
+        Validate.isTrue(lines.contains(line), "Line is not a part of this hologram");
+        int index = lines.indexOf(line);
         lines.remove(line);
+        reorganize(index);
         line.despawn();
         setDirty(true);
     }
@@ -135,6 +140,9 @@ public class Hologram {
      * @param index the index
      */
     public HologramLine getLine(int index) {
+        if (index < 0 || index >= lines.size()) {
+            return null;
+        }
         return lines.get(index);
     }
 
@@ -145,6 +153,27 @@ public class Hologram {
         this.despawn();
         if (location.getChunk().isLoaded()) {
             spawnEntities();
+        }
+    }
+
+    // Reorganizes holograms after an initial index
+    private void reorganize(int index) {
+        HologramLine previous = getLine(index - 1);
+        Location location = previous == null ? getLocation() : previous.getEntity().getBukkitEntity().getLocation().clone(); // TODO: Better way to get previous location
+        double y = location.getY();
+
+        // Spawn the first line and then start decrementing the y
+        HologramLine first = getLine(index);
+        first.spawn(location);
+
+        for (int i = index + 1 ; i < lines.size() ; i++) {
+            HologramLine line = getLine(i);
+            if (line != null) {
+                y -= line.getHeight();
+                // TODO: y -= 0.02 (include in height?)
+                location.setY(y);
+                line.spawn(location); // TODO: isHidden check change
+            }
         }
     }
 
@@ -182,29 +211,10 @@ public class Hologram {
      * @param location the location
      */
     public void teleport(Location location) {
-        if (this.location.equals(location)) {
-            return;
+        if (!this.location.equals(location)) {
+            this.location = location.clone();
+            reorganize(0);
+            setDirty(true);
         }
-
-        // Move all the hologram lines
-        this.location = location;
-        double currentY = this.location.getY();
-        boolean first = true;
-
-        for (HologramLine line : lines) {
-            if (first) {
-                first = false;
-            } else {
-                currentY -= line.getHeight();
-                currentY -= 0.02;
-            }
-
-            Location nextLocation = this.location.clone();
-            nextLocation.setY(currentY);
-            line.getEntity().getBukkitEntity().teleport(nextLocation);
-        }
-
-        // Mark as dirty to save the new location
-        setDirty(true);
     }
 }
