@@ -13,41 +13,47 @@ public class TextLine implements TextualHologramLine {
     private static final double height = 0.23; // Height of the line
 
     private Hologram parent;
+    private Location location;
     private String text;
     private HologramEntity nmsNameable;
 
     public TextLine(Hologram parent, String text) {
         this.parent = parent;
+        this.location = parent.getLocation(); // TODO: Should this be the behavior?
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
     }
 
     @Override
-    public void spawn(Location location) {
-        despawn();
+    public void setLocation(Location location) {
+        this.location = location.clone();
+        nmsNameable.getBukkitEntity().teleport(location); // TODO: Stuff later
+    }
 
-        // Spawn the entities and set the horse and the skulls passenger
+    @Override
+    public Location getLocation() {
+        return location.clone();
+    }
+
+    @Override
+    public void hide() {
+        if (isHidden()) {
+            throw new IllegalStateException("This hologram line is already hidden");
+        }
+        nmsNameable.die();
+        nmsNameable = null;
+    }
+
+    @Override
+    public void show() {
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
-
-        // Set the text held by this object
-        if (text != null && !text.isEmpty()) {
-            nmsNameable.setCustomName(text);
-        }
-
-        nmsNameable.setLockTick(true);
+        nmsNameable.setCustomName(text);
+        // TODO: lock tick
     }
 
     @Override
-    public HologramEntity getEntity() {
-        return nmsNameable;
-    }
-
-    @Override
-    public void despawn() {
-        if (nmsNameable != null) {
-            nmsNameable.die();
-            nmsNameable = null;
-        }
+    public boolean isHidden() {
+        return nmsNameable == null; // TODO: Could set the name to null
     }
 
     @Override
@@ -58,7 +64,7 @@ public class TextLine implements TextualHologramLine {
     @Override
     public void setText(String text) {
         this.text = text;
-        getEntity().setCustomName(text);
+        nmsNameable.setCustomName(text);
     }
 
     @Override

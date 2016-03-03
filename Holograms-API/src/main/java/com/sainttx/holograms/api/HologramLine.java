@@ -4,27 +4,37 @@ import org.bukkit.Location;
 
 public interface HologramLine {
 
-    /*
-    TODO:
-    spawn -> setLocation(Location)
-    despawn -> hide()
-    *new* show() -> throws IllegalStateException if location not set
-    *new* getLocation()
-    *new* boolean isHidden()
-    remove getEntity (only used to teleport, but this will be done with setLocation)
-     */
-
     /**
-     * Spawns this line at a specific {@link Location}.
+     * Sets the location that this line should be displayed at.
      *
-     * @param location where to spawn
+     * @param location the location
      */
-    void spawn(Location location);
+    void setLocation(Location location);
 
     /**
-     * Despawns this line.
+     * Gets the current location where this line is displayed at.
+     *
+     * @return the location
      */
-    void despawn();
+    Location getLocation();
+
+    /**
+     * Hides this line from being displayed by the hologram.
+     */
+    void hide();
+
+    /**
+     * Re-adds this line to the hologram for display.
+     */
+    void show();
+
+    /**
+     * Returns whether this line is hidden from being displayed by its
+     * parent hologram.
+     *
+     * @return <tt>true</tt> if the line is hidden
+     */
+    boolean isHidden();
 
     /**
      * Returns the height of the line.
@@ -32,13 +42,6 @@ public interface HologramLine {
      * @return the height
      */
     double getHeight();
-
-    /**
-     * Returns the {@link HologramEntity} being used to display this line.
-     *
-     * @return the entity
-     */
-    HologramEntity getEntity();
 
     /**
      * Returns the parent {@link Hologram} that contains this line.
