@@ -23,7 +23,9 @@ public class TextLine implements TextualHologramLine {
     @Override
     public void setLocation(Location location) {
         this.location = location.clone();
-        nmsNameable.getBukkitEntity().teleport(location); // TODO: Stuff later
+        if (!isHidden()) {
+            nmsNameable.getBukkitEntity().teleport(location); // TODO: Stuff later
+        }
     }
 
     @Override
