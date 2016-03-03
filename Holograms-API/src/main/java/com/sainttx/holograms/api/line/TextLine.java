@@ -9,9 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TextLine implements TextualHologramLine {
 
-    private static final double OFFSET = 0; // Y offset used in the position of the NMS entities
-    private static final double height = 0.23; // Height of the line
-
     private Hologram parent;
     private Location location;
     private String text;
@@ -46,7 +43,7 @@ public class TextLine implements TextualHologramLine {
     @Override
     public void show() {
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY() + OFFSET, location.getZ(), this);
+        nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY(), location.getZ(), this);
         nmsNameable.setCustomName(text);
         // TODO: lock tick
     }
@@ -69,7 +66,7 @@ public class TextLine implements TextualHologramLine {
 
     @Override
     public final double getHeight() {
-        return height;
+        return 0.23;
     }
 
     @Override

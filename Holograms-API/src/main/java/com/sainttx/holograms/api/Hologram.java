@@ -170,7 +170,7 @@ public class Hologram {
             HologramLine line = getLine(i);
             if (line != null && !line.isHidden()) {
                 y -= line.getHeight();
-                // TODO: y -= 0.02 (include in height?)
+                y -= HologramLine.SPACE_BETWEEN_LINES;
                 location.setY(y);
                 line.setLocation(location);
             }

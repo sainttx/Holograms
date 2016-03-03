@@ -5,6 +5,12 @@ import org.bukkit.Location;
 public interface HologramLine {
 
     /**
+     * The amount of space that should be added between lines
+     * when spawning them on top of each other.
+     */
+    double SPACE_BETWEEN_LINES = 0.02;
+
+    /**
      * Sets the location that this line should be displayed at.
      *
      * @param location the location
