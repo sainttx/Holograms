@@ -115,7 +115,8 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        reorganize(index);
+        line.show();
+        reorganize();
         setDirty(true);
     }
 
@@ -127,9 +128,8 @@ public class Hologram {
      */
     public void removeLine(HologramLine line) {
         Validate.isTrue(lines.contains(line), "Line is not a part of this hologram");
-        int index = lines.indexOf(line);
         lines.remove(line);
-        reorganize(index);
+        reorganize();
         if (!line.isHidden()) {
             line.hide();
         }
@@ -154,21 +154,22 @@ public class Hologram {
     public void refresh() {
         this.despawn();
         if (location.getChunk().isLoaded()) {
-            spawnEntities();
+            getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
+            reorganize();
+            //spawnEntities();
         }
     }
 
     // Reorganizes holograms after an initial index
-    private void reorganize(int index) {
-        HologramLine previous = getLine(index - 1);
-        Location location = previous == null ? getLocation() : previous.getLocation();
+    private void reorganize() {
+        Location location = getLocation();
         double y = location.getY();
 
         // Spawn the first line and then start decrementing the y
-        HologramLine first = getLine(index);
+        HologramLine first = getLine(0);
         first.setLocation(location);
 
-        for (int i = index + 1 ; i < lines.size() ; i++) {
+        for (int i = 1 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
             if (line != null && !line.isHidden()) {
                 y -= line.getHeight();
@@ -216,7 +217,7 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location.clone();
-            reorganize(0);
+            reorganize();
             setDirty(true);
         }
     }
