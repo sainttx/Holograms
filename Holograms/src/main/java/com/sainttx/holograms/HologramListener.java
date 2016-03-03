@@ -8,9 +8,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-/**
- * Created by Matthew on 08/01/2015.
- */
 public class HologramListener implements Listener {
 
     /*

@@ -9,9 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class CommandList implements CommandExecutor {
 
     private HologramPlugin plugin;

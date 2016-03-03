@@ -13,9 +13,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class CommandNear implements CommandExecutor {
 
     private HologramPlugin plugin;

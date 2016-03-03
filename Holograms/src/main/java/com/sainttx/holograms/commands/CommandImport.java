@@ -19,9 +19,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
-/**
- * Created by Matthew on 16/03/2015.
- */
 public class CommandImport implements CommandExecutor {
 
     private HologramPlugin plugin;

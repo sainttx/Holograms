@@ -2,9 +2,6 @@ package com.sainttx.holograms.api;
 
 import org.bukkit.Location;
 
-/**
- * Created by Matthew on 12/14/2015.
- */
 public interface HologramLine {
 
     /**

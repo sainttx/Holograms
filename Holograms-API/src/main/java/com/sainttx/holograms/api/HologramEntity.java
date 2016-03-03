@@ -2,9 +2,6 @@ package com.sainttx.holograms.api;
 
 import org.bukkit.entity.Entity;
 
-/**
- * Created by Matthew on 08/01/2015.
- */
 public interface HologramEntity {
 
     /**

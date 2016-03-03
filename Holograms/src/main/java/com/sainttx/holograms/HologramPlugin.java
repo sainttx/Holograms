@@ -7,9 +7,6 @@ import com.sainttx.holograms.util.ReflectionUtil;
 
 import java.lang.reflect.Constructor;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     /**

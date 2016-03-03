@@ -11,9 +11,6 @@ import org.bukkit.util.Vector;
 
 import java.util.Collection;
 
-/**
- * Created by Matthew on 28/01/2015.
- */
 public class CraftHologram extends CraftArmorStand {
 
     public CraftHologram(CraftServer server, EntityHologram entity) {

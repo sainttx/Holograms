@@ -2,9 +2,6 @@ package com.sainttx.holograms.util;
 
 import org.bukkit.Bukkit;
 
-/**
- * Created by Matthew on 15/03/2015.
- */
 public class ReflectionUtil {
 
     /*

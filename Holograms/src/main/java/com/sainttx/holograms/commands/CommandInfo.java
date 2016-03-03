@@ -12,9 +12,6 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class CommandInfo implements CommandExecutor {
 
     private HologramPlugin plugin;

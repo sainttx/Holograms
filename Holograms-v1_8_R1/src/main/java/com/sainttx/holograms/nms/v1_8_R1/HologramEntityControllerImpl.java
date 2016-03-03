@@ -13,9 +13,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.util.logging.Level;
 
-/**
- * Created by Matthew on 08/01/2015.
- */
 public class HologramEntityControllerImpl implements HologramEntityController {
 
     private HologramPlugin plugin;

@@ -7,9 +7,6 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by Matthew on 28/01/2015.
- */
 public class EntityHologram extends EntityArmorStand implements HologramEntity {
 
     private boolean lockTick;

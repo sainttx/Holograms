@@ -10,9 +10,6 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class HologramCommands implements CommandExecutor {
 
     /*

@@ -12,9 +12,6 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class CommandInsertLine implements CommandExecutor {
 
     private HologramPlugin plugin;

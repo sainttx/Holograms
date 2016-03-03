@@ -5,9 +5,6 @@ import org.bukkit.Location;
 
 import java.text.NumberFormat;
 
-/**
- * Created by Matthew on 15/03/2015.
- */
 public class TextUtil {
 
     /**

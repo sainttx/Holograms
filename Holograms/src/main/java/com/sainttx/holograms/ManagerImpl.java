@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * Created by Matthew on 08/01/2015.
- */
 public class ManagerImpl implements HologramManager {
 
     /*

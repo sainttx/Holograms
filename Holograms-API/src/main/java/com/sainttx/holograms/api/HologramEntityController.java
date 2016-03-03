@@ -3,9 +3,6 @@ package com.sainttx.holograms.api;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 
-/**
- * Created by Matthew on 15/03/2015.
- */
 public interface HologramEntityController {
 
     /**

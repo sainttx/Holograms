@@ -9,9 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * Created by Matthew on 14/03/2015.
- */
 public class CommandMoveHere implements CommandExecutor {
 
     private HologramPlugin plugin;

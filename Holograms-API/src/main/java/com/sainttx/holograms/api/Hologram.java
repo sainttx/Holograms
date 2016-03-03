@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Matthew on 12/14/2015.
- */
 public class Hologram {
 
     private final String id;

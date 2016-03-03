@@ -7,9 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-/**
- * Created by Matthew on 8/3/2015.
- */
 public class CommandRefresh implements CommandExecutor {
 
     private HologramPlugin plugin;

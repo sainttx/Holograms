@@ -4,9 +4,6 @@ import net.minecraft.server.v1_8_R3.AxisAlignedBB;
 import net.minecraft.server.v1_8_R3.MovingObjectPosition;
 import net.minecraft.server.v1_8_R3.Vec3D;
 
-/**
- * Created by Matthew on 28/01/2015.
- */
 public class NullBoundingBox extends AxisAlignedBB {
 
     public NullBoundingBox() {

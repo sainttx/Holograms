@@ -6,9 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.logging.Level;
 
-/**
- * Created by Matthew on 21/10/2014.
- */
 public class Configuration extends YamlConfiguration {
 
     /**
