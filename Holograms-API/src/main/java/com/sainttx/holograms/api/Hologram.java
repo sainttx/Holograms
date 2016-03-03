@@ -2,7 +2,6 @@ package com.sainttx.holograms.api;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ public class Hologram {
     private final String id;
     private Location location;
     private boolean persist;
+    private boolean dirty;
     private List<HologramLine> lines = new ArrayList<>();
 
     @ConstructorProperties({ "id", "location" })
@@ -28,9 +28,7 @@ public class Hologram {
         this.id = id;
         this.location = location;
         this.persist = persist;
-
-        // TODO: Remove this
-        saveIfPersistent();
+        this.dirty = persist;
     }
 
     /**
@@ -58,7 +56,29 @@ public class Hologram {
      */
     public void setPersistent(boolean persist) {
         this.persist = persist;
-        saveIfPersistent();
+        setDirty(true);
+    }
+
+    /**
+     * Returns whether this Hologram has had any changes since it was last saved.
+     *
+     * @return <tt>true</tt> if the hologram has been modified
+     */
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     * Sets this Holograms dirty state. A "dirty" Hologram implies that since the last
+     * time it was saved, the Hologram has had some sort of modification performed to it
+     * and requires the plugin to save it to reflect any changes. If the Hologram is not
+     * persistent, it will always remain dirty unless modified by a third party. This is
+     * due to the plugin never saving it.
+     *
+     * @param dirty the dirty state
+     */
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
 
     /**
@@ -68,14 +88,6 @@ public class Hologram {
      */
     public Location getLocation() {
         return this.location;
-    }
-
-    // Saves this hologram only if it is persistent
-    private void saveIfPersistent() {
-        if (this.isPersistent()) {
-            HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-            plugin.getHologramManager().saveHologram(this);
-        }
     }
 
     /**
@@ -104,7 +116,7 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        this.saveIfPersistent();
+        setDirty(true);
     }
 
     /**
@@ -115,7 +127,7 @@ public class Hologram {
     public void removeLine(HologramLine line) {
         lines.remove(line);
         line.despawn();
-        this.saveIfPersistent();
+        setDirty(true);
     }
 
     /**
@@ -193,7 +205,7 @@ public class Hologram {
             line.getEntity().getBukkitEntity().teleport(nextLocation);
         }
 
-        // Save new location
-        this.saveIfPersistent();
+        // Mark as dirty to save the new location
+        setDirty(true);
     }
 }
