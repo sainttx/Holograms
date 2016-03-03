@@ -58,6 +58,7 @@ public class TextLine implements TextualHologramLine {
     @Override
     public void setText(String text) {
         this.text = text;
+        getEntity().setCustomName(text);
     }
 
     @Override
