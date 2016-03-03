@@ -65,6 +65,7 @@ public class ManagerImpl implements HologramManager {
                 }
                 hologram.refresh();
                 hologram.setPersistent(true);
+                addActiveHologram(hologram);
             }
         }
     }

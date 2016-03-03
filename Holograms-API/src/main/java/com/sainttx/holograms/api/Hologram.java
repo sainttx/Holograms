@@ -30,8 +30,6 @@ public class Hologram {
         this.persist = persist;
 
         // TODO: Remove this
-        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        plugin.getHologramManager().addActiveHologram(this);
         saveIfPersistent();
     }
 
