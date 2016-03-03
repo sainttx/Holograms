@@ -26,11 +26,15 @@ public interface HologramLine {
 
     /**
      * Hides this line from being displayed by the hologram.
+     *
+     * @throws IllegalStateException if the line is already hidden
      */
     void hide();
 
     /**
      * Re-adds this line to the hologram for display.
+     *
+     * @throws IllegalStateException if the line is already being shown
      */
     void show();
 

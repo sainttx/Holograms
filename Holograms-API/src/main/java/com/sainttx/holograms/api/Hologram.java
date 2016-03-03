@@ -130,7 +130,9 @@ public class Hologram {
         int index = lines.indexOf(line);
         lines.remove(line);
         reorganize(index);
-        line.hide();
+        if (!line.isHidden()) {
+            line.hide();
+        }
         setDirty(true);
     }
 
@@ -203,7 +205,7 @@ public class Hologram {
      * De-spawns all of the lines in this Hologram.
      */
     public void despawn() {
-        getLines().forEach(HologramLine::hide);
+        getLines().stream().filter(line -> !line.isHidden()).forEach(HologramLine::hide);
     }
 
     /**
