@@ -9,11 +9,11 @@ import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class ManagerImpl implements HologramManager {
 
@@ -73,14 +73,10 @@ public class ManagerImpl implements HologramManager {
     public void saveHologram(Hologram hologram) {
         String hologramName = hologram.getId();
         Collection<HologramLine> holoLines = hologram.getLines();
-        List<String> uncoloredLines = new ArrayList<String>();
-
-        for (HologramLine line : holoLines) {
-            if (line instanceof TextualHologramLine) {
-                uncoloredLines.add(((TextualHologramLine) line).getText().replace(ChatColor.COLOR_CHAR, '&'));
-            }
-        }
-
+        List<String> uncoloredLines = holoLines.stream()
+                .filter(line -> line instanceof TextualHologramLine)
+                .map(line -> ((TextualHologramLine) line).getText().replace(ChatColor.COLOR_CHAR, '&'))
+                .collect(Collectors.toList());
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
         persistingHolograms.set("holograms." + hologramName + ".lines", uncoloredLines);
         persistingHolograms.saveConfiguration();
@@ -116,9 +112,7 @@ public class ManagerImpl implements HologramManager {
 
     @Override
     public void clear() {
-        for (Hologram holo : getActiveHolograms().values()) {
-            holo.despawn();
-        }
+        getActiveHolograms().values().forEach(Hologram::despawn);
         getActiveHolograms().clear();
     }
 }

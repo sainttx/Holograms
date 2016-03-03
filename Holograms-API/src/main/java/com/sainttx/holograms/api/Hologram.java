@@ -164,9 +164,7 @@ public class Hologram {
      * De-spawns all of the lines in this Hologram.
      */
     public void despawn() {
-        for (HologramLine line : getLines()) {
-            line.despawn();
-        }
+        getLines().forEach(HologramLine::despawn);
     }
 
     /**

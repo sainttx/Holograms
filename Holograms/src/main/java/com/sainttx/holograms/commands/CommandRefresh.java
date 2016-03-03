@@ -17,10 +17,7 @@ public class CommandRefresh implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        for (Hologram hologram : plugin.getHologramManager().getActiveHolograms().values()) {
-            hologram.refresh();
-        }
-
+        plugin.getHologramManager().getActiveHolograms().values().forEach(Hologram::refresh);
         sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms");
         return true;
     }

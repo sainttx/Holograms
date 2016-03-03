@@ -29,11 +29,9 @@ public class HologramListener implements Listener {
         if (event.getChunk() == null) {
             return;
         }
-        for (Hologram holo : plugin.getHologramManager().getActiveHolograms().values()) {
-            if (holo.getLocation().getChunk().equals(event.getChunk())) {
-                holo.refresh();
-            }
-        }
+        plugin.getHologramManager().getActiveHolograms().values().stream()
+                .filter(holo -> holo.getLocation().getChunk().equals(event.getChunk()))
+                .forEach(Hologram::refresh);
     }
 
     @EventHandler
@@ -41,11 +39,9 @@ public class HologramListener implements Listener {
         if (event.getChunk() == null) {
             return;
         }
-        for (Hologram holo : plugin.getHologramManager().getActiveHolograms().values()) {
-            if (holo.getLocation().getChunk().equals(event.getChunk())) {
-                holo.despawn();
-            }
-        }
+        plugin.getHologramManager().getActiveHolograms().values().stream()
+                .filter(holo -> holo.getLocation().getChunk().equals(event.getChunk()))
+                .forEach(Hologram::despawn);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
