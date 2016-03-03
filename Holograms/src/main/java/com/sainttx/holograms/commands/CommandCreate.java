@@ -38,6 +38,7 @@ public class CommandCreate implements CommandExecutor {
                 holo.addLine(line);
                 holo.refresh();
                 plugin.getHologramManager().addActiveHologram(holo);
+                plugin.getHologramManager().saveHologram(holo);
                 sender.sendMessage(TextUtil.color("&7Created a new hologram &f\"" + hologramName + "\" &7with line &f\"" + text + "&f\"."));
             }
         }

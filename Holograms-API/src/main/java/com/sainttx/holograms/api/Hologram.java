@@ -28,7 +28,6 @@ public class Hologram {
         this.id = id;
         this.location = location;
         this.persist = persist;
-        this.dirty = persist;
     }
 
     /**

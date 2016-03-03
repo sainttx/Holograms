@@ -78,6 +78,7 @@ public class ManagerImpl implements HologramManager {
                 .filter(line -> line instanceof TextualHologramLine)
                 .map(line -> ((TextualHologramLine) line).getText().replace(ChatColor.COLOR_CHAR, '&'))
                 .collect(Collectors.toList());
+        hologram.setDirty(false);
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
         persistingHolograms.set("holograms." + hologramName + ".lines", uncoloredLines);
         persistingHolograms.saveConfiguration();

@@ -70,6 +70,7 @@ public class CommandImport implements CommandExecutor {
                                 }
                                 hologram.refresh();
                                 plugin.getHologramManager().addActiveHologram(hologram);
+                                plugin.getHologramManager().saveHologram(hologram);
                                 sender.sendMessage(TextUtil.color("&a&oSuccessfully converted HolographicDisplays hologram \"" + holoName + "\"."));
                             }
                         } catch (Exception ex) {

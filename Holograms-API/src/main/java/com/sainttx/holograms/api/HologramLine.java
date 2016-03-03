@@ -4,6 +4,16 @@ import org.bukkit.Location;
 
 public interface HologramLine {
 
+    /*
+    TODO:
+    spawn -> setLocation(Location)
+    despawn -> hide()
+    *new* show() -> throws IllegalStateException if location not set
+    *new* getLocation()
+    *new* boolean isHidden()
+    remove getEntity (only used to teleport, but this will be done with setLocation)
+     */
+
     /**
      * Spawns this line at a specific {@link Location}.
      *
