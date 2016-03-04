@@ -36,7 +36,7 @@ public interface HologramLine {
      *
      * @throws IllegalStateException if the line is already being shown
      */
-    void show();
+    boolean show();
 
     /**
      * Returns whether this line is hidden from being displayed by its

@@ -31,6 +31,8 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         if (!addEntityToWorld(nmsWorld, armorStand)) {
             plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + location.getWorld().getName()
                     + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
+            armorStand.remove();
+            return null;
         }
 
         return armorStand;

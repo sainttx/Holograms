@@ -43,13 +43,17 @@ public class TextLine implements TextualHologramLine {
     }
 
     @Override
-    public void show() {
+    public boolean show() {
         if (!isHidden()) {
             throw new IllegalStateException("This hologram line is already being displayed");
         }
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         nameable = plugin.getEntityController().spawnNameable(this, getLocation());
+        if (nameable == null) {
+            return false;
+        }
         nameable.setName(text);
+        return true;
     }
 
     @Override
