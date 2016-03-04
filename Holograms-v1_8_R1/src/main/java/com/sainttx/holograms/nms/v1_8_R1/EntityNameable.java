@@ -1,27 +1,27 @@
-package com.sainttx.holograms.nms.v1_8_R3;
+package com.sainttx.holograms.nms.v1_8_R1;
 
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.entity.Nameable;
-import net.minecraft.server.v1_8_R3.AxisAlignedBB;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_8_R3.Vec3D;
-import net.minecraft.server.v1_8_R3.World;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import net.minecraft.server.v1_8_R1.AxisAlignedBB;
+import net.minecraft.server.v1_8_R1.DamageSource;
+import net.minecraft.server.v1_8_R1.EntityArmorStand;
+import net.minecraft.server.v1_8_R1.EntityHuman;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.ItemStack;
+import net.minecraft.server.v1_8_R1.NBTTagCompound;
+import net.minecraft.server.v1_8_R1.PacketPlayOutEntityTeleport;
+import net.minecraft.server.v1_8_R1.Vec3D;
+import net.minecraft.server.v1_8_R1.World;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
-public class EntityHologram extends EntityArmorStand implements Nameable {
+public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
     private HologramLine parentPiece;
 
-    public EntityHologram(World world, HologramLine parentPiece) {
+    public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
         super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
@@ -29,7 +29,6 @@ public class EntityHologram extends EntityArmorStand implements Nameable {
         setArms(false);
         setGravity(true);
         setBasePlate(true);
-        n(true); // setMarker
         this.parentPiece = parentPiece;
         try {
             setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
@@ -65,7 +64,7 @@ public class EntityHologram extends EntityArmorStand implements Nameable {
     @Override
     public boolean isInvulnerable(DamageSource source) {
         /*
-		 * The field Entity.invulnerable is private.
+         * The field Entity.invulnerable is private.
 		 * It's only used while saving NBTTags, but since the entity would be killed
 		 * on chunk unload, we prefer to override isInvulnerable().
 		 */
@@ -126,7 +125,7 @@ public class EntityHologram extends EntityArmorStand implements Nameable {
     }
 
     @Override
-    public void t_() {
+    public void s_() {
         if (!lockTick) {
             super.s_();
         }
@@ -155,7 +154,7 @@ public class EntityHologram extends EntityArmorStand implements Nameable {
     @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftHologram(this.world.getServer(), this);
+            this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
         }
         return this.bukkitEntity;
     }

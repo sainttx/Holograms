@@ -16,12 +16,12 @@ import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
-public class EntityHologram extends EntityArmorStand implements Nameable {
+public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
     private HologramLine parentPiece;
 
-    public EntityHologram(World world, HologramLine parentPiece) {
+    public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
         super.a(new NullBoundingBox()); // Forces the bounding box
         setInvisible(true);
@@ -166,7 +166,7 @@ public class EntityHologram extends EntityArmorStand implements Nameable {
     @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftHologram(this.world.getServer(), this);
+            this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
         }
         return this.bukkitEntity;
     }
