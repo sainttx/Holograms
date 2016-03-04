@@ -156,7 +156,6 @@ public class Hologram {
         if (location.getChunk().isLoaded()) {
             getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
             reorganize();
-            //spawnEntities();
         }
     }
 
@@ -177,28 +176,6 @@ public class Hologram {
                 location.setY(y);
                 line.setLocation(location);
             }
-        }
-    }
-
-    // Forces the entities to spawn
-    // TODO: Remove this method or something
-    private void spawnEntities() {
-        this.despawn();
-
-        double currentY = this.location.getY();
-        boolean first = true;
-
-        for (HologramLine line : lines) {
-            if (first) {
-                first = false;
-            } else {
-                currentY -= line.getHeight();
-                currentY -= 0.02;
-            }
-
-            Location location = this.location.clone();
-            location.setY(currentY);
-            line.setLocation(location);
         }
     }
 

@@ -14,7 +14,7 @@ public interface HologramEntity {
     /**
      * Permanently removes this entity.
      */
-    void die();
+    void remove();
 
     /**
      * Sets a new custom name for the hologram line.
@@ -29,13 +29,6 @@ public interface HologramEntity {
      * @return the current text.
      */
     String getCustomName();
-
-    /**
-     * Locks this entity from being ticked and updated.
-     *
-     * @param lockTick the new value
-     */
-    void setLockTick(boolean lockTick);
 
     /**
      * Gets the Bukkit entity for this hologram line.

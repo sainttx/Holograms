@@ -127,9 +127,13 @@ public class EntityHologram extends EntityArmorStand implements HologramEntity {
         // Remove sounds.
     }
 
-    @Override
     public void setLockTick(boolean lock) {
         lockTick = lock;
+    }
+
+    @Override
+    public void remove() {
+        die();
     }
 
     @Override

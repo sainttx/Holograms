@@ -38,7 +38,7 @@ public class TextLine implements TextualHologramLine {
         if (isHidden()) {
             throw new IllegalStateException("This hologram line is already hidden");
         }
-        nmsNameable.die();
+        nmsNameable.remove();
         nmsNameable = null;
     }
 
