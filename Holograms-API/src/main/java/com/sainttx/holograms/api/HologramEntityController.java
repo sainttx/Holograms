@@ -1,5 +1,6 @@
 package com.sainttx.holograms.api;
 
+import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.Nameable;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

@@ -1,7 +1,5 @@
 package com.sainttx.holograms.api.entity;
 
-import com.sainttx.holograms.api.HologramEntity;
-
 public interface Nameable extends HologramEntity {
 
     /**

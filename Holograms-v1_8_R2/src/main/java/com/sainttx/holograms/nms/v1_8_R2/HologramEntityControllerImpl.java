@@ -1,6 +1,6 @@
 package com.sainttx.holograms.nms.v1_8_R2;
 
-import com.sainttx.holograms.api.HologramEntity;
+import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
