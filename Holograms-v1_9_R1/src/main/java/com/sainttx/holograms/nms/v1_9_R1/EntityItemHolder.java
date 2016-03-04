@@ -165,15 +165,23 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null && vehicle != null) {
+        if (entity == null) {
+            removeMount();
+        } else if (entity instanceof Entity) {
+            removeMount();
+            vehicle = (Entity) entity;
+            super.a(vehicle, true);
+            vehicle.passengers.add(this);
+        }
+    }
+
+    // Removes the current mount
+    private void removeMount() {
+        if (vehicle != null) {
             stopRiding();
             vehicle.passengers.remove(this);
             vehicle.die();
             vehicle = null;
-        } else if (entity instanceof Entity) {
-            vehicle = (Entity) entity;
-            super.a(vehicle, true);
-            vehicle.passengers.add(this);
         }
     }
 }
