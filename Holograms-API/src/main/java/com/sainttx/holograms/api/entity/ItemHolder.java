@@ -2,7 +2,7 @@ package com.sainttx.holograms.api.entity;
 
 import org.bukkit.inventory.ItemStack;
 
-public interface ItemHolder extends HologramEntity {
+public interface ItemHolder extends HologramEntity, MountedEntity {
 
     /**
      * Sets the item for this entity to display.

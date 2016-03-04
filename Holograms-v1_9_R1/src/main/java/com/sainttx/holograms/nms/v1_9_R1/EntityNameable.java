@@ -35,7 +35,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         setMarker(true);
         this.parentPiece = parentPiece;
         try {
-            setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
+            setPrivateField(EntityArmorStand.class, this, "bz", Integer.MAX_VALUE);
         } catch (Exception e) {
             // There's still the overridden method.
         }
@@ -158,7 +158,8 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         return this.bukkitEntity;
     }
 
-    public void setLocationNMS(double x, double y, double z) {
+    @Override
+    public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
 
         // Send a packet near to update the position.

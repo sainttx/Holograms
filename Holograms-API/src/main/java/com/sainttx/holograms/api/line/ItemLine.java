@@ -2,6 +2,7 @@ package com.sainttx.holograms.api.line;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
@@ -25,9 +26,12 @@ public class ItemLine implements ItemCarryingHologramLine {
 
     @Override
     public void setLocation(Location location) {
+        // TODO: This is bugged if the line is on a vehicle
         this.location = location.clone();
         if (!isHidden()) {
+            entity.setMount(null);
             entity.getBukkitEntity().teleport(location); // TODO: Stuff later
+            entity.setMount(createMount());
         }
     }
 
@@ -41,6 +45,7 @@ public class ItemLine implements ItemCarryingHologramLine {
         if (isHidden()) {
             throw new IllegalStateException("This hologram line is already hidden");
         }
+        entity.setMount(null);
         entity.remove();
         entity = null;
     }
@@ -56,7 +61,14 @@ public class ItemLine implements ItemCarryingHologramLine {
             return false;
         }
         entity.setItem(item);
+        entity.setMount(createMount());
         return true;
+    }
+
+    // Creates a new mount entity
+    private HologramEntity createMount() {
+        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+        return plugin.getEntityController().spawnNameable(this, getLocation());
     }
 
     @Override
@@ -66,7 +78,7 @@ public class ItemLine implements ItemCarryingHologramLine {
 
     @Override
     public ItemStack getItem() {
-        return item.clone(); // TODO
+        return item.clone();
     }
 
     @Override
