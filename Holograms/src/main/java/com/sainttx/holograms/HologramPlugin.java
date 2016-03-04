@@ -63,7 +63,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
     }
 
     @Override
-    public HologramEntityController getNMSController() {
+    public HologramEntityController getEntityController() {
         return controller;
     }
 }

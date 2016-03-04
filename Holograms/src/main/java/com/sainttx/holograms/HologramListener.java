@@ -46,7 +46,7 @@ public class HologramListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.isCancelled() && plugin.getNMSController().getHologramEntity(event.getEntity()) != null) {
+        if (event.isCancelled() && plugin.getEntityController().getHologramEntity(event.getEntity()) != null) {
             event.setCancelled(false);
         }
     }

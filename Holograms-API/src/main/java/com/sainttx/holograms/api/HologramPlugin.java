@@ -17,5 +17,5 @@ public abstract class HologramPlugin extends JavaPlugin {
      *
      * @return the entity controller
      */
-    public abstract HologramEntityController getNMSController();
+    public abstract HologramEntityController getEntityController();
 }

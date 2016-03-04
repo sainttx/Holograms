@@ -48,7 +48,7 @@ public class TextLine implements TextualHologramLine {
             throw new IllegalStateException("This hologram line is already being displayed");
         }
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        nameable = plugin.getNMSController().spawnNameable(this, getLocation());
+        nameable = plugin.getEntityController().spawnNameable(this, getLocation());
         nameable.setName(text);
     }
 
