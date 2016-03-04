@@ -4,6 +4,7 @@ import com.sainttx.holograms.api.HologramEntity;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.entity.Nameable;
 import net.minecraft.server.v1_8_R2.Entity;
 import net.minecraft.server.v1_8_R2.WorldServer;
 import org.bukkit.Chunk;
@@ -22,7 +23,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     @Override
-    public EntityHologram spawnHologram(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
+    public Nameable spawnNameable(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
         EntityHologram armorStand = new EntityHologram(nmsWorld, parentPiece);
         armorStand.setLocationNMS(x, y, z);

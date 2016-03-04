@@ -17,20 +17,6 @@ public interface HologramEntity {
     void remove();
 
     /**
-     * Sets a new custom name for the hologram line.
-     *
-     * @param text the new text
-     */
-    void setCustomName(String text);
-
-    /**
-     * Returns the current custom name/text for the hologram line.
-     *
-     * @return the current text.
-     */
-    String getCustomName();
-
-    /**
      * Gets the Bukkit entity for this hologram line.
      *
      * @return the entity

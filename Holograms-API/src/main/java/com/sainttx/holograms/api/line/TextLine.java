@@ -1,8 +1,8 @@
 package com.sainttx.holograms.api.line;
 
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.HologramEntity;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.entity.Nameable;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +12,7 @@ public class TextLine implements TextualHologramLine {
     private Hologram parent;
     private Location location;
     private String text;
-    private HologramEntity nmsNameable;
+    private Nameable nameable;
 
     public TextLine(Hologram parent, String text) {
         this.parent = parent;
@@ -24,7 +24,7 @@ public class TextLine implements TextualHologramLine {
     public void setLocation(Location location) {
         this.location = location.clone();
         if (!isHidden()) {
-            nmsNameable.getBukkitEntity().teleport(location); // TODO: Stuff later
+            nameable.getBukkitEntity().teleport(location); // TODO: Stuff later
         }
     }
 
@@ -38,8 +38,8 @@ public class TextLine implements TextualHologramLine {
         if (isHidden()) {
             throw new IllegalStateException("This hologram line is already hidden");
         }
-        nmsNameable.remove();
-        nmsNameable = null;
+        nameable.remove();
+        nameable = null;
     }
 
     @Override
@@ -48,14 +48,13 @@ public class TextLine implements TextualHologramLine {
             throw new IllegalStateException("This hologram line is already being displayed");
         }
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        nmsNameable = plugin.getNMSController().spawnHologram(location.getWorld(), location.getX(), location.getY(), location.getZ(), this);
-        nmsNameable.setCustomName(text);
-        // TODO: lock tick
+        nameable = plugin.getNMSController().spawnNameable(location.getWorld(), location.getX(), location.getY(), location.getZ(), this);
+        nameable.setName(text);
     }
 
     @Override
     public boolean isHidden() {
-        return nmsNameable == null; // TODO: Could set the name to null
+        return nameable == null; // TODO: Could set the name to null
     }
 
     @Override
@@ -66,7 +65,7 @@ public class TextLine implements TextualHologramLine {
     @Override
     public void setText(String text) {
         this.text = text;
-        nmsNameable.setCustomName(text);
+        nameable.setName(text);
     }
 
     @Override

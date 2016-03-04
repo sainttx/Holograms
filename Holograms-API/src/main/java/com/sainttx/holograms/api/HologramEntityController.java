@@ -1,5 +1,6 @@
 package com.sainttx.holograms.api;
 
+import com.sainttx.holograms.api.entity.Nameable;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 
@@ -16,7 +17,7 @@ public interface HologramEntityController {
      * @param parentPiece the parenting hologram line for the entity
      * @return the resulting entity that was spanwned
      */
-    HologramEntity spawnHologram(World world, double x, double y, double z, HologramLine parentPiece);
+    Nameable spawnNameable(World world, double x, double y, double z, HologramLine parentPiece);
 
     /**
      * Returns the {@link HologramEntity} of a hologram entity. If the

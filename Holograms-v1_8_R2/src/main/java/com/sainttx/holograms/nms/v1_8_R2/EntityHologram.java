@@ -1,13 +1,22 @@
 package com.sainttx.holograms.nms.v1_8_R2;
 
 import com.sainttx.holograms.api.HologramLine;
-import com.sainttx.holograms.api.HologramEntity;
-import net.minecraft.server.v1_8_R2.*;
+import com.sainttx.holograms.api.entity.Nameable;
+import net.minecraft.server.v1_8_R2.AxisAlignedBB;
+import net.minecraft.server.v1_8_R2.DamageSource;
+import net.minecraft.server.v1_8_R2.EntityArmorStand;
+import net.minecraft.server.v1_8_R2.EntityHuman;
+import net.minecraft.server.v1_8_R2.EntityPlayer;
+import net.minecraft.server.v1_8_R2.ItemStack;
+import net.minecraft.server.v1_8_R2.NBTTagCompound;
+import net.minecraft.server.v1_8_R2.PacketPlayOutEntityTeleport;
+import net.minecraft.server.v1_8_R2.Vec3D;
+import net.minecraft.server.v1_8_R2.World;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 
 import java.lang.reflect.Field;
 
-public class EntityHologram extends EntityArmorStand implements HologramEntity {
+public class EntityHologram extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
     private HologramLine parentPiece;
@@ -27,6 +36,7 @@ public class EntityHologram extends EntityArmorStand implements HologramEntity {
         } catch (Exception e) {
             // There's still the overridden method.
         }
+        setLockTick(true);
     }
 
     private void setMarker(boolean flag) {
@@ -74,16 +84,16 @@ public class EntityHologram extends EntityArmorStand implements HologramEntity {
     }
 
     @Override
-    public void setCustomName(String customName) {
-        if (customName != null && customName.length() > 300) {
-            customName = customName.substring(0, 300);
+    public void setName(String text) {
+        if (text != null && text.length() > 300) {
+            text = text.substring(0, 300);
         }
-        super.setCustomName(customName);
-        super.setCustomNameVisible(customName != null && !customName.isEmpty());
+        super.setCustomName(text);
+        super.setCustomNameVisible(text != null && !text.isEmpty());
     }
 
     @Override
-    public String getCustomName() {
+    public String getName() {
         return super.getCustomName();
     }
 
