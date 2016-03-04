@@ -1,5 +1,6 @@
 package com.sainttx.holograms.api;
 
+import com.sainttx.holograms.api.line.HologramLine;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 

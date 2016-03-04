@@ -1,5 +1,6 @@
-package com.sainttx.holograms.api;
+package com.sainttx.holograms.api.line;
 
+import com.sainttx.holograms.api.Hologram;
 import org.bukkit.Location;
 
 public interface HologramLine {

@@ -1,6 +1,6 @@
 package com.sainttx.holograms.nms.v1_9_R1;
 
-import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.entity.Nameable;
 import net.minecraft.server.v1_9_R1.AxisAlignedBB;
 import net.minecraft.server.v1_9_R1.DamageSource;

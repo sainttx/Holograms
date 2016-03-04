@@ -1,7 +1,7 @@
 package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.line.TextLine;
 import com.sainttx.holograms.api.line.TextualHologramLine;

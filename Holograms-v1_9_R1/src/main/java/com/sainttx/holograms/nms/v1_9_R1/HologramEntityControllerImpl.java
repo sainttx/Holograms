@@ -2,7 +2,7 @@ package com.sainttx.holograms.nms.v1_9_R1;
 
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.entity.Nameable;
 import net.minecraft.server.v1_9_R1.Entity;

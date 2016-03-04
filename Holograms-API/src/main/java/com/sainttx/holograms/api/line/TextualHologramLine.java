@@ -1,7 +1,5 @@
 package com.sainttx.holograms.api.line;
 
-import com.sainttx.holograms.api.HologramLine;
-
 /**
  * Represents a {@link HologramLine} that only displays a single line of text.
  */

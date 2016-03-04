@@ -2,6 +2,7 @@ package com.sainttx.holograms.api;
 
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 

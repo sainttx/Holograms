@@ -1,6 +1,6 @@
 package com.sainttx.holograms.api.entity;
 
-import com.sainttx.holograms.api.HologramLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import org.bukkit.entity.Entity;
 
 public interface HologramEntity {
