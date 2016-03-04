@@ -42,10 +42,10 @@ permissions:
     default: op
   hologram.addline:
     description: Allows players to add lines to holograms
-    default: true
+    default: op
   hologram.removeline:
     description: Allows players to remove lines from holograms
-    default: true
+    default: op
   hologram.insertline:
     description: Allows players to insert lines into holograms
     default: op
