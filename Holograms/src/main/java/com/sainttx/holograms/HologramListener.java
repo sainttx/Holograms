@@ -31,7 +31,7 @@ public class HologramListener implements Listener {
         }
         plugin.getHologramManager().getActiveHolograms().values().stream()
                 .filter(holo -> holo.getLocation().getChunk().equals(event.getChunk()))
-                .forEach(Hologram::refresh);
+                .forEach(Hologram::spawn);
     }
 
     @EventHandler

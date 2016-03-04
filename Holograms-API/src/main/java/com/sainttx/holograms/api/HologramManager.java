@@ -40,8 +40,6 @@ public interface HologramManager {
      * the hologram to have persistence, then the {@link #saveHologram(Hologram)} method
      * should be called.
      * <p>
-     * This method does not call the {@link Hologram#refresh()} method
-     * and thus displaying the holograms entities is up to the user.
      * The hologram will be available in {@link #getActiveHolograms()} after
      * calling this method.
      *

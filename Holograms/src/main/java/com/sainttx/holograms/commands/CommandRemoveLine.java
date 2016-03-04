@@ -42,7 +42,6 @@ public class CommandRemoveLine implements CommandExecutor {
                 } else {
                     HologramLine line = hologram.getLine(index);
                     hologram.removeLine(line);
-                    hologram.refresh();
                     if (line instanceof TextualHologramLine) {
                         sender.sendMessage(TextUtil.color("&7Removed line &f\"" + ((TextualHologramLine) line).getText()
                                 + "&f\" &7from hologram &f\"" + hologram.getId() + "\"."));

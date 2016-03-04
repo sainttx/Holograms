@@ -46,7 +46,6 @@ public class CommandInsertLine implements CommandExecutor {
                     String text = TextUtil.implode(3, args);
                     HologramLine line = new TextLine(hologram, text);
                     hologram.addLine(line, index);
-                    hologram.refresh();
                     sender.sendMessage(TextUtil.color("&7Inserted line &f\"" + text + "&f\" &7into hologram &f\""
                             + hologram.getId() + "\" &7at index &f" + index + "."));
                 }

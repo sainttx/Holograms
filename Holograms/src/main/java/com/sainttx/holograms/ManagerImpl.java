@@ -63,7 +63,6 @@ public class ManagerImpl implements HologramManager {
                     TextLine line = new TextLine(hologram, string);
                     hologram.addLine(line);
                 }
-                hologram.refresh();
                 hologram.setPersistent(true);
                 addActiveHologram(hologram);
             }

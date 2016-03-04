@@ -68,7 +68,6 @@ public class CommandImport implements CommandExecutor {
                                 for (String text : lines) {
                                     hologram.addLine(new TextLine(hologram, text));
                                 }
-                                hologram.refresh();
                                 plugin.getHologramManager().addActiveHologram(hologram);
                                 plugin.getHologramManager().saveHologram(hologram);
                                 sender.sendMessage(TextUtil.color("&a&oSuccessfully converted HolographicDisplays hologram \"" + holoName + "\"."));

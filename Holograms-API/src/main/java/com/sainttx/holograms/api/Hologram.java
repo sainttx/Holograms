@@ -129,10 +129,10 @@ public class Hologram {
     public void removeLine(HologramLine line) {
         Validate.isTrue(lines.contains(line), "Line is not a part of this hologram");
         lines.remove(line);
-        reorganize();
         if (!line.isHidden()) {
             line.hide();
         }
+        reorganize();
         setDirty(true);
     }
 
@@ -146,17 +146,6 @@ public class Hologram {
             return null;
         }
         return lines.get(index);
-    }
-
-    /**
-     * Refreshes and respawns this Holograms line(s).
-     */
-    public void refresh() {
-        this.despawn();
-        if (location.getChunk().isLoaded()) {
-            getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
-            reorganize();
-        }
     }
 
     // Reorganizes holograms after an initial index
@@ -184,6 +173,13 @@ public class Hologram {
      */
     public void despawn() {
         getLines().stream().filter(line -> !line.isHidden()).forEach(HologramLine::hide);
+    }
+
+    /**
+     * Spawns all of the lines in this Hologram.
+     */
+    public void spawn() {
+        getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
     }
 
     /**
