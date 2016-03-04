@@ -8,6 +8,7 @@ import com.sainttx.holograms.api.entity.Nameable;
 import net.minecraft.server.v1_8_R1.Entity;
 import net.minecraft.server.v1_8_R1.WorldServer;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -23,13 +24,13 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     @Override
-    public Nameable spawnNameable(org.bukkit.World world, double x, double y, double z, HologramLine parentPiece) {
-        WorldServer nmsWorld = ((CraftWorld) world).getHandle();
-        EntityHologram armorStand = new EntityHologram(nmsWorld, parentPiece);
-        armorStand.setLocationNMS(x, y, z);
+    public Nameable spawnNameable(HologramLine line, Location location) {
+        WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
+        EntityHologram armorStand = new EntityHologram(nmsWorld, line);
+        armorStand.setLocationNMS(location.getX(), location.getY(), location.getZ());
         if (!addEntityToWorld(nmsWorld, armorStand)) {
-            plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + world.getName()
-                    + " at x:" + x + " y:" + y + " z:" + z);
+            plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + location.getWorld().getName()
+                    + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
         }
 
         return armorStand;
