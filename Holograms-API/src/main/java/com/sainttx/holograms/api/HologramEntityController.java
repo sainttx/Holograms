@@ -1,6 +1,7 @@
 package com.sainttx.holograms.api;
 
 import com.sainttx.holograms.api.entity.HologramEntity;
+import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import org.bukkit.Location;
@@ -14,9 +15,19 @@ public interface HologramEntityController {
      *
      * @param line the parenting hologram line for the entity
      * @param location the location
-     * @return the resulting entity that was spanwned
+     * @return the resulting entity that was spawned
      */
     Nameable spawnNameable(HologramLine line, Location location);
+
+    /**
+     * Spawns a new entity at a specific location for a HologramLine
+     * to modify displayed item.
+     *
+     * @param line the parenting hologram line for the entity
+     * @param location the location
+     * @return the resulting entity that was spawned
+     */
+    ItemHolder spawnItemHolder(HologramLine line, Location location);
 
     /**
      * Returns the {@link HologramEntity} of a hologram entity. If the

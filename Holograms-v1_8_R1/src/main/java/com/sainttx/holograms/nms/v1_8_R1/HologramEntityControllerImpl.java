@@ -2,6 +2,7 @@ package com.sainttx.holograms.nms.v1_8_R1;
 
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.HologramEntityController;
+import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.entity.Nameable;
@@ -36,6 +37,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         }
 
         return armorStand;
+    }
+
+    @Override
+    public ItemHolder spawnItemHolder(HologramLine line, Location location) {
+        return null;
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
