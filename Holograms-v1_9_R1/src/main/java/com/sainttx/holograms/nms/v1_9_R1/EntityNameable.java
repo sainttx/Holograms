@@ -17,8 +17,6 @@ import net.minecraft.server.v1_9_R1.Vec3D;
 import net.minecraft.server.v1_9_R1.World;
 import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
 
-import java.lang.reflect.Field;
-
 public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
@@ -34,11 +32,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         setBasePlate(true);
         setMarker(true);
         this.parentPiece = parentPiece;
-        try {
-            setPrivateField(EntityArmorStand.class, this, "bz", Integer.MAX_VALUE);
-        } catch (Exception e) {
-            // There's still the overridden method.
-        }
         setLockTick(true);
     }
 
@@ -173,11 +166,5 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public HologramLine getHologramLine() {
         return parentPiece;
-    }
-
-    public void setPrivateField(Class<?> clazz, Object handle, String fieldName, Object value) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(handle, value);
     }
 }

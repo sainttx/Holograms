@@ -1,7 +1,7 @@
 package com.sainttx.holograms.nms.v1_8_R3;
 
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_8_R3.AxisAlignedBB;
 import net.minecraft.server.v1_8_R3.DamageSource;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
@@ -13,8 +13,6 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutEntityTeleport;
 import net.minecraft.server.v1_8_R3.Vec3D;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-
-import java.lang.reflect.Field;
 
 public class EntityNameable extends EntityArmorStand implements Nameable {
 
@@ -31,11 +29,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         setBasePlate(true);
         n(true); // setMarker
         this.parentPiece = parentPiece;
-        try {
-            setPrivateField(EntityArmorStand.class, this, "bg", Integer.MAX_VALUE);
-        } catch (Exception e) {
-            // There's still the overridden method.
-        }
         setLockTick(true);
     }
 
@@ -177,11 +170,5 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public HologramLine getHologramLine() {
         return parentPiece;
-    }
-
-    public void setPrivateField(Class<?> clazz, Object handle, String fieldName, Object value) throws Exception {
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(handle, value);
     }
 }
