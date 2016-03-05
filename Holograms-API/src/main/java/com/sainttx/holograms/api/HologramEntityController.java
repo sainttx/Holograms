@@ -10,6 +10,14 @@ import org.bukkit.entity.Entity;
 public interface HologramEntityController {
 
     /**
+     * Returns the current Minecraft version implementation that this
+     * controller is handling.
+     *
+     * @return the minecraft version
+     */
+    MinecraftVersion getMinecraftVersion();
+
+    /**
      * Spawns a new entity at a specific location for a HologramLine
      * to modify displayed text.
      *

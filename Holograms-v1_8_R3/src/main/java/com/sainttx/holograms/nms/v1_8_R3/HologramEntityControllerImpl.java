@@ -1,11 +1,12 @@
 package com.sainttx.holograms.nms.v1_8_R3;
 
-import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.entity.ItemHolder;
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.MinecraftVersion;
+import com.sainttx.holograms.api.entity.HologramEntity;
+import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Chunk;
@@ -22,6 +23,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     public HologramEntityControllerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public MinecraftVersion getMinecraftVersion() {
+        return MinecraftVersion.V1_8_R3;
     }
 
     @Override

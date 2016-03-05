@@ -2,6 +2,7 @@ package com.sainttx.holograms.nms.v1_8_R1;
 
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
@@ -22,6 +23,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     public HologramEntityControllerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public MinecraftVersion getMinecraftVersion() {
+        return MinecraftVersion.V1_8_R1;
     }
 
     @Override
