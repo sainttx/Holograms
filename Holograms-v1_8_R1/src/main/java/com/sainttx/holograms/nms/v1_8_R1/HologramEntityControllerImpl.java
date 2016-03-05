@@ -28,7 +28,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public Nameable spawnNameable(HologramLine line, Location location) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityNameable armorStand = new EntityNameable(nmsWorld, line);
-        armorStand.setLocationNMS(location.getX(), location.getY(), location.getZ()); // TODO: setPosition?
+        armorStand.setPosition(location.getX(), location.getY(), location.getZ()); // TODO: setPosition?
         if (!addEntityToWorld(nmsWorld, armorStand)) {
             plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + location.getWorld().getName()
                     + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());

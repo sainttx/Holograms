@@ -16,7 +16,7 @@ public class TextLine implements TextualHologramLine {
 
     public TextLine(Hologram parent, String text) {
         this.parent = parent;
-        this.location = parent.getLocation(); // TODO: Should this be the behavior?
+        this.location = parent.getLocation();
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
     }
 
@@ -24,7 +24,7 @@ public class TextLine implements TextualHologramLine {
     public void setLocation(Location location) {
         this.location = location.clone();
         if (!isHidden()) {
-            nameable.getBukkitEntity().teleport(location); // TODO: Stuff later
+            nameable.getBukkitEntity().teleport(location);
         }
     }
 
@@ -58,7 +58,7 @@ public class TextLine implements TextualHologramLine {
 
     @Override
     public boolean isHidden() {
-        return nameable == null; // TODO: Could set the name to null
+        return nameable == null;
     }
 
     @Override

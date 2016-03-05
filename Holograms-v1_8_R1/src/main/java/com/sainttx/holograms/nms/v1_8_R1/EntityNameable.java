@@ -159,7 +159,8 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         return this.bukkitEntity;
     }
 
-    public void setLocationNMS(double x, double y, double z) {
+    @Override
+    public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
 
         // Send a packet near to update the position.

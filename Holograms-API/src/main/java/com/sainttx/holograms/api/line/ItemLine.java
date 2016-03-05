@@ -20,17 +20,16 @@ public class ItemLine implements ItemCarryingHologramLine {
         Validate.notNull(parent, "Parent hologram cannot be null");
         Validate.notNull(item, "Item cannot be null");
         this.parent = parent;
-        this.location = parent.getLocation(); // TODO: Should this be the behavior?
+        this.location = parent.getLocation();
         this.item = item;
     }
 
     @Override
     public void setLocation(Location location) {
-        // TODO: This is bugged if the line is on a vehicle
         this.location = location.clone();
         if (!isHidden()) {
             entity.setMount(null);
-            entity.getBukkitEntity().teleport(location); // TODO: Stuff later
+            entity.getBukkitEntity().teleport(location);
             entity.setMount(createMount());
         }
     }
