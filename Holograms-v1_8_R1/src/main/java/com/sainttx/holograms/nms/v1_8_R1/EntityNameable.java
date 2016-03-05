@@ -1,7 +1,7 @@
 package com.sainttx.holograms.nms.v1_8_R1;
 
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_8_R1.AxisAlignedBB;
 import net.minecraft.server.v1_8_R1.DamageSource;
 import net.minecraft.server.v1_8_R1.EntityArmorStand;
@@ -15,6 +15,7 @@ import net.minecraft.server.v1_8_R1.World;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class EntityNameable extends EntityArmorStand implements Nameable {
 
@@ -63,11 +64,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public boolean isInvulnerable(DamageSource source) {
-        /*
-         * The field Entity.invulnerable is private.
-		 * It's only used while saving NBTTags, but since the entity would be killed
-		 * on chunk unload, we prefer to override isInvulnerable().
-		 */
         return true;
     }
 
@@ -87,37 +83,30 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void setCustomNameVisible(boolean visible) {
-        // Locks the custom name.
     }
 
     @Override
     public boolean a(EntityHuman human, Vec3D vec3d) {
-        // Prevent stand being equipped
         return true;
     }
 
     @Override
     public boolean d(int i, ItemStack item) {
-        // Prevent stand being equipped
         return false;
     }
 
     @Override
     public void setEquipment(int i, ItemStack item) {
-        // Prevent stand being equipped
     }
 
     @Override
     public void a(AxisAlignedBB boundingBox) {
-        // Do not change it!
     }
 
     @Override
     public int getId() {
-
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            // Then this method is being called when creating a new packet, we return a fake ID!
             return -1;
         }
 
@@ -165,17 +154,17 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
         // Send a packet near to update the position.
         PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
+        List<Object> players = this.world.players;
+        players.stream()
+                .filter(obj -> obj instanceof EntityPlayer)
+                .forEach(obj -> {
+                    EntityPlayer nmsPlayer = (EntityPlayer) obj;
 
-        for (Object obj : this.world.players) {
-            if (obj instanceof EntityPlayer) {
-                EntityPlayer nmsPlayer = (EntityPlayer) obj;
-
-                double distanceSquared = Math.pow(nmsPlayer.locX - this.locX, 2) + Math.pow(nmsPlayer.locZ - this.locZ, 2);
-                if (distanceSquared < 8192 && nmsPlayer.playerConnection != null) {
-                    nmsPlayer.playerConnection.sendPacket(teleportPacket);
-                }
-            }
-        }
+                    double distanceSquared = Math.pow(nmsPlayer.locX - this.locX, 2) + Math.pow(nmsPlayer.locZ - this.locZ, 2);
+                    if (distanceSquared < 8192 && nmsPlayer.playerConnection != null) {
+                        nmsPlayer.playerConnection.sendPacket(teleportPacket);
+                    }
+                });
     }
 
     @Override

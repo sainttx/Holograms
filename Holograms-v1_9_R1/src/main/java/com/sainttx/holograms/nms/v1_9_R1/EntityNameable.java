@@ -1,7 +1,7 @@
 package com.sainttx.holograms.nms.v1_9_R1;
 
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_9_R1.AxisAlignedBB;
 import net.minecraft.server.v1_9_R1.DamageSource;
 import net.minecraft.server.v1_9_R1.EntityArmorStand;
@@ -68,7 +68,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public boolean isInvulnerable(DamageSource source) {
         /*
-		 * The field Entity.invulnerable is private.
+         * The field Entity.invulnerable is private.
 		 * It's only used while saving NBTTags, but since the entity would be killed
 		 * on chunk unload, we prefer to override isInvulnerable().
 		 */
@@ -110,10 +110,8 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public int getId() {
-
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            // Then this method is being called when creating a new packet, we return a fake ID!
             return -1;
         }
 
@@ -161,17 +159,15 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
         // Send a packet near to update the position.
         PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-
-        for (Object obj : this.world.players) {
-            if (obj instanceof EntityPlayer) {
-                EntityPlayer nmsPlayer = (EntityPlayer) obj;
-
-                double distanceSquared = Math.pow(nmsPlayer.locX - this.locX, 2) + Math.pow(nmsPlayer.locZ - this.locZ, 2);
-                if (distanceSquared < 8192 && nmsPlayer.playerConnection != null) {
-                    nmsPlayer.playerConnection.sendPacket(teleportPacket);
-                }
-            }
-        }
+        this.world.players.stream()
+                .filter(p -> p instanceof EntityPlayer)
+                .map(p -> (EntityPlayer) p)
+                .forEach(p -> {
+                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
+                    if (distanceSquared < 8192 && p.playerConnection != null) {
+                        p.playerConnection.sendPacket(teleportPacket);
+                    }
+                });
     }
 
     @Override

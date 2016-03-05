@@ -163,17 +163,15 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
         // Send a packet near to update the position.
         PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-
-        for (Object obj : this.world.players) {
-            if (obj instanceof EntityPlayer) {
-                EntityPlayer nmsPlayer = (EntityPlayer) obj;
-
-                double distanceSquared = Math.pow(nmsPlayer.locX - this.locX, 2) + Math.pow(nmsPlayer.locZ - this.locZ, 2);
-                if (distanceSquared < 8192 && nmsPlayer.playerConnection != null) {
-                    nmsPlayer.playerConnection.sendPacket(teleportPacket);
-                }
-            }
-        }
+        this.world.players.stream()
+                .filter(p -> p instanceof EntityPlayer)
+                .map(p -> (EntityPlayer) p)
+                .forEach(p -> {
+                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
+                    if (distanceSquared < 8192 && p.playerConnection != null) {
+                        p.playerConnection.sendPacket(teleportPacket);
+                    }
+                });
     }
 
     @Override
