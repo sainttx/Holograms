@@ -41,7 +41,16 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public ItemHolder spawnItemHolder(HologramLine line, Location location) {
-        return null;
+        WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
+        EntityItemHolder item = new EntityItemHolder(nmsWorld, line);
+        item.setPosition(location.getX(), location.getY(), location.getZ());
+        if (!addEntityToWorld(nmsWorld, item)) {
+            plugin.getLogger().log(Level.WARNING, "Failed to spawn item entity in world " + location.getWorld().getName()
+                    + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
+            item.remove();
+            return null;
+        }
+        return item;
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
