@@ -3,34 +3,28 @@ package com.sainttx.holograms.api.line;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.entity.Nameable;
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TextLine implements TextualHologramLine {
+public class TextLine extends AbstractLine implements TextualHologramLine {
 
-    private Hologram parent;
-    private Location location;
     private String text;
     private Nameable nameable;
 
     public TextLine(Hologram parent, String text) {
-        this.parent = parent;
-        this.location = parent.getLocation();
+        super(parent);
+        Validate.notNull(text, "Text cannot be null");
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
     }
 
     @Override
     public void setLocation(Location location) {
-        this.location = location.clone();
+        super.setLocation(location);
         if (!isHidden()) {
-            nameable.getBukkitEntity().teleport(location);
+            nameable.getBukkitEntity().teleport(getLocation());
         }
-    }
-
-    @Override
-    public Location getLocation() {
-        return location.clone();
     }
 
     @Override
@@ -73,12 +67,7 @@ public class TextLine implements TextualHologramLine {
     }
 
     @Override
-    public final double getHeight() {
+    public double getHeight() {
         return 0.23;
-    }
-
-    @Override
-    public final Hologram getHologram() {
-        return parent;
     }
 }

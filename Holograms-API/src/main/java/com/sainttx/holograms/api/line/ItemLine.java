@@ -9,34 +9,25 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ItemLine implements ItemCarryingHologramLine {
+public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
-    private Hologram parent;
-    private Location location;
     private ItemStack item;
     private ItemHolder entity;
 
     public ItemLine(Hologram parent, ItemStack item) {
-        Validate.notNull(parent, "Parent hologram cannot be null");
+        super(parent);
         Validate.notNull(item, "Item cannot be null");
-        this.parent = parent;
-        this.location = parent.getLocation();
         this.item = item;
     }
 
     @Override
     public void setLocation(Location location) {
-        this.location = location.clone();
+        super.setLocation(location);
         if (!isHidden()) {
             entity.setMount(null);
-            entity.getBukkitEntity().teleport(location);
+            entity.getBukkitEntity().teleport(getLocation());
             entity.setMount(createMount());
         }
-    }
-
-    @Override
-    public Location getLocation() {
-        return location.clone();
     }
 
     @Override
@@ -87,12 +78,7 @@ public class ItemLine implements ItemCarryingHologramLine {
     }
 
     @Override
-    public final double getHeight() {
+    public double getHeight() {
         return 0.23;
-    }
-
-    @Override
-    public final Hologram getHologram() {
-        return parent;
     }
 }
