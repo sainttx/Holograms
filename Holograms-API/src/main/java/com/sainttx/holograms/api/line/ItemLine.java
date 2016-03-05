@@ -79,6 +79,12 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
     @Override
     public double getHeight() {
-        return 0.23;
+        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+        switch (plugin.getEntityController().getMinecraftVersion()) {
+            case V1_9_R1:
+                return 0.4;
+            default:
+                return 0.8;
+        }
     }
 }
