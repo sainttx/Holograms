@@ -85,11 +85,11 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void setName(String text) {
-        if (text != null && text.length() > 300) {
-            text = text.substring(0, 300);
+        if (text.length() > 256) {
+            text = text.substring(0, 256);
         }
         super.setCustomName(text);
-        super.setCustomNameVisible(text != null && !text.isEmpty());
+        super.setCustomNameVisible(!text.isEmpty());
     }
 
     @Override
