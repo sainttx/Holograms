@@ -54,13 +54,12 @@ public class ManagerImpl implements HologramManager {
                 }
 
                 // Create the Hologram
-                Hologram hologram = new Hologram(hologramName, location, false);
+                Hologram hologram = new Hologram(hologramName, location, true);
                 // Add the lines
                 for (String string : uncoloredLines) {
                     HologramLine line = plugin.parseLine(hologram, string);
                     hologram.addLine(line);
                 }
-                hologram.setPersistent(true);
                 addActiveHologram(hologram);
             }
         }
