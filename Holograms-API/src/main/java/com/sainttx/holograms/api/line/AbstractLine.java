@@ -12,6 +12,7 @@ public abstract class AbstractLine implements HologramLine {
 
     public AbstractLine(Hologram parent, String raw) {
         Validate.notNull(parent, "Parent hologram cannot be null");
+        Validate.notNull(raw, "Raw representation cannot be null");
         this.parent = parent;
         this.raw = raw;
         this.location = parent.getLocation();
