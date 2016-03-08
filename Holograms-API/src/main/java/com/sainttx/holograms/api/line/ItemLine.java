@@ -22,7 +22,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
     public static class Parser implements HologramLine.Parser {
 
-        private Pattern linePattern = Pattern.compile("((item|icon|itemstack):)(.+)");
+        private static final Pattern linePattern = Pattern.compile("((item|icon|itemstack):)(.+)");
 
         @Override
         public boolean canParse(String text) {
@@ -31,11 +31,21 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
         @Override
         public HologramLine parse(Hologram hologram, String text) {
+            return new ItemLine(hologram, parseItem(text));
+        }
+
+        /**
+         * Parses an ItemStack from a string of text.
+         *
+         * @param text the text
+         * @return the item
+         * @throws NumberFormatException when an invalid amount or durability are provided
+         * @throws IllegalArgumentException when an invalid material or enchantment is provided
+         */
+        public static ItemStack parseItem(String text) {
             Matcher matcher = linePattern.matcher(text);
             if (matcher.find()) {
                 text = matcher.group(3);
-            } else {
-                throw new IllegalArgumentException("Invalid item provided");
             }
             String[] split = text.split(" ");
             short durability = -1;
@@ -60,14 +70,14 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             try {
                 amount = split.length == 1 ? 1 : Integer.parseInt(split[1]);
             } catch (NumberFormatException ex) {
-                throw new IllegalArgumentException("Invalid amount \""+ split[1] +"\"", ex);
+                throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
             }
             ItemStack item = new ItemStack(material, amount, (short) Math.max(0, durability));
             ItemMeta meta = item.getItemMeta();
 
             // No meta data was provided, we can return here
             if (split.length < 3) {
-                return new ItemLine(hologram, item);
+                return item;
             }
 
             // Go through all the item meta specified
@@ -113,7 +123,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
             // Set the meta and return created item line
             item.setItemMeta(meta);
-            return new ItemLine(hologram, item);
+            return item;
         }
     }
 
