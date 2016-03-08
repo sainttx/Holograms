@@ -157,6 +157,8 @@ public class Hologram {
         // Spawn the first line and then start decrementing the y
         HologramLine first = getLine(0);
         first.setLocation(location);
+        y -= first.getHeight() / 2; 
+        y -= HologramLine.SPACE_BETWEEN_LINES;
 
         for (int i = 1 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
