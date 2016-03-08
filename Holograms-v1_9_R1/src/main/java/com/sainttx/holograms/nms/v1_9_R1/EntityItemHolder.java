@@ -143,7 +143,6 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
             tagList.add(new NBTTagString(getRandomString()));
 
             display.set("Lore", tagList);
-            nms.count = 0;
         }
         setItemStack(nms);
     }
