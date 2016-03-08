@@ -23,10 +23,11 @@ public interface HologramLine {
          * Parses a text validated with {@link #canParse(String)} and
          * returns a HologramLine created from the text.
          *
+         * @param hologram the parent hologram to use in the creation of lines
          * @param text validated text
          * @return the parsed line
          */
-        HologramLine parse(String text);
+        HologramLine parse(Hologram hologram, String text);
     }
 
     /**

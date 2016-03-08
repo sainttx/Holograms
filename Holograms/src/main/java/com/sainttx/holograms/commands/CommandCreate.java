@@ -34,7 +34,7 @@ public class CommandCreate implements CommandExecutor {
                 Player player = (Player) sender;
                 String text = TextUtil.implode(2, args);
                 Hologram holo = new Hologram(hologramName, player.getLocation(), true);
-                HologramLine line = plugin.parseLine(text);
+                HologramLine line = plugin.parseLine(hologram, text);
                 holo.addLine(line);
                 plugin.getHologramManager().addActiveHologram(holo);
                 plugin.getHologramManager().saveHologram(holo);

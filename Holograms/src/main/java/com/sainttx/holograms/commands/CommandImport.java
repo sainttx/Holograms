@@ -65,7 +65,7 @@ public class CommandImport implements CommandExecutor {
 
                                 Hologram hologram = new Hologram(holoName, location, true);
                                 for (String text : lines) {
-                                    hologram.addLine(plugin.parseLine(text));
+                                    hologram.addLine(plugin.parseLine(hologram, text));
                                 }
                                 plugin.getHologramManager().addActiveHologram(hologram);
                                 plugin.getHologramManager().saveHologram(hologram);

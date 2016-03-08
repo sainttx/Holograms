@@ -17,7 +17,7 @@ public abstract class HologramPlugin extends JavaPlugin {
         Optional<HologramLine.Parser> parser = parsers.stream()
                 .filter(p -> p.canParse(text))
                 .findFirst();
-        return parser.isPresent() ? parser.get().parse(text) : new TextLine(hologram, text);
+        return parser.isPresent() ? parser.get().parse(hologram, text) : new TextLine(hologram, text);
     }
 
     public boolean addLineParser(HologramLine.Parser parser) {
