@@ -73,7 +73,8 @@ public interface HologramLine {
     boolean isHidden();
 
     /**
-     * Returns the height of the line.
+     * Returns the total height of this line. The height should be defined
+     * by the total distance from the very bottom of the line to the top.
      *
      * @return the height
      */

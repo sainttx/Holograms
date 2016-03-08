@@ -3,7 +3,6 @@ package com.sainttx.holograms.api.line;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.entity.Nameable;
-import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;

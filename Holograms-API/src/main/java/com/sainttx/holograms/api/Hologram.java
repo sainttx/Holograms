@@ -161,9 +161,12 @@ public class Hologram {
         for (int i = 1 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
             if (line != null && !line.isHidden()) {
-                y -= line.getHeight();
-                y -= HologramLine.SPACE_BETWEEN_LINES;
+                double height = line.getHeight();
+                double middle = height / 2;
+                y -= middle; // Spawn the line at the middle of its height
                 location.setY(y);
+                y -= middle; // Add space below the line so added lines don't get placed inside it
+                y -= HologramLine.SPACE_BETWEEN_LINES;
                 line.setLocation(location);
             }
         }

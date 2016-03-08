@@ -202,9 +202,9 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         switch (plugin.getEntityController().getMinecraftVersion()) {
             case V1_8_R1:
-                return 0.8;
+                return 1.60;
             default:
-                return 0.4;
+                return 0.8;
         }
     }
 }
