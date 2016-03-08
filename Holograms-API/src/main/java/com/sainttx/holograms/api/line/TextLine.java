@@ -10,19 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TextLine extends AbstractLine implements TextualHologramLine {
 
-    public static class Parser implements HologramLine.Parser {
-
-        @Override
-        public boolean canParse(String text) {
-            return false;
-        }
-
-        @Override
-        public HologramLine parse(String text) {
-            return null;
-        }
-    }
-
     private String text;
     private Nameable nameable;
 

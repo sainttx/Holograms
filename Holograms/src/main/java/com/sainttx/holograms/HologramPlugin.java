@@ -3,7 +3,6 @@ package com.sainttx.holograms;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.line.ItemLine;
-import com.sainttx.holograms.api.line.TextLine;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.tasks.HologramSaveTask;
 import com.sainttx.holograms.util.ReflectionUtil;
@@ -24,7 +23,6 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
     @Override
     public void onEnable() {
         this.manager = new ManagerImpl(this);
-        addLineParser(new TextLine.Parser());
         addLineParser(new ItemLine.Parser());
 
         if (setupController()) {
