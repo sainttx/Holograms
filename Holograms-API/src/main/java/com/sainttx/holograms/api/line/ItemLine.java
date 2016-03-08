@@ -11,6 +11,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
+    public static class Parser implements HologramLine.Parser {
+
+        @Override
+        public boolean canParse(String text) {
+            return false;
+        }
+
+        @Override
+        public HologramLine parse(String text) {
+            return null;
+        }
+    }
+
     private ItemStack item;
     private ItemHolder entity;
 

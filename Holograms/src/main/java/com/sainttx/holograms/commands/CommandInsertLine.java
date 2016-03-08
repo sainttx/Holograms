@@ -1,9 +1,8 @@
 package com.sainttx.holograms.commands;
 
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.line.TextLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -44,7 +43,7 @@ public class CommandInsertLine implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + lines.size() + ".");
                 } else {
                     String text = TextUtil.implode(3, args);
-                    HologramLine line = new TextLine(hologram, text);
+                    HologramLine line = plugin.parseLine(text);
                     hologram.addLine(line, index);
                     sender.sendMessage(TextUtil.color("&7Inserted line &f\"" + text + "&f\" &7into hologram &f\""
                             + hologram.getId() + "\" &7at index &f" + index + "."));
