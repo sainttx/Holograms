@@ -29,8 +29,13 @@ public class CommandAddLine implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
             } else {
                 String text = TextUtil.implode(2, args);
-                HologramLine line = plugin.parseLine(hologram, text);
-                hologram.addLine(line);
+                try {
+                    HologramLine line = plugin.parseLine(hologram, text);
+                    hologram.addLine(line);
+                } catch (Exception ex) {
+                    sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
+                    return true;
+                }
                 sender.sendMessage(TextUtil.color("&7Added line &f\"" + text + "\" &7to hologram &f\"" + hologram.getId() + "&f\"."));
             }
         }

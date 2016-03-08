@@ -34,11 +34,17 @@ public class CommandCreate implements CommandExecutor {
                 Player player = (Player) sender;
                 String text = TextUtil.implode(2, args);
                 Hologram holo = new Hologram(hologramName, player.getLocation(), true);
-                HologramLine line = plugin.parseLine(hologram, text);
-                holo.addLine(line);
+                try {
+                    HologramLine line = plugin.parseLine(holo, text);
+                    holo.addLine(line);
+                } catch (Exception ex) {
+                    sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
+                    return true;
+                }
                 plugin.getHologramManager().addActiveHologram(holo);
                 plugin.getHologramManager().saveHologram(holo);
                 sender.sendMessage(TextUtil.color("&7Created a new hologram &f\"" + hologramName + "\" &7with line &f\"" + text + "&f\"."));
+
             }
         }
 
