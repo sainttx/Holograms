@@ -85,4 +85,12 @@ public interface HologramLine {
      * @return the parent hologram
      */
     Hologram getHologram();
+
+    /**
+     * Returns the raw representation of this line. This string is what is
+     * used when saving and loading hologram lines.
+     *
+     * @return the text representation
+     */
+    String getRaw();
 }

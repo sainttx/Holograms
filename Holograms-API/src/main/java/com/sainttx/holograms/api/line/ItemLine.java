@@ -31,7 +31,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
         @Override
         public HologramLine parse(Hologram hologram, String text) {
-            return new ItemLine(hologram, parseItem(text));
+            return new ItemLine(hologram, text, parseItem(text));
         }
 
         /**
@@ -130,8 +130,12 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     private ItemStack item;
     private ItemHolder entity;
 
-    public ItemLine(Hologram parent, ItemStack item) {
-        super(parent);
+    public ItemLine(Hologram parent, String raw) {
+        this(parent, raw, Parser.parseItem(raw));
+    }
+
+    public ItemLine(Hologram parent, String raw, ItemStack item) {
+        super(parent, raw);
         Validate.notNull(item, "Item cannot be null");
         this.item = item;
     }

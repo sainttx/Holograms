@@ -8,10 +8,12 @@ public abstract class AbstractLine implements HologramLine {
 
     private Hologram parent;
     private Location location;
+    private String raw;
 
-    public AbstractLine(Hologram parent) {
+    public AbstractLine(Hologram parent, String raw) {
         Validate.notNull(parent, "Parent hologram cannot be null");
         this.parent = parent;
+        this.raw = raw;
         this.location = parent.getLocation();
     }
 
@@ -33,5 +35,10 @@ public abstract class AbstractLine implements HologramLine {
     @Override
     public final Hologram getHologram() {
         return parent;
+    }
+
+    @Override
+    public final String getRaw() {
+        return raw;
     }
 }

@@ -14,7 +14,7 @@ public class TextLine extends AbstractLine implements TextualHologramLine {
     private Nameable nameable;
 
     public TextLine(Hologram parent, String text) {
-        super(parent);
+        super(parent, text);
         Validate.notNull(text, "Text cannot be null");
         this.text = text == null ? null : ChatColor.translateAlternateColorCodes('&', text);
     }
