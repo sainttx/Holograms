@@ -1,12 +1,9 @@
 package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.api.line.TextLine;
-import com.sainttx.holograms.api.line.TextualHologramLine;
+import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.util.LocationUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.Collection;
@@ -60,7 +57,7 @@ public class ManagerImpl implements HologramManager {
                 Hologram hologram = new Hologram(hologramName, location, false);
                 // Add the lines
                 for (String string : uncoloredLines) {
-                    TextLine line = new TextLine(hologram, string);
+                    HologramLine line = plugin.parseLine(hologram, string);
                     hologram.addLine(line);
                 }
                 hologram.setPersistent(true);
@@ -74,8 +71,7 @@ public class ManagerImpl implements HologramManager {
         String hologramName = hologram.getId();
         Collection<HologramLine> holoLines = hologram.getLines();
         List<String> uncoloredLines = holoLines.stream()
-                .filter(line -> line instanceof TextualHologramLine)
-                .map(line -> ((TextualHologramLine) line).getText().replace(ChatColor.COLOR_CHAR, '&'))
+                .map(HologramLine::getRaw)
                 .collect(Collectors.toList());
         hologram.setDirty(false);
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
