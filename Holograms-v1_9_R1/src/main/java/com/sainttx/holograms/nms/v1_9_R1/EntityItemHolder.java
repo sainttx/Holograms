@@ -24,6 +24,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     private HologramLine line;
     private Entity vehicle;
     private int mountPacketTick;
+    private org.bukkit.inventory.ItemStack item;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
@@ -144,6 +145,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
             display.set("Lore", tagList);
         }
+        this.item = item;
         setItemStack(nms);
     }
 
@@ -154,7 +156,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public org.bukkit.inventory.ItemStack getItem() {
-        return CraftItemStack.asBukkitCopy(getItemStack());
+        return item;
     }
 
     @Override
