@@ -31,7 +31,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
         @Override
         public HologramLine parse(Hologram hologram, String text) {
-            return new ItemLine(hologram, text, parseItem(text));
+            return new ItemLine(hologram, text);
         }
 
         /**
