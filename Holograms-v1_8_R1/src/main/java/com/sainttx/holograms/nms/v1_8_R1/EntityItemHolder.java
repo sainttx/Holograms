@@ -90,6 +90,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void remove() {
         this.lockTick = false;
+        removeMount();
         super.die();
     }
 
