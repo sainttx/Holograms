@@ -1,9 +1,12 @@
 # Holograms
+[![Build Status](http://ci.sainttx.com/buildStatus/icon?job=Holograms)](http://ci.sainttx.com/job/Holograms/)
+
 A Bukkit plugin that allows easy creation and management of text based Holograms
 
 ### Resources
 
 * [Resource Page](https://www.spigotmc.org/resources/holograms.4924/)
+* [Development Builds](http://ci.sainttx.com/job/Holograms/)
 
 ### Building
 
@@ -36,8 +39,8 @@ You can also add Holograms as a Maven dependency:
 ```xml
 <repositories>
   <repository>
-    <id>sainttx-repo</id>
-    <url>http://repo.sainttx.com/artifactory/libs-release-local/</url>
+    <id>maven.sainttx.com</id>
+    <url>http://maven.sainttx.com/nexus/content/groups/public/</url>
   </repository>
 </repositories>
 
@@ -45,7 +48,7 @@ You can also add Holograms as a Maven dependency:
   <dependency>
     <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-api</artifactId>
-    <version>1.9b</version>
+    <version>2.0.0-SNAPSHOT</version>
     <scope>provided</scope>
   </dependency>
 </dependencies>
@@ -64,12 +67,11 @@ public void onEnable() {
 
 ##### Creating and Modifying Holograms
 
-Once you have the reference, you can easily work your way around the APIs offerings:
+Once you have the manager reference, you can easily work your way around the APIs offerings:
 
 ```java
-public void createHologram(String id, Location location, String... text) {
-    Hologram hologram = new Hologram(id, location, text); 
-    hologram.refresh(); // Force spawns all of the lines at the defined location
+public void createHologram(String id, Location location) {
+    Hologram hologram = new Hologram(id, location);
     hologramManager.addActiveHologram(hologram); // Tells the plugin a new Hologram was added
 }
 ```
@@ -77,10 +79,14 @@ public void createHologram(String id, Location location, String... text) {
 Adding lines is easy as well:
 
 ```java
-public void addLine(Hologram hologram, String text) {
+public void addTextLine(Hologram hologram, String text) {
     HologramLine line = new TextLine(hologram, text);
     hologram.addLine(line);
-    hologram.refresh();
+}
+
+public void addItemLine(Hologram hologram, ItemStack itemstack) {
+    HologramLine line = new ItemLine(hologram, itemstack);
+    hologram.addLine(line);
 }
 ```
 
