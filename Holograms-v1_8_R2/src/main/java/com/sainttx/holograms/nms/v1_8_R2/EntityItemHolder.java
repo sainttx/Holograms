@@ -39,17 +39,6 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
-    public ItemStack getItemStack() {
-        // Check if item is being picked up
-        StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-        if (stacktrace.length > 2 && stacktrace[2].getClassName().contains("EntityInsentient")) {
-            return null;
-        }
-
-        return super.getItemStack();
-    }
-
-    @Override
     public void b(NBTTagCompound nbttagcompound) {
     }
 
