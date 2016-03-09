@@ -56,7 +56,7 @@ public class TextUtil {
      * Implodes a String array and combines into a single string seprated by a space
      *
      * @param startIndex The start index of the String array to implode
-     * @param toImplode  The String array to implode
+     * @param toImplode The String array to implode
      * @return An imploded string joined by spaces
      */
     public static String implode(int startIndex, String[] toImplode) {
@@ -67,8 +67,8 @@ public class TextUtil {
      * Implode a string array from a starting index and combine into a string separated by a space
      *
      * @param startIndex The start index of the String array to implode
-     * @param toImplode  A string array to implode
-     * @param spacer     The string to seperate words
+     * @param toImplode A string array to implode
+     * @param spacer The string to seperate words
      * @return An imploded string joined by the spacer
      */
     public static String implode(int startIndex, String[] toImplode, String spacer) {

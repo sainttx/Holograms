@@ -22,7 +22,7 @@ public class Configuration extends YamlConfiguration {
      * Instantiates a new Configuration file
      *
      * @param plugin The plugin instantiating the file
-     * @param file   The name of the file being created as a .YML file
+     * @param file The name of the file being created as a .YML file
      */
     public Configuration(JavaPlugin plugin, String file) {
         this.plugin = plugin;
