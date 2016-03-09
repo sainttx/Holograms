@@ -11,7 +11,7 @@ public interface MountedEntity extends HologramEntity {
 
     /**
      * Mounts this item to a new entity. Passing in a null value
-     * will remove any mount that the item is currently sitting on.
+     * will remove any mount that this entity is currently sitting on.
      *
      * @param entity new mount
      */
