@@ -136,7 +136,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     }
 
     public ItemLine(Hologram parent, ItemStack item) {
-        this(parent, itemstackToRaw(item), item);
+        this(parent, "item:" + itemstackToRaw(item), item);
     }
 
     private ItemLine(Hologram parent, String raw, ItemStack item) {
