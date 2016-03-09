@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,10 +135,50 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         this(parent, raw, Parser.parseItem(raw));
     }
 
-    public ItemLine(Hologram parent, String raw, ItemStack item) {
+    public ItemLine(Hologram parent, ItemStack item) {
+        this(parent, itemstackToRaw(item), item);
+    }
+
+    private ItemLine(Hologram parent, String raw, ItemStack item) {
         super(parent, raw);
         Validate.notNull(item, "Item cannot be null");
         this.item = item;
+    }
+
+    // Converts an ItemStack to raw representation
+    private static String itemstackToRaw(ItemStack itemstack) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(itemstack.getType().toString()); // append type
+        sb.append(':').append(itemstack.getDurability()); // append durability
+        sb.append(' ').append(itemstack.getAmount()); // append amount
+
+        if (itemstack.hasItemMeta()) {
+            ItemMeta meta = itemstack.getItemMeta();
+
+            // append name
+            if (meta.hasDisplayName()) {
+                sb.append(' ').append("name:").append(meta.getDisplayName().replace(' ', '_'));
+            }
+
+            // append lore
+            if (meta.hasLore()) {
+                sb.append(' ').append("lore:");
+                Iterator<String> iterator = meta.getLore().iterator();
+                while (iterator.hasNext()) {
+                    sb.append(iterator.next().replace(' ', '_'));
+                    if (iterator.hasNext()) {
+                        sb.append('|');
+                    }
+                }
+            }
+
+            // append enchantments
+            meta.getEnchants().forEach((ench, level) -> {
+                sb.append(' ').append(ench.getName()).append(':').append(level);
+            });
+        }
+
+        return sb.toString();
     }
 
     @Override
