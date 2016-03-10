@@ -17,7 +17,7 @@ public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
     }
 
     public AnimatedItemLine(Hologram parent, Animation<ItemStack> animation, long delay) {
-        super(parent, "animation_item(" + delay + "):" + animationToRaw(animation), animation.firstSlide());
+        super(parent, "animated_item(" + delay + "):" + animationToRaw(animation), animation.firstSlide());
         this.animation = animation;
         this.delay = delay;
     }

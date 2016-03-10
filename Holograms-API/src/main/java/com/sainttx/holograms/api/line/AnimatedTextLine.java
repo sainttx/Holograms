@@ -16,7 +16,7 @@ public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
     }
 
     public AnimatedTextLine(Hologram parent, Animation<String> animation, long delay) {
-        super(parent, "animation_text(" + delay + "):" + animationToRaw(animation), animation.firstSlide());
+        super(parent, "animated_text(" + delay + "):" + animationToRaw(animation), animation.firstSlide());
         this.animation = animation;
         this.delay = delay;
     }

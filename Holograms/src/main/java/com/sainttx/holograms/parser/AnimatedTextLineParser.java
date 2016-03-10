@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class AnimatedTextLineParser implements AnimatedTextLine.Parser {
 
-    private static final Pattern linePattern = Pattern.compile("(animation_text(\\(([0-9]+)\\))?:)(.+)");
+    private static final Pattern linePattern = Pattern.compile("((animated|animation)_text(\\(([0-9]+)\\))?:)(.+)");
 
     @Override
     public boolean canParse(String text) {
@@ -25,9 +25,9 @@ public class AnimatedTextLineParser implements AnimatedTextLine.Parser {
             throw new IllegalArgumentException("Invalid raw text provided");
         }
 
-        String delay = matcher.group(3);
+        String delay = matcher.group(4);
         long parsedDelay = delay == null || delay.isEmpty() ? 5000 : Long.parseLong(delay);
-        String items = matcher.group(4);
+        String items = matcher.group(5);
         String[] individualItems = items.split("\\|\\|");
         TextAnimation animation = new TextAnimation(individualItems);
         return new AnimatedTextLine(hologram, animation, parsedDelay);
