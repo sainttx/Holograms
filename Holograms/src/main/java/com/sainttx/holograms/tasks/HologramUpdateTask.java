@@ -20,7 +20,7 @@ public class HologramUpdateTask implements Runnable {
         // Update all lines
         hologramManager.getTrackedLines().stream()
                 .filter(line -> !line.isHidden()) // Don't update hidden lines
-                .filter(line -> line.getLastUpdateTime() + line.getDelay() > time) // Allow intervals set by implementation
+                .filter(line -> time > line.getLastUpdateTime() + line.getDelay()) // Allow intervals set by implementation
                 .forEach(UpdatingHologramLine::update);
     }
 }
