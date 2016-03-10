@@ -2,7 +2,6 @@ package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.api.line.ItemLine;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.parser.AnimatedItemLineParser;
 import com.sainttx.holograms.parser.AnimatedTextLineParser;
@@ -47,7 +46,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
             getCommand("holograms").setExecutor(new HologramCommands(this));
-            ((ManagerImpl) manager).load();
+            getServer().getScheduler().runTaskLater(this, () -> ((ManagerImpl) manager).load(), 1L);
             getServer().getScheduler().runTaskTimer(this, saveTask, 0L, 20L * 60L * 5L); // Save dirty holograms every 5 minutes
             getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L); // Update holograms (TODO: Configurable interval)
         }

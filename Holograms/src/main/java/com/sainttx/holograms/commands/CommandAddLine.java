@@ -2,8 +2,6 @@ package com.sainttx.holograms.commands;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.animation.TextAnimation;
-import com.sainttx.holograms.api.line.AnimatedTextLine;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;

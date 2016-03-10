@@ -24,6 +24,7 @@ public class ManagerImpl implements HologramManager {
 
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
+        persistingHolograms = new Configuration(plugin, "holograms.yml");
     }
 
     /**
