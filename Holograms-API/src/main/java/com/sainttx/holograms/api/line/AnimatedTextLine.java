@@ -1,9 +1,7 @@
 package com.sainttx.holograms.api.line;
 
-import com.google.common.base.Joiner;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.animation.Animation;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Iterator;
 
@@ -13,7 +11,8 @@ public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
     private long lastUpdate;
 
     public AnimatedTextLine(Hologram parent, Animation<String> animation) {
-        super(parent, "animation_text:" + animationToRaw(animation));
+        super(parent, "animation_text:" + animationToRaw(animation), animation.firstSlide());
+        this.animation = animation;
     }
 
     // Converts an animation to raw format
@@ -23,7 +22,7 @@ public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
         while (iterator.hasNext()) {
             sb.append(iterator.next());
             if (iterator.hasNext()) {
-                sb.append("\n"); // TODO: Is \n a good idea?
+                sb.append("||");
             }
         }
         return sb.toString();

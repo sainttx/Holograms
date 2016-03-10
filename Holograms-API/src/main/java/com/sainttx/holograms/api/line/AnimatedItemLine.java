@@ -12,7 +12,8 @@ public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
     private long lastUpdate;
 
     public AnimatedItemLine(Hologram parent, Animation<ItemStack> animation) {
-        super(parent, "animation_item:" + animationToRaw(animation));
+        super(parent, "animation_item:" + animationToRaw(animation), animation.firstSlide());
+        this.animation = animation;
     }
 
     // Converts an animation to raw format
@@ -22,7 +23,7 @@ public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
         while (iterator.hasNext()) {
             sb.append(itemstackToRaw(iterator.next()));
             if (iterator.hasNext()) {
-                sb.append("\n"); // TODO: Is \n a good idea?
+                sb.append("||");
             }
         }
         return sb.toString();

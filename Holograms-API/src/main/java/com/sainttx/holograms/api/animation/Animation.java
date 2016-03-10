@@ -5,6 +5,13 @@ import java.util.Collection;
 public interface Animation<T> {
 
     /**
+     * Gets the first slide of the animation.
+     *
+     * @return the first slide
+     */
+    T firstSlide();
+
+    /**
      * Gets the next slide to display.
      *
      * @return the next slide in the animation

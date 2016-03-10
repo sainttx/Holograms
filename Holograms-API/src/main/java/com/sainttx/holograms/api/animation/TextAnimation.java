@@ -1,15 +1,21 @@
 package com.sainttx.holograms.api.animation;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class TextAnimation implements Animation<String> {
 
-    private List<String> slides;
+    private final List<String> slides;
     private int slide = 0;
+
+    public TextAnimation() {
+        this.slides = new ArrayList<>();
+    }
 
     public TextAnimation(String... stacks) {
         Validate.notNull(stacks, "Cannot provide null stacks");
@@ -19,6 +25,11 @@ public class TextAnimation implements Animation<String> {
     public TextAnimation(List<String> stacks) {
         Validate.notNull(stacks, "Cannot provide null stacks");
         this.slides = stacks;
+    }
+
+    @Override
+    public String firstSlide() {
+        return slides.get(0);
     }
 
     @Override

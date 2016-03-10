@@ -21,128 +21,106 @@ import java.util.regex.Pattern;
 
 public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
-    public static class Parser implements HologramLine.Parser {
-
-        private static final Pattern linePattern = Pattern.compile("((item|icon|itemstack):)(.+)");
-
-        @Override
-        public boolean canParse(String text) {
-            return linePattern.matcher(text).matches();
-        }
-
-        @Override
-        public HologramLine parse(Hologram hologram, String text) {
-            return new ItemLine(hologram, text);
-        }
-
-        /**
-         * Parses an ItemStack from a string of text.
-         *
-         * @param text the text
-         * @return the item
-         * @throws NumberFormatException when an invalid amount or durability are provided
-         * @throws IllegalArgumentException when an invalid material or enchantment is provided
-         */
-        public static ItemStack parseItem(String text) {
-            Matcher matcher = linePattern.matcher(text);
-            if (matcher.find()) {
-                text = matcher.group(3);
-            }
-            String[] split = text.split(" ");
-            short durability = -1;
-            String data = split[0];
-
-            if (data.contains(":")) {
-                String[] datasplit = data.split(":");
-                data = datasplit[0];
-                durability = Short.parseShort(datasplit[1]);
-            }
-
-            Material material = data.matches("[0-9]+")
-                    ? Material.getMaterial(Integer.parseInt(data))
-                    : Material.getMaterial(data.toUpperCase());
-
-            // Throw exception if the material provided was wrong
-            if (material == null) {
-                throw new IllegalArgumentException("Invalid material " + data);
-            }
-
-            int amount;
-            try {
-                amount = split.length == 1 ? 1 : Integer.parseInt(split[1]);
-            } catch (NumberFormatException ex) {
-                throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
-            }
-            ItemStack item = new ItemStack(material, amount, (short) Math.max(0, durability));
-            ItemMeta meta = item.getItemMeta();
-
-            // No meta data was provided, we can return here
-            if (split.length < 3) {
-                return item;
-            }
-
-            // Go through all the item meta specified
-            for (int i = 2 ; i < split.length ; i++) {
-                String[] information = split[i].split(":");
-
-                // Data, name, or lore has been specified
-                switch (information[0].toLowerCase()) {
-                    case "name":
-                        // Replace '_' with spaces
-                        String name = information[1].replace(' ', ' ');
-                        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                        break;
-                    case "lore":
-                        // If lore was specified 2x for some reason, don't overwrite
-                        List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
-                        String[] loreLines = information[1].split("\\|");
-
-                        // Format all the lines and add them as lore
-                        for (String line : loreLines) {
-                            line = line.replace('_', ' '); // Replace '_' with space
-                            lore.add(ChatColor.translateAlternateColorCodes('&', line));
-                        }
-
-                        meta.setLore(lore);
-                        break;
-                    case "data":
-                        short dataValue = Short.parseShort(information[1]);
-                        item.setDurability(dataValue);
-                    default:
-                        // Try parsing enchantment if it was nothing else
-                        Enchantment ench = Enchantment.getByName(information[0].toUpperCase());
-                        int level = Integer.parseInt(information[1]);
-
-                        if (ench != null) {
-                            meta.addEnchant(ench, level, true);
-                        } else {
-                            throw new IllegalArgumentException("Invalid enchantment " + information[0]);
-                        }
-                        break;
-                }
-            }
-
-            // Set the meta and return created item line
-            item.setItemMeta(meta);
-            return item;
-        }
-    }
-
+    private static final Pattern linePattern = Pattern.compile("((item|icon|itemstack):)(.+)");
     private ItemStack item;
     private ItemHolder entity;
 
     public ItemLine(Hologram parent, String raw) {
-        this(parent, raw, Parser.parseItem(raw));
+        this(parent, raw, parseItem(raw));
     }
 
     public ItemLine(Hologram parent, ItemStack item) {
         this(parent, "item:" + itemstackToRaw(item), item);
     }
 
-    private ItemLine(Hologram parent, String raw, ItemStack item) {
+    ItemLine(Hologram parent, String raw, ItemStack item) {
         super(parent, raw);
         Validate.notNull(item, "Item cannot be null");
         this.item = item;
+    }
+
+    // Parses an itemstack from text
+    private static ItemStack parseItem(String text) {
+        Matcher matcher = linePattern.matcher(text);
+        if (matcher.find()) {
+            text = matcher.group(3);
+        }
+        String[] split = text.split(" ");
+        short durability = -1;
+        String data = split[0];
+
+        if (data.contains(":")) {
+            String[] datasplit = data.split(":");
+            data = datasplit[0];
+            durability = Short.parseShort(datasplit[1]);
+        }
+
+        Material material = data.matches("[0-9]+")
+                ? Material.getMaterial(Integer.parseInt(data))
+                : Material.getMaterial(data.toUpperCase());
+
+        // Throw exception if the material provided was wrong
+        if (material == null) {
+            throw new IllegalArgumentException("Invalid material " + data);
+        }
+
+        int amount;
+        try {
+            amount = split.length == 1 ? 1 : Integer.parseInt(split[1]);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
+        }
+        ItemStack item = new ItemStack(material, amount, (short) Math.max(0, durability));
+        ItemMeta meta = item.getItemMeta();
+
+        // No meta data was provided, we can return here
+        if (split.length < 3) {
+            return item;
+        }
+
+        // Go through all the item meta specified
+        for (int i = 2 ; i < split.length ; i++) {
+            String[] information = split[i].split(":");
+
+            // Data, name, or lore has been specified
+            switch (information[0].toLowerCase()) {
+                case "name":
+                    // Replace '_' with spaces
+                    String name = information[1].replace(' ', ' ');
+                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+                    break;
+                case "lore":
+                    // If lore was specified 2x for some reason, don't overwrite
+                    List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+                    String[] loreLines = information[1].split("\\|");
+
+                    // Format all the lines and add them as lore
+                    for (String line : loreLines) {
+                        line = line.replace('_', ' '); // Replace '_' with space
+                        lore.add(ChatColor.translateAlternateColorCodes('&', line));
+                    }
+
+                    meta.setLore(lore);
+                    break;
+                case "data":
+                    short dataValue = Short.parseShort(information[1]);
+                    item.setDurability(dataValue);
+                default:
+                    // Try parsing enchantment if it was nothing else
+                    Enchantment ench = Enchantment.getByName(information[0].toUpperCase());
+                    int level = Integer.parseInt(information[1]);
+
+                    if (ench != null) {
+                        meta.addEnchant(ench, level, true);
+                    } else {
+                        throw new IllegalArgumentException("Invalid enchantment " + information[0]);
+                    }
+                    break;
+            }
+        }
+
+        item.setItemMeta(meta);
+        return item;
     }
 
     // Converts an ItemStack to raw representation

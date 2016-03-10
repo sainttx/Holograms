@@ -3,14 +3,19 @@ package com.sainttx.holograms.api.animation;
 import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class ItemAnimation implements Animation<ItemStack> {
 
-    private List<ItemStack> slides;
+    private final List<ItemStack> slides;
     private int slide = 0;
+
+    public ItemAnimation() {
+        this.slides = new ArrayList<>();
+    }
 
     public ItemAnimation(ItemStack... stacks) {
         Validate.notNull(stacks, "Cannot provide null stacks");
@@ -20,6 +25,11 @@ public class ItemAnimation implements Animation<ItemStack> {
     public ItemAnimation(List<ItemStack> stacks) {
         Validate.notNull(stacks, "Cannot provide null stacks");
         this.slides = stacks;
+    }
+
+    @Override
+    public ItemStack firstSlide() {
+        return slides.get(0);
     }
 
     @Override

@@ -13,7 +13,11 @@ public class TextLine extends AbstractLine implements TextualHologramLine {
     private Nameable nameable;
 
     public TextLine(Hologram parent, String text) {
-        super(parent, text);
+        this(parent, text, text);
+    }
+
+    TextLine(Hologram parent, String raw, String text) {
+        super(parent, raw);
         this.text = ChatColor.translateAlternateColorCodes('&', text);
     }
 
