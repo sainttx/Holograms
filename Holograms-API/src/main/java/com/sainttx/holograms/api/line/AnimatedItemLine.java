@@ -37,7 +37,7 @@ public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
 
     @Override
     public long getDelay() {
-        return 0L;
+        return 5000L; // 5 seconds
     }
 
     @Override

@@ -36,7 +36,7 @@ public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
 
     @Override
     public long getDelay() {
-        return 0L;
+        return 5000L; // 5 seconds
     }
 
     @Override
