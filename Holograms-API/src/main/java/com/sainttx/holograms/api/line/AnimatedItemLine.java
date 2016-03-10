@@ -9,11 +9,17 @@ import java.util.Iterator;
 public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
 
     private Animation<ItemStack> animation;
+    private long delay;
     private long lastUpdate;
 
     public AnimatedItemLine(Hologram parent, Animation<ItemStack> animation) {
+        this(parent, animation, 5000L);
+    }
+
+    public AnimatedItemLine(Hologram parent, Animation<ItemStack> animation, long delay) {
         super(parent, "animation_item:" + animationToRaw(animation), animation.firstSlide());
         this.animation = animation;
+        this.delay = delay;
     }
 
     // Converts an animation to raw format
@@ -37,7 +43,7 @@ public class AnimatedItemLine extends ItemLine implements UpdatingHologramLine {
 
     @Override
     public long getDelay() {
-        return 5000L; // 5 seconds
+        return delay;
     }
 
     @Override

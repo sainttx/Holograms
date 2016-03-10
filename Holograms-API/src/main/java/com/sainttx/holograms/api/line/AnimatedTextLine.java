@@ -8,11 +8,17 @@ import java.util.Iterator;
 public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
 
     private Animation<String> animation;
+    private long delay;
     private long lastUpdate;
 
     public AnimatedTextLine(Hologram parent, Animation<String> animation) {
+        this(parent, animation, 5000L);
+    }
+
+    public AnimatedTextLine(Hologram parent, Animation<String> animation, long delay) {
         super(parent, "animation_text:" + animationToRaw(animation), animation.firstSlide());
         this.animation = animation;
+        this.delay = delay;
     }
 
     // Converts an animation to raw format
@@ -36,7 +42,7 @@ public class AnimatedTextLine extends TextLine implements UpdatingHologramLine {
 
     @Override
     public long getDelay() {
-        return 5000L; // 5 seconds
+        return delay;
     }
 
     @Override
