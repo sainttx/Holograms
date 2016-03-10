@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class AnimatedItemLineParser implements AnimatedItemLine.Parser {
 
-    private static final Pattern linePattern = Pattern.compile("(animation_item:)(.+)");
+    private static final Pattern linePattern = Pattern.compile("(animation_item(\\(([0-9]+)\\))?:)(.+)");
 
     @Override
     public boolean canParse(String text) {
@@ -24,12 +24,14 @@ public class AnimatedItemLineParser implements AnimatedItemLine.Parser {
         if (!matcher.find()) {
             throw new IllegalArgumentException("Invalid raw text provided");
         }
-        String items = matcher.group(2);
+        String delay = matcher.group(3);
+        long parsedDelay = delay == null || delay.isEmpty() ? 5000 : Long.parseLong(delay);
+        String items = matcher.group(4);
         String[] individualItems = items.split("\\|\\|");
         ItemAnimation animation = new ItemAnimation();
         for (String item : individualItems) {
             animation.addSlide(TextUtil.parseItem(item));
         }
-        return new AnimatedItemLine(hologram, animation);
+        return new AnimatedItemLine(hologram, animation, parsedDelay);
     }
 }
