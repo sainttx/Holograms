@@ -211,7 +211,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     }
 
     @Override
-    public void setItem(ItemStack text) {
+    public void setItem(ItemStack item) {
         this.item = item.clone();
         entity.setItem(this.item);
     }
