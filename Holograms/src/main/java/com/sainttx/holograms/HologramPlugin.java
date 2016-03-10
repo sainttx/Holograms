@@ -5,6 +5,7 @@ import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.line.ItemLine;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.tasks.HologramSaveTask;
+import com.sainttx.holograms.tasks.HologramUpdateTask;
 import com.sainttx.holograms.util.ReflectionUtil;
 
 import java.lang.reflect.Constructor;
@@ -19,6 +20,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
     private HologramManager manager;
     private HologramEntityController controller;
     private Runnable saveTask = new HologramSaveTask(this);
+    private Runnable updateTask = new HologramUpdateTask(this);
 
     @Override
     public void onEnable() {
@@ -30,6 +32,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
             getCommand("holograms").setExecutor(new HologramCommands(this));
             ((ManagerImpl) manager).load();
             getServer().getScheduler().runTaskTimer(this, saveTask, 0L, 20L * 60L * 5L); // Save dirty holograms every 5 minutes
+            getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L); // Update holograms (TODO: Configurable interval)
         }
     }
 

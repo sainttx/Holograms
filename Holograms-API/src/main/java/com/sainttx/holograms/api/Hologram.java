@@ -1,8 +1,10 @@
 package com.sainttx.holograms.api;
 
 import com.sainttx.holograms.api.line.HologramLine;
+import com.sainttx.holograms.api.line.UpdatingHologramLine;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class Hologram {
 
+    private final HologramPlugin plugin;
     private final String id;
     private Location location;
     private boolean persist;
@@ -26,6 +29,7 @@ public class Hologram {
     public Hologram(String id, Location location, boolean persist) {
         Validate.notNull(id, "Hologram id cannot be null");
         Validate.notNull(location, "Hologram location cannot be null");
+        this.plugin = JavaPlugin.getPlugin(HologramPlugin.class);
         this.id = id;
         this.location = location;
         this.persist = persist;
@@ -118,6 +122,9 @@ public class Hologram {
         lines.add(index, line);
         line.show();
         reorganize();
+        if (line instanceof UpdatingHologramLine) { // Track updating line
+            plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
+        }
         setDirty(true);
     }
 
@@ -132,6 +139,9 @@ public class Hologram {
         lines.remove(line);
         if (!line.isHidden()) {
             line.hide();
+        }
+        if (line instanceof UpdatingHologramLine) { // Remove tracked line
+            plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
         reorganize();
         setDirty(true);

@@ -1,5 +1,8 @@
 package com.sainttx.holograms.api;
 
+import com.sainttx.holograms.api.line.UpdatingHologramLine;
+
+import java.util.Collection;
 import java.util.Map;
 
 public interface HologramManager {
@@ -53,6 +56,31 @@ public interface HologramManager {
      * @param hologram the hologram
      */
     void removeActiveHologram(Hologram hologram);
+
+    /**
+     * Tracks an updating hologram line for execution of
+     * {@link UpdatingHologramLine#update()} by the plugins internal
+     * scheduler.
+     *
+     * @param line the line to track.
+     */
+    void trackLine(UpdatingHologramLine line);
+
+    /**
+     * Removes an already tracked line.
+     *
+     * @param line the line
+     * @return <tt>true</tt> if the line was removed from the
+     *      collection returned by {@link #getTrackedLines()}
+     */
+    boolean untrackLine(UpdatingHologramLine line);
+
+    /**
+     * Returns all currently tracked hologram lines.
+     *
+     * @return tracked lines
+     */
+    Collection<? extends UpdatingHologramLine> getTrackedLines();
 
     /**
      * Despawns and removes all active holograms.

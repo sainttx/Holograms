@@ -3,32 +3,24 @@ package com.sainttx.holograms;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.line.HologramLine;
+import com.sainttx.holograms.api.line.UpdatingHologramLine;
 import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.Location;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ManagerImpl implements HologramManager {
 
-    /*
-     * The HologramPlugin instance
-     */
     private HologramPlugin plugin;
-
-    /*
-     * The file that stores saved Hologram information
-     */
     private Configuration persistingHolograms;
-
-    /*
-     * A map containing all spawned Holograms
-     * key is the holograms name
-     */
     private Map<String, Hologram> activeHolograms = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private Set<UpdatingHologramLine> trackedUpdatingLines = new HashSet<>();
 
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
@@ -104,6 +96,21 @@ public class ManagerImpl implements HologramManager {
     @Override
     public void removeActiveHologram(Hologram hologram) {
         activeHolograms.remove(hologram.getId());
+    }
+
+    @Override
+    public void trackLine(UpdatingHologramLine line) {
+        trackedUpdatingLines.add(line);
+    }
+
+    @Override
+    public boolean untrackLine(UpdatingHologramLine line) {
+        return trackedUpdatingLines.remove(line);
+    }
+
+    @Override
+    public Collection<? extends UpdatingHologramLine> getTrackedLines() {
+        return trackedUpdatingLines;
     }
 
     @Override
