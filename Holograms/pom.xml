@@ -21,7 +21,7 @@
     </properties>
 
     <build>
-        <finalName>Holograms</finalName>
+        <finalName>Holograms-${project.version}</finalName>
         <resources>
             <resource>
                 <filtering>true</filtering>

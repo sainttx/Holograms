@@ -11,6 +11,7 @@ import net.minecraft.server.v1_8_R2.Entity;
 import net.minecraft.server.v1_8_R2.WorldServer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R2.CraftChunk;
 import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -64,6 +65,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
         if (nmsChunk != null) {
             Chunk chunk = nmsChunk.bukkitChunk;
+
+            if (chunk == null) {
+                chunk = new CraftChunk(nmsChunk);
+            }
 
             if (!chunk.isLoaded()) {
                 chunk.load();
