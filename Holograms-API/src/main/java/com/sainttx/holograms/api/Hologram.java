@@ -34,6 +34,14 @@ public class Hologram {
         this.location = location;
         this.persist = persist;
     }
+    
+    // Internal method to save hologram if persistent state has been set
+    private void saveIfPersistent() {
+        if (isPersistent()) {
+            plugin.getHologramManager().saveHologram(this);
+            setDirty(false);
+        }
+    }
 
     /**
      * Returns the unique ID id of this Hologram.
@@ -126,6 +134,7 @@ public class Hologram {
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
         setDirty(true);
+        saveIfPersistent();
     }
 
     /**
@@ -145,6 +154,7 @@ public class Hologram {
         }
         reorganize();
         setDirty(true);
+        saveIfPersistent();
     }
 
     /**
@@ -212,6 +222,7 @@ public class Hologram {
             this.location = location.clone();
             reorganize();
             setDirty(true);
+            saveIfPersistent();
         }
     }
 }
