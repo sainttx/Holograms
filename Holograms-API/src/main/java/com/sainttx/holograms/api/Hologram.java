@@ -161,6 +161,10 @@ public class Hologram {
 
     // Reorganizes holograms after an initial index
     private void reorganize() {
+        // Don't reorganize lines if there are none to reorganize
+        if (lines.isEmpty()) { 
+            return;
+        }
         Location location = getLocation();
         double y = location.getY();
 
