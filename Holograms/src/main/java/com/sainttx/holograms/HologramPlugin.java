@@ -54,7 +54,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     @Override
     public void onDisable() {
-        // saveTask.run();
+        saveTask.run();
         manager.clear();
         this.manager = null;
         this.controller = null;
