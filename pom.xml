@@ -7,7 +7,7 @@
     <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,6 +31,7 @@
         <module>Holograms-v1_8_R2</module>
         <module>Holograms-v1_8_R3</module>
         <module>Holograms-v1_9_R1</module>
+        <module>Holograms-v1_9_R2</module>
         <module>Holograms</module>
     </modules>
 </project>
