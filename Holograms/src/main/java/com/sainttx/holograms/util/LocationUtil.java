@@ -13,6 +13,9 @@ public class LocationUtil {
      * @return A string representation of the Location
      */
     public static String locationAsString(Location location) {
+        if(location == null) {
+            return null;
+        }
         return location.getWorld().getName() + ";" + location.getX() + ";" + location.getY()
                 + ";" + location.getZ() + ";" + location.getPitch() + ";" + location.getYaw();
     }
@@ -25,6 +28,9 @@ public class LocationUtil {
      * the world specified is not loaded
      */
     public static Location stringAsLocation(String string) {
+        if(string == null) {
+            return null;
+        }
         String[] parts = string.split(";");
 
         if (parts.length >= 4) { // At least world, x, y, z specified
