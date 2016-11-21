@@ -54,7 +54,10 @@ public class ManagerImpl implements HologramManager {
                     hologram.addLine(line);
                 }
                 addActiveHologram(hologram);
+                plugin.getLogger().info("Loaded hologram with \"" + hologram.getId() + "\" with " + hologram.getLines().size() + " lines");
             }
+        } else {
+            plugin.getLogger().warning("holograms.yml file had no 'holograms' section defined, no holograms loaded");
         }
     }
 
