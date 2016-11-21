@@ -32,6 +32,7 @@ public class CommandMoveHere implements CommandExecutor {
             } else {
                 Player player = (Player) sender;
                 hologram.teleport(player.getLocation());
+                plugin.getHologramManager().saveHologram(hologram);
                 // hologram.refreshAll();
                 sender.sendMessage(TextUtil.color("&7Teleported hologram &f\"" + hologramName + "\" &7to your location."));
             }

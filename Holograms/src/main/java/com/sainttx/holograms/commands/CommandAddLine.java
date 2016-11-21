@@ -32,6 +32,7 @@ public class CommandAddLine implements CommandExecutor {
                 try {
                     HologramLine line = plugin.parseLine(hologram, text);
                     hologram.addLine(line);
+                    plugin.getHologramManager().saveHologram(hologram);
                 } catch (Exception ex) {
                     sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
                     return true;
