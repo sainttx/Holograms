@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Hologram {
@@ -107,7 +106,7 @@ public class Hologram {
      *
      * @return all lines in the hologram
      */
-    public Collection<HologramLine> getLines() {
+    public List<HologramLine> getLines() {
         return lines;
     }
 
