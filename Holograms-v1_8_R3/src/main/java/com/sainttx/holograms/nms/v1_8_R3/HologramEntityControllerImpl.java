@@ -6,6 +6,7 @@ import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.WorldServer;
@@ -67,7 +68,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
             Chunk chunk = nmsChunk.bukkitChunk;
 
             if (chunk == null) {
-                chunk = new CraftChunk(nmsChunk);
+                try {
+                    chunk = new CraftChunk(nmsChunk);
+                } catch (NullPointerException e) {
+                    throw new HologramEntitySpawnException("Attempted to spawn hologram entity in invalid chunk", e);
+                }
             }
 
             if (!chunk.isLoaded()) {
