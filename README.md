@@ -51,7 +51,7 @@ You can also add Holograms as a Maven dependency:
   <dependency>
     <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-api</artifactId>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>2.4.1-SNAPSHOT</version>
     <scope>provided</scope>
   </dependency>
 </dependencies>
