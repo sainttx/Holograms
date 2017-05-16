@@ -1,4 +1,4 @@
-package com.sainttx.holograms.nms.v1_8_R2;
+package com.sainttx.holograms.nms.v1_11_R1;
 
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramPlugin;
@@ -6,15 +6,13 @@ import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
-import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
-import net.minecraft.server.v1_8_R2.Entity;
-import net.minecraft.server.v1_8_R2.WorldServer;
+import net.minecraft.server.v1_11_R1.Entity;
+import net.minecraft.server.v1_11_R1.WorldServer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.CraftChunk;
-import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import java.util.logging.Level;
@@ -29,7 +27,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public MinecraftVersion getMinecraftVersion() {
-        return MinecraftVersion.V1_8_R2;
+        return MinecraftVersion.V1_11_R1;
     }
 
     @Override
@@ -62,18 +60,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
-        net.minecraft.server.v1_8_R2.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
+        net.minecraft.server.v1_11_R1.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
 
         if (nmsChunk != null) {
             Chunk chunk = nmsChunk.bukkitChunk;
-
-            if (chunk == null) {
-                try {
-                    chunk = new CraftChunk(nmsChunk);
-                } catch (NullPointerException e) {
-                    throw new HologramEntitySpawnException("Attempted to spawn hologram entity in invalid chunk", e);
-                }
-            }
 
             if (!chunk.isLoaded()) {
                 chunk.load();
@@ -89,4 +79,5 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
     }
+
 }

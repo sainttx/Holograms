@@ -48,6 +48,7 @@ public class CommandSetLine implements CommandExecutor {
                         String text = TextUtil.implode(3, args);
                         ((TextualHologramLine) line).setText(TextUtil.color(text));
                         line.getHologram().setDirty(true);
+                        plugin.getHologramManager().saveHologram(hologram);
                         sender.sendMessage(TextUtil.color("&7Set the text at position &f" + index + " &7of hologram &f\""
                                 + hologram.getId() + "\""));
                     }

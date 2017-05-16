@@ -2,6 +2,7 @@ package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramManager;
+import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.line.UpdatingHologramLine;
 import com.sainttx.holograms.util.LocationUtil;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class ManagerImpl implements HologramManager {
@@ -37,6 +39,7 @@ public class ManagerImpl implements HologramManager {
 
         // Load all the holograms
         if (persistingHolograms.isConfigurationSection("holograms")) {
+            loadHolograms:
             for (String hologramName : persistingHolograms.getConfigurationSection("holograms").getKeys(false)) {
                 List<String> uncoloredLines = persistingHolograms.getStringList("holograms." + hologramName + ".lines");
                 Location location = LocationUtil.stringAsLocation(persistingHolograms.getString("holograms." + hologramName + ".location"));
@@ -51,10 +54,18 @@ public class ManagerImpl implements HologramManager {
                 // Add the lines
                 for (String string : uncoloredLines) {
                     HologramLine line = plugin.parseLine(hologram, string);
-                    hologram.addLine(line);
+                    try {
+                        hologram.addLine(line);
+                    } catch (HologramEntitySpawnException e) {
+                        plugin.getLogger().log(Level.WARNING, "Failed to spawn Hologram \"" + hologramName + "\"", e);
+                        continue loadHolograms;
+                    }
                 }
                 addActiveHologram(hologram);
+                plugin.getLogger().info("Loaded hologram with \"" + hologram.getId() + "\" with " + hologram.getLines().size() + " lines");
             }
+        } else {
+            plugin.getLogger().warning("holograms.yml file had no 'holograms' section defined, no holograms loaded");
         }
     }
 

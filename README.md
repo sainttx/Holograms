@@ -13,6 +13,7 @@ A Bukkit plugin that allows easy creation and management of text based Holograms
 To successfully build Holograms using Maven, you must first run Spigot's BuildTools for several versions in order to compile.
 
 ```
+java -jar BuildTools.jar --rev 1.11
 java -jar BuildTools.jar --rev 1.10
 java -jar BuildTools.jar --rev 1.9.4
 java -jar BuildTools.jar --rev 1.9
@@ -50,7 +51,7 @@ You can also add Holograms as a Maven dependency:
   <dependency>
     <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-api</artifactId>
-    <version>2.3.0-SNAPSHOT</version>
+    <version>2.4.1-SNAPSHOT</version>
     <scope>provided</scope>
   </dependency>
 </dependencies>
