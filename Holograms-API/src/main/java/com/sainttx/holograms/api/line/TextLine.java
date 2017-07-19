@@ -65,6 +65,7 @@ public class TextLine extends AbstractLine implements TextualHologramLine {
     @Override
     public void setText(String text) {
         this.text = text;
+        setRaw(text);
         nameable.setName(text);
     }
 

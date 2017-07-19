@@ -17,6 +17,11 @@ public abstract class AbstractLine implements HologramLine {
         this.raw = raw;
         this.location = parent.getLocation();
     }
+    
+    protected void setRaw(String raw) {
+        Validate.notNull(raw, "Raw representation cannot be null");
+        this.raw = raw;
+    }
 
     @Override
     public void setLocation(Location location) {
