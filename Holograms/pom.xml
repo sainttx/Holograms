@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.sainttx.holograms</groupId>
         <artifactId>holograms-parent</artifactId>
-        <version>2.4.1-SNAPSHOT</version>
+        <version>2.5.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>holograms</artifactId>
@@ -135,6 +135,13 @@
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_11_R1</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sainttx.holograms</groupId>
+            <artifactId>holograms-v1_12_R1</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
