@@ -3,6 +3,7 @@ package com.sainttx.holograms.commands;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.line.HologramLine;
+import com.sainttx.holograms.api.line.ItemLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -31,6 +32,9 @@ public class CommandAddLine implements CommandExecutor {
                 String text = TextUtil.implode(2, args);
                 try {
                     HologramLine line = plugin.parseLine(hologram, text);
+                    if (line instanceof ItemLine) {
+                        sender.sendMessage(TextUtil.color("&cYou may need to relog or reload the area to properly view the item"));
+                    }
                     hologram.addLine(line);
                     plugin.getHologramManager().saveHologram(hologram);
                 } catch (Exception ex) {
