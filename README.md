@@ -1,12 +1,9 @@
 # Holograms
-[![Build Status](http://ci.sainttx.com/buildStatus/icon?job=Holograms)](http://ci.sainttx.com/job/Holograms/)
-
 A Bukkit plugin that allows easy creation and management of text based Holograms
 
 ### Resources
 
 * [Resource Page](https://www.spigotmc.org/resources/holograms.4924/)
-* [Development Builds](http://ci.sainttx.com/job/Holograms/)
 
 ### Building
 
@@ -36,26 +33,6 @@ To use Holograms in your plugins, add the Holograms-API module to your build pat
 
 ```yml
 depend: [Holograms]
-```
-
-You can also add Holograms as a Maven dependency:
-
-```xml
-<repositories>
-  <repository>
-    <id>maven.sainttx.com</id>
-    <url>http://maven.sainttx.com/nexus/content/groups/public/</url>
-  </repository>
-</repositories>
-
-<dependencies>
-  <dependency>
-    <groupId>com.sainttx.holograms</groupId>
-    <artifactId>holograms-api</artifactId>
-    <version>2.5.0-SNAPSHOT</version>
-    <scope>provided</scope>
-  </dependency>
-</dependencies>
 ```
 
 Hologram creation is made easy with our API. Get a reference to the HologramManager and you're set.
