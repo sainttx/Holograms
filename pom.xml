@@ -36,6 +36,7 @@
         <module>Holograms-v1_11_R1</module>
         <module>Holograms-v1_12_R1</module>
         <module>Holograms-v1_13_R1</module>
+        <module>Holograms-v1_13_R2</module>
         <module>Holograms</module>
     </modules>
 </project>
