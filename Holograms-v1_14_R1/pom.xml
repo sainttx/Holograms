@@ -10,7 +10,7 @@
         <version>2.7-SNAPSHOT</version>
     </parent>
 
-    <artifactId>holograms-v1_9_R1</artifactId>
+    <artifactId>holograms-v1_14_R1</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.9-R0.1-SNAPSHOT</version>
+            <version>1.14.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- End local .m2 -->
