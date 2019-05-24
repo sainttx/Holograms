@@ -76,6 +76,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics-lite</artifactId>
+            <version>R8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-api</artifactId>
             <version>${project.version}</version>
