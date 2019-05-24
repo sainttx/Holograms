@@ -4,7 +4,7 @@ description: ${project.description}
 author: SainttX
 
 main: com.sainttx.holograms.HologramPlugin
-softdepend: [ Multiverse-Core, MultiWorld, WorldLoad ]
+softdepend: [ HologramsPlaceholders, Multiverse-Core, MultiWorld, WorldLoad ]
 
 commands:
   holograms:
