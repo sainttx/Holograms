@@ -55,9 +55,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             durability = Short.parseShort(datasplit[1]);
         }
 
-        Material material = data.matches("[0-9]+")
-                ? Material.getMaterial(Integer.parseInt(data))
-                : Material.getMaterial(data.toUpperCase());
+        Material material = Material.getMaterial(data.toUpperCase());
 
         // Throw exception if the material provided was wrong
         if (material == null) {
