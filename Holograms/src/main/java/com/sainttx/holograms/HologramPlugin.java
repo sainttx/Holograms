@@ -9,10 +9,8 @@ import com.sainttx.holograms.parser.ItemLineParser;
 import com.sainttx.holograms.tasks.HologramSaveTask;
 import com.sainttx.holograms.tasks.HologramUpdateTask;
 import com.sainttx.holograms.util.ReflectionUtil;
-import org.mcstats.MetricsLite;
 
 import java.lang.reflect.Constructor;
-import java.util.logging.Level;
 
 public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
@@ -34,14 +32,6 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
         addLineParser(new ItemLineParser());
         addLineParser(new AnimatedItemLineParser());
         addLineParser(new AnimatedTextLineParser());
-
-        // Enable plugin metrics
-        try {
-            MetricsLite metrics = new MetricsLite(this);
-            metrics.start();
-        } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "Failed to start plugin metrics!", e);
-        }
 
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
