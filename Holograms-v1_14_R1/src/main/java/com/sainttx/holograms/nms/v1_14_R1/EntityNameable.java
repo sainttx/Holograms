@@ -23,6 +23,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
     private HologramLine parentPiece;
+    private CraftEntity bukkitEntity;
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(EntityTypes.ARMOR_STAND, world);
@@ -135,7 +136,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
+        if (this.bukkitEntity == null) {
             this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
         }
         return this.bukkitEntity;

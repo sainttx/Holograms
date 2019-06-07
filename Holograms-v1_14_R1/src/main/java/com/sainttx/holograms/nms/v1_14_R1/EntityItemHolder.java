@@ -26,6 +26,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     private Entity vehicle;
     private int mountPacketTick;
     private org.bukkit.inventory.ItemStack item;
+    private CraftEntity bukkitEntity;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(EntityTypes.ITEM, world);
@@ -100,7 +101,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
+        if (this.bukkitEntity == null) {
             this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
         }
         return this.bukkitEntity;
