@@ -13,42 +13,42 @@ commands:
     permission-message: You do not have sufficient permissions to use this command
 
 permissions:
-  hologram.*:
+  holograms.*:
     description: Gives access to all Auction commands
     children:
-      hologram.create: true
-      hologram.delete: true
-      hologram.list: true
-      hologram.near: true
-      hologram.movehere: true
-      hologram.addline: true
-      hologram.removeline: true
-      hologram.insertline: true
-      hologram.info: true
-  hologram.create:
+      holograms.create: true
+      holograms.delete: true
+      holograms.list: true
+      holograms.near: true
+      holograms.movehere: true
+      holograms.addline: true
+      holograms.removeline: true
+      holograms.insertline: true
+      holograms.info: true
+  holograms.create:
     description: Allows players to create holograms
     default: op
-  hologram.delete:
+  holograms.delete:
     description: Allows players to delete holograms
     default: op
-  hologram.list:
+  holograms.list:
     description: Allows players to list holograms
     default: op
-  hologram.near:
+  holograms.near:
     description: Allows players to view nearby holograms
     default: op
-  hologram.movehere:
+  holograms.movehere:
     description: Allows players to move holograms
     default: op
-  hologram.addline:
+  holograms.addline:
     description: Allows players to add lines to holograms
     default: op
-  hologram.removeline:
+  holograms.removeline:
     description: Allows players to remove lines from holograms
     default: op
-  hologram.insertline:
+  holograms.insertline:
     description: Allows players to insert lines into holograms
     default: op
-  hologram.info:
+  holograms.info:
     description: Allows players to view a holograms info
     default: op
