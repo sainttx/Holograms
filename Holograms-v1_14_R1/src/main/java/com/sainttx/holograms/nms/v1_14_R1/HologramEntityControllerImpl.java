@@ -72,8 +72,8 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
-        int x = (int) nmsEntity.locX >> 4;
-        int z = (int) nmsEntity.locZ >> 4;
+        int x = (int) Math.floor(nmsEntity.locX / 16.0D);
+        int z = (int) Math.floor(nmsEntity.locZ / 16.0D);
 
         if (!nmsWorld.isChunkLoaded(x, z)) {
             nmsEntity.dead = true;
