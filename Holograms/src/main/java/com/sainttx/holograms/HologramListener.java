@@ -1,6 +1,9 @@
 package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
+import java.util.Collection;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,22 +29,30 @@ public class HologramListener implements Listener {
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
-        if (event.getChunk() == null) {
+        Chunk chunk = event.getChunk();
+        if (chunk == null || !chunk.isLoaded()) {
             return;
         }
-        plugin.getHologramManager().getActiveHolograms().values().stream()
-                .filter(holo -> holo.getLocation().getChunk().equals(event.getChunk()))
-                .forEach(Hologram::spawn);
+
+        Collection<Hologram> holograms = plugin.getHologramManager().getActiveHolograms().values();
+        for (Hologram holo : holograms) {
+            Location loc = holo.getLocation();
+            if (loc.getBlockX() >> 4 == chunk.getX() && loc.getBlockZ() >> 4 == chunk.getZ()) {
+                holo.spawn();
+            }
+        }
     }
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
-        if (event.getChunk() == null) {
-            return;
+        Chunk chunk = event.getChunk();
+        Collection<Hologram> holograms = plugin.getHologramManager().getActiveHolograms().values();
+        for (Hologram holo : holograms) {
+            Location loc = holo.getLocation();
+            if (loc.getBlockX() >> 4 == chunk.getX() && loc.getBlockZ() >> 4 == chunk.getZ()) {
+                holo.despawn();
+            }
         }
-        plugin.getHologramManager().getActiveHolograms().values().stream()
-                .filter(holo -> holo.getLocation().getChunk().equals(event.getChunk()))
-                .forEach(Hologram::despawn);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
