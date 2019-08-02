@@ -125,13 +125,12 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void remove() {
-        die();
+        super.dead = true;
     }
 
     @Override
     public void die() {
-        setLockTick(false);
-        super.die();
+
     }
 
     @Override

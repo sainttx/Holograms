@@ -7,6 +7,8 @@ import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import net.minecraft.server.v1_14_R1.Entity;
 import net.minecraft.server.v1_14_R1.WorldServer;
 import org.bukkit.Chunk;
@@ -18,6 +20,16 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
+
+    private static final Method registerEntityMethod;
+    static {
+        try {
+            registerEntityMethod = WorldServer.class.getDeclaredMethod("registerEntity", Entity.class);
+            registerEntityMethod.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private HologramPlugin plugin;
 
@@ -60,18 +72,23 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
-        net.minecraft.server.v1_14_R1.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
+        int x = (int) nmsEntity.locX >> 4;
+        int z = (int) nmsEntity.locZ >> 4;
 
-        if (nmsChunk != null) {
-            Chunk chunk = nmsChunk.bukkitChunk;
-
-            if (!chunk.isLoaded()) {
-                chunk.load();
-                plugin.getLogger().info("Loaded chunk (x:" + chunk.getX() + " z:" + chunk.getZ() + ") to spawn a Hologram");
-            }
+        if (!nmsWorld.isChunkLoaded(x, z)) {
+            nmsEntity.dead = true;
+            return false;
         }
 
-        return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        net.minecraft.server.v1_14_R1.Chunk chunk = nmsWorld.getChunkAt(x, z);
+        chunk.a(nmsEntity);
+        try {
+            registerEntityMethod.invoke(nmsWorld, nmsEntity);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -79,5 +96,4 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
     }
-
 }

@@ -3,6 +3,7 @@ package com.sainttx.holograms.nms.v1_14_R1;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
+import java.lang.reflect.Field;
 import net.minecraft.server.v1_14_R1.DamageSource;
 import net.minecraft.server.v1_14_R1.Entity;
 import net.minecraft.server.v1_14_R1.EntityItem;
@@ -21,10 +22,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
+    private static final Field vehicleField;
+    static {
+        try {
+            vehicleField = Entity.class.getDeclaredField("vehicle");
+            vehicleField.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private boolean lockTick;
     private HologramLine line;
-    private Entity vehicle;
-    private int mountPacketTick;
     private org.bukkit.inventory.ItemStack item;
     private CraftEntity bukkitEntity;
 
@@ -38,28 +47,10 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void tick() {
         ticksLived = 0;
-        if (mountPacketTick++ > 20) {
-            mountPacketTick = 0;
-            mountPacket();
-        }
+
         if (!lockTick) {
             super.tick();
         }
-    }
-
-    // Sends a packet to notify nearby players that this entity is mounted
-    private void mountPacket() {
-        // Send packet to update passenger state
-        PacketPlayOutMount packet = new PacketPlayOutMount(this.vehicle);
-        world.getPlayers().stream()
-                .filter(e -> e instanceof EntityPlayer)
-                .map(e -> (EntityPlayer) e)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 1024 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(packet);
-                    }
-                });
     }
 
     @Override
@@ -114,9 +105,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void remove() {
-        this.lockTick = false;
-        removeMount();
-        super.die();
+        super.dead = true;
+        Entity vehicle = super.getVehicle();
+        if (vehicle != null) {
+            vehicle.dead = true;
+        }
     }
 
     @Override
@@ -154,29 +147,31 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public HologramEntity getMount() {
-        return (HologramEntity) vehicle;
+        try {
+            return (HologramEntity) vehicleField.get(this);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null) {
-            removeMount();
-        } else if (entity instanceof Entity) {
-            removeMount();
-            vehicle = (Entity) entity;
-            super.a(vehicle, true);
-            vehicle.passengers.add(this);
+        if (!(entity instanceof Entity)) {
+            return;
         }
-    }
 
-    // Removes the current mount
-    private void removeMount() {
-        if (vehicle != null) {
-            stopRiding();
-            vehicle.passengers.remove(this);
-            vehicle.die();
-            vehicle = null;
+        Entity old = super.getVehicle();
+        if (old != null) {
+            old.passengers.remove(this);
         }
-    }
 
+        Entity next = (Entity) entity;
+        try {
+            vehicleField.set(this, next);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        next.passengers.clear();
+        next.passengers.add(this);
+    }
 }
