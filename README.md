@@ -110,6 +110,11 @@ The subcommands for this plugin are as follows:
 * `/holograms setline <hologramName> <index> <text>`
 
 
+## License ##
+This software is available under the following licenses:
+
+* MIT
+
 Special Thanks To:
 -------------
 

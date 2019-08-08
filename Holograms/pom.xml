@@ -27,6 +27,13 @@
                 <filtering>true</filtering>
                 <directory>src/main/resources/</directory>
             </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>..</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
         </resources>
 
         <plugins>
