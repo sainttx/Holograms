@@ -163,9 +163,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     public void setLocation(Location location) {
         super.setLocation(location);
         if (!isHidden()) {
-            entity.setMount(null);
-            entity.getBukkitEntity().teleport(getLocation());
-            entity.setMount(createMount());
+            entity.setPosition(location.getX(), location.getY(), location.getZ());
         }
     }
 
@@ -190,14 +188,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             return false;
         }
         entity.setItem(item);
-        entity.setMount(createMount());
         return true;
-    }
-
-    // Creates a new mount entity
-    private HologramEntity createMount() {
-        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        return plugin.getEntityController().spawnNameable(this, getLocation());
     }
 
     @Override

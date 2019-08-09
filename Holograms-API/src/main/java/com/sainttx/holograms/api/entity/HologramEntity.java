@@ -23,4 +23,6 @@ public interface HologramEntity {
      * @return the entity
      */
     Entity getBukkitEntity();
+
+    void setPosition(double x, double y, double z);
 }
