@@ -39,7 +39,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public MinecraftVersion getMinecraftVersion() {
-        return MinecraftVersion.V1_14_R1;
+        return MinecraftVersion.V1_15_R1;
     }
 
     @Override
