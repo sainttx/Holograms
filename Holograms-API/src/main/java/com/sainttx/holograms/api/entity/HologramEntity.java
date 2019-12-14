@@ -24,5 +24,12 @@ public interface HologramEntity {
      */
     Entity getBukkitEntity();
 
+    /**
+     * Set the x/y/z coordinates of the entity.
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
+     */
     void setPosition(double x, double y, double z);
 }

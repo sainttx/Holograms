@@ -9,6 +9,7 @@ import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.MathHelper;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -33,17 +34,16 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     @Override
-    public Nameable spawnNameable(HologramLine line, Location location) {
+    public EntityNameable spawnNameable(HologramLine line, Location location) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityNameable armorStand = new EntityNameable(nmsWorld, line);
         armorStand.setPosition(location.getX(), location.getY(), location.getZ());
         if (!addEntityToWorld(nmsWorld, armorStand)) {
-            plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + location.getWorld().getName()
-                    + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
             armorStand.remove();
             return null;
         }
 
+        armorStand.setLockTick(true);
         return armorStand;
     }
 
@@ -51,34 +51,29 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public ItemHolder spawnItemHolder(HologramLine line, Location location) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityItemHolder item = new EntityItemHolder(nmsWorld, line);
+        Location armorStandPosition = location.clone();
+        location.setY(location.getY() + line.getHeight());
+        EntityNameable armorStand = spawnNameable(line, armorStandPosition);
         item.setPosition(location.getX(), location.getY(), location.getZ());
         if (!addEntityToWorld(nmsWorld, item)) {
-            plugin.getLogger().log(Level.WARNING, "Failed to spawn item entity in world " + location.getWorld().getName()
-                    + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
             item.remove();
             return null;
         }
+        if (armorStand != null) {
+            item.setMount(armorStand);
+        }
+        item.setLockTick(true);
         return item;
     }
 
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
-        net.minecraft.server.v1_8_R3.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
+        // Validate the chunk is loaded
+        final int chunkX = MathHelper.floor(nmsEntity.locX / 16.0);
+        final int chunkZ = MathHelper.floor(nmsEntity.locZ / 16.0);
 
-        if (nmsChunk != null) {
-            Chunk chunk = nmsChunk.bukkitChunk;
-
-            if (chunk == null) {
-                try {
-                    chunk = new CraftChunk(nmsChunk);
-                } catch (NullPointerException e) {
-                    throw new HologramEntitySpawnException("Attempted to spawn hologram entity in invalid chunk", e);
-                }
-            }
-
-            if (!chunk.isLoaded()) {
-                chunk.load();
-                plugin.getLogger().info("Loaded chunk (x:" + chunk.getX() + " z:" + chunk.getZ() + ") to spawn a Hologram");
-            }
+        if (!nmsWorld.chunkProviderServer.isChunkLoaded(chunkX, chunkZ)) {
+            nmsEntity.dead = true;
+            return false;
         }
 
         return nmsWorld.addEntity(nmsEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);

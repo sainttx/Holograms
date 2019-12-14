@@ -30,7 +30,10 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
-        this.lockTick = true;
+    }
+
+    public void setLockTick(boolean lockTick) {
+        this.lockTick = lockTick;
     }
 
     @Override
@@ -107,6 +110,15 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public HologramLine getHologramLine() {
         return line;
+    }
+
+    @Override
+    public void setPosition(double x, double y, double z) {
+        HologramEntity mount = getMount();
+        if (mount != null) {
+            mount.setPosition(x, y, z);
+        }
+        super.setPosition(x, y, z);
     }
 
     @Override

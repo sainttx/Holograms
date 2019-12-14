@@ -31,7 +31,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     }
 
     @Override
-    public Nameable spawnNameable(HologramLine line, Location location) {
+    public EntityNameable spawnNameable(HologramLine line, Location location) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityNameable armorStand = new EntityNameable(nmsWorld, line);
         armorStand.setPosition(location.getX(), location.getY(), location.getZ());
@@ -42,6 +42,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
             return null;
         }
 
+        armorStand.setLockTick(true);
         return armorStand;
     }
 
@@ -49,13 +50,20 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public ItemHolder spawnItemHolder(HologramLine line, Location location) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityItemHolder item = new EntityItemHolder(nmsWorld, line);
+        Location armorStandPosition = location.clone();
+        location.setY(location.getY() + line.getHeight());
+        EntityNameable armorStand = spawnNameable(line, armorStandPosition);
         item.setPosition(location.getX(), location.getY(), location.getZ());
         if (!addEntityToWorld(nmsWorld, item)) {
             plugin.getLogger().log(Level.WARNING, "Failed to spawn item entity in world " + location.getWorld().getName()
-                    + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
+                + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
             item.remove();
             return null;
         }
+        if (armorStand != null) {
+            item.setMount(armorStand);
+        }
+        item.setLockTick(true);
         return item;
     }
 

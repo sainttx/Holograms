@@ -29,7 +29,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         setBasePlate(true);
         n(true); // setMarker
         this.parentPiece = parentPiece;
-        setLockTick(true);
     }
 
     @Override
