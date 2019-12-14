@@ -3,6 +3,7 @@ package com.sainttx.holograms.commands;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.line.HologramLine;
+import com.sainttx.holograms.api.line.ItemLine;
 import com.sainttx.holograms.api.line.TextualHologramLine;
 import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
@@ -41,17 +42,17 @@ public class CommandSetLine implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + (hologram.getLines().size() - 1) + ".");
                 } else {
                     HologramLine line = hologram.getLine(index);
-
-                    if (!(line instanceof TextualHologramLine)) {
-                        sender.sendMessage(ChatColor.RED + "Line " + index + " of that Hologram is not a text line and cannot be modified.");
-                    } else {
-                        String text = TextUtil.implode(3, args);
-                        ((TextualHologramLine) line).setText(TextUtil.color(text));
-                        line.getHologram().setDirty(true);
-                        plugin.getHologramManager().saveHologram(hologram);
-                        sender.sendMessage(TextUtil.color("&7Set the text at position &f" + index + " &7of hologram &f\""
-                                + hologram.getId() + "\""));
+                    String text = TextUtil.implode(3, args);
+                    HologramLine settingLine = plugin.parseLine(hologram, text);
+                    if (line instanceof ItemLine) {
+                        sender.sendMessage(TextUtil.color("&cYou may need to relog or reload the area to properly view the item"));
                     }
+                    hologram.removeLine(line);
+                    hologram.addLine(settingLine, index);
+                    plugin.getServer().getScheduler().runTaskLater(plugin, hologram::reorganize, 10L);
+                    plugin.getHologramManager().saveHologram(hologram);
+                    sender.sendMessage(TextUtil.color("&7Updated line at index &f" + index + " &7of hologram &f\""
+                        + hologram.getId() + "\""));
                 }
             }
         }

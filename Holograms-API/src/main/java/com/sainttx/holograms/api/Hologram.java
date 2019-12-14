@@ -169,7 +169,7 @@ public class Hologram {
     }
 
     // Reorganizes holograms after an initial index
-    private void reorganize() {
+    public void reorganize() {
         // Don't reorganize lines if there are none to reorganize
         if (lines.isEmpty()) { 
             return;
