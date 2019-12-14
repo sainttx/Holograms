@@ -49,17 +49,14 @@ public class HologramCommands implements CommandExecutor {
             sendMenu(sender);
         } else {
             String subCommand = args[0].toLowerCase();
+            CommandExecutor subCommandExec = commands.get(subCommand);
 
-            if (!sender.hasPermission("holograms." + subCommand)) {
+            if (subCommandExec == null) {
+                sendMenu(sender);
+            } else if (!sender.hasPermission("holograms." + subCommand)) {
                 sender.sendMessage(ChatColor.RED + command.getPermissionMessage());
             } else {
-                CommandExecutor subCommandExec = commands.get(subCommand);
-
-                if (subCommandExec == null) {
-                    sendMenu(sender);
-                } else {
-                    return subCommandExec.onCommand(sender, command, label, args);
-                }
+                return subCommandExec.onCommand(sender, command, label, args);
             }
         }
 
