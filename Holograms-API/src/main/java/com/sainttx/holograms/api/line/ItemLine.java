@@ -172,6 +172,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         if (isHidden()) {
             throw new IllegalStateException("This hologram line is already hidden");
         }
+        
         entity.setMount(null);
         entity.remove();
         entity = null;
@@ -183,11 +184,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             throw new IllegalStateException("This hologram line is already being displayed");
         }
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        entity = plugin.getEntityController().spawnItemHolder(this, getLocation());
-        if (entity == null) {
-            return false;
-        }
-        entity.setItem(item);
+        entity = plugin.getEntityController().spawnItemHolder(this, getLocation(), item);
         return true;
     }
 
@@ -214,7 +211,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             case V1_8_R1:
                 return 1.60;
             default:
-                return 0.8;
+                return 0.7;
         }
     }
 }

@@ -3,14 +3,7 @@ package com.sainttx.holograms.nms.v1_8_R3;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityItem;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
-import net.minecraft.server.v1_8_R3.NBTTagString;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 
@@ -27,6 +20,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
+        super.u();
     }
 
     public void setLockTick(boolean lockTick) {
@@ -35,10 +29,16 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void t_() {
+        super.u(); // Reset age to -6000
         ticksLived = 0;
         if (!lockTick) {
-            super.m();
+            super.t_();
         }
+    }
+
+    @Override
+    public void d(EntityHuman entityhuman) {
+
     }
 
     @Override
@@ -60,21 +60,19 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
-    public void f(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public void a(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
     public boolean isInvulnerable(DamageSource source) {
         return true;
     }
 
     @Override
     public void die() {
+        setLockTick(false);
+        super.die();
+    }
 
+    @Override
+    public boolean isAlive() {
+        return false;
     }
 
     @Override
@@ -92,17 +90,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setPosition(double x, double y, double z) {
-        HologramEntity mount = getMount();
-        if (mount != null) {
-            mount.setPosition(x, y, z);
-        }
         super.setPosition(x, y, z);
     }
 
     @Override
     public void remove() {
         this.lockTick = false;
-        removeMount();
         super.die();
     }
 
@@ -122,7 +115,6 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
             NBTTagList tagList = new NBTTagList();
             tagList.add(new NBTTagString(getRandomString()));
-
             display.set("Lore", tagList);
         }
         this.item = item;
@@ -146,9 +138,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null) {
-            removeMount();
-        } else if (entity instanceof Entity) {
+        if (entity instanceof Entity) {
             removeMount();
             vehicle = (Entity) entity;
             mount(vehicle);
@@ -159,9 +149,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     // Removes the current mount
     private void removeMount() {
         if (vehicle != null) {
-            mount(null);
             vehicle.passenger = null;
-            vehicle.die();
             vehicle = null;
         }
     }

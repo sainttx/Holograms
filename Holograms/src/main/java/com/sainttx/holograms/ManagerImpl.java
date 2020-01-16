@@ -76,7 +76,6 @@ public class ManagerImpl implements HologramManager {
         List<String> uncoloredLines = holoLines.stream()
                 .map(HologramLine::getRaw)
                 .collect(Collectors.toList());
-        hologram.setDirty(false);
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
         persistingHolograms.set("holograms." + hologramName + ".lines", uncoloredLines);
         persistingHolograms.saveConfiguration();

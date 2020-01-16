@@ -11,9 +11,11 @@ import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.WorldServer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.logging.Level;
 
@@ -32,38 +34,42 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public EntityNameable spawnNameable(HologramLine line, Location location) {
+        return spawnNameable(line, location, true);
+    }
+
+    private EntityNameable spawnNameable(HologramLine line, Location location, boolean lock) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityNameable armorStand = new EntityNameable(nmsWorld, line);
         armorStand.setPosition(location.getX(), location.getY(), location.getZ());
         if (!addEntityToWorld(nmsWorld, armorStand)) {
             plugin.getLogger().log(Level.WARNING, "Failed to spawn hologram entity in world " + location.getWorld().getName()
                     + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
-            armorStand.remove();
-            return null;
         }
-
-        armorStand.setLockTick(true);
+        if (lock) {
+            armorStand.setLockTick(true);
+        }
         return armorStand;
     }
 
     @Override
     public ItemHolder spawnItemHolder(HologramLine line, Location location) {
+        return spawnItemHolder(line, location, new ItemStack(Material.AIR));
+    }
+
+    @Override
+    public ItemHolder spawnItemHolder(HologramLine line, Location location, ItemStack itemstack) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityItemHolder item = new EntityItemHolder(nmsWorld, line);
-        Location armorStandPosition = location.clone();
-        location.setY(location.getY() + line.getHeight());
-        EntityNameable armorStand = spawnNameable(line, armorStandPosition);
-        item.setPosition(location.getX(), location.getY(), location.getZ());
+        item.setPosition(location.getX(), location.getY() + line.getHeight(), location.getZ());
+        item.setItem(itemstack);
         if (!addEntityToWorld(nmsWorld, item)) {
             plugin.getLogger().log(Level.WARNING, "Failed to spawn item entity in world " + location.getWorld().getName()
                     + " at x:" + location.getX() + " y:" + location.getY() + " z:" + location.getZ());
-            item.remove();
-            return null;
         }
-        if (armorStand != null) {
-            item.setMount(armorStand);
-        }
+        EntityNameable armorStand = spawnNameable(line, location, false);
+        item.setMount(armorStand);
         item.setLockTick(true);
+        armorStand.setLockTick(true);
         return item;
     }
 

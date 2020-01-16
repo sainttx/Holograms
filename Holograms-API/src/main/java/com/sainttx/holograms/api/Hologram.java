@@ -16,7 +16,6 @@ public class Hologram {
     private final String id;
     private Location location;
     private boolean persist;
-    private boolean dirty;
     private List<HologramLine> lines = new ArrayList<>();
 
     @ConstructorProperties({ "id", "location" })
@@ -38,7 +37,6 @@ public class Hologram {
     private void saveIfPersistent() {
         if (isPersistent()) {
             plugin.getHologramManager().saveHologram(this);
-            setDirty(false);
         }
     }
 
@@ -67,29 +65,6 @@ public class Hologram {
      */
     public void setPersistent(boolean persist) {
         this.persist = persist;
-        setDirty(true);
-    }
-
-    /**
-     * Returns whether this Hologram has had any changes since it was last saved.
-     *
-     * @return <tt>true</tt> if the hologram has been modified
-     */
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    /**
-     * Sets this Holograms dirty state. A "dirty" Hologram implies that since the last
-     * time it was saved, the Hologram has had some sort of modification performed to it
-     * and requires the plugin to save it to reflect any changes. If the Hologram is not
-     * persistent, it will always remain dirty unless modified by a third party. This is
-     * due to the plugin never saving it.
-     *
-     * @param dirty the dirty state
-     */
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
     }
 
     /**
@@ -127,12 +102,13 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        line.show();
         reorganize();
+        if (isChunkLoaded()) {
+            respawn();
+        }
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
-        setDirty(true);
         saveIfPersistent();
     }
 
@@ -152,7 +128,7 @@ public class Hologram {
             plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
         reorganize();
-        setDirty(true);
+        respawn();
         saveIfPersistent();
     }
 
@@ -168,32 +144,28 @@ public class Hologram {
         return lines.get(index);
     }
 
+    /**
+     * Returns whether the Hologram is in a loaded chunk.
+     *
+     * @return true if chunk is loaded, false otherwise
+     */
+    public boolean isChunkLoaded() {
+        Location location = getLocation();
+        int chunkX = (int) Math.floor(location.getBlockX() / 16.0D);
+        int chunkZ = (int) Math.floor(location.getBlockZ() / 16.0D);
+        return location.getWorld().isChunkLoaded(chunkX, chunkZ);
+    }
+
     // Reorganizes holograms after an initial index
     public void reorganize() {
-        // Don't reorganize lines if there are none to reorganize
-        if (lines.isEmpty()) { 
-            return;
-        }
         Location location = getLocation();
         double y = location.getY();
-
-        // Spawn the first line and then start decrementing the y
-        HologramLine first = getLine(0);
-        first.setLocation(location);
-        y -= first.getHeight() / 2;
-        y -= HologramLine.SPACE_BETWEEN_LINES;
-
-        for (int i = 1 ; i < lines.size() ; i++) {
+        for (int i = 0 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
-            if (line != null && !line.isHidden()) {
-                double height = line.getHeight();
-                double middle = height / 2;
-                y -= middle; // Spawn the line at the middle of its height
-                location.setY(y);
-                y -= middle; // Add space below the line so added lines don't get placed inside it
-                y -= HologramLine.SPACE_BETWEEN_LINES;
-                line.setLocation(location);
-            }
+            Location lineLocation = new Location(location.getWorld(), location.getX(), y, location.getZ());
+            line.setLocation(lineLocation);
+            y -= line.getHeight();
+            y -= HologramLine.SPACE_BETWEEN_LINES;
         }
     }
 
@@ -208,7 +180,13 @@ public class Hologram {
      * Spawns all of the lines in this Hologram.
      */
     public void spawn() {
+        reorganize();
         getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
+    }
+
+    private void respawn() {
+        despawn();
+        spawn();
     }
 
     /**
@@ -219,8 +197,7 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location.clone();
-            reorganize();
-            setDirty(true);
+            respawn();
             saveIfPersistent();
         }
     }

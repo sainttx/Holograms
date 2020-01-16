@@ -18,13 +18,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>minelink-repo</id>
-            <url>http://repo.minelink.net/content/repositories/thirdparty/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>

@@ -23,7 +23,9 @@ public class CommandRefresh implements CommandExecutor {
 
         for (Hologram hologram : manager.getActiveHolograms().values()) {
             hologram.despawn();
-            hologram.spawn();
+            if (hologram.isChunkLoaded()) {
+                hologram.spawn();
+            }
         }
 
         sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms!");

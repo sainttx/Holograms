@@ -18,6 +18,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
     private HologramLine parentPiece;
+    private boolean disableFakeId;
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
@@ -118,6 +119,9 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public int getId() {
+        if (this.disableFakeId) {
+            return super.getId();
+        }
 
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
@@ -131,7 +135,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public void t_() {
         if (!lockTick) {
-            super.s_();
+            super.t_();
         }
     }
 
@@ -168,7 +172,9 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         super.setPosition(x, y, z);
 
         // Send a packet near to update the position.
+        this.disableFakeId = true;
         PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
+        this.disableFakeId = false;
         this.world.players.stream()
                 .filter(p -> p instanceof EntityPlayer)
                 .map(p -> (EntityPlayer) p)

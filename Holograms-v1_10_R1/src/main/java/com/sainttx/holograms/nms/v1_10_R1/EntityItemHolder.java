@@ -30,6 +30,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
+        super.v();
     }
 
     public void setLockTick(boolean lockTick) {
@@ -38,6 +39,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void m() {
+        super.v();
         ticksLived = 0;
         if (mountPacketTick++ > 20) {
             mountPacketTick = 0;
@@ -101,6 +103,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
             this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
@@ -115,17 +122,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setPosition(double x, double y, double z) {
-        HologramEntity mount = getMount();
-        if (mount != null) {
-            mount.setPosition(x, y, z);
-        }
         super.setPosition(x, y, z);
     }
 
     @Override
     public void remove() {
         this.lockTick = false;
-        removeMount();
         super.die();
     }
 
@@ -169,9 +171,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null) {
-            removeMount();
-        } else if (entity instanceof Entity) {
+        if (entity instanceof Entity) {
             removeMount();
             vehicle = (Entity) entity;
             super.a(vehicle, true);
@@ -182,9 +182,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     // Removes the current mount
     private void removeMount() {
         if (vehicle != null) {
-            stopRiding();
             vehicle.passengers.remove(this);
-            vehicle.die();
             vehicle = null;
         }
     }
