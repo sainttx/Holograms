@@ -41,7 +41,7 @@ public class CommandImport implements CommandExecutor {
                 if (!holoDatabase.exists()) {
                     sender.sendMessage(ChatColor.RED + "File \"../plugins/HolographicDisplays/database.yml\" couldn't be found");
                 } else {
-                    sender.sendMessage(TextUtil.color("&7&oImporting holograms from HolographicDisplays..."));
+                    sender.sendMessage(ChatColor.GREEN + "Importing HolographicDisplays holograms...");
                     YamlConfiguration config = Configuration.loadConfiguration(holoDatabase);
                     Random random = new Random();
 
@@ -50,16 +50,16 @@ public class CommandImport implements CommandExecutor {
                             Location location = convertHologramLocation(config.getString(holoName + ".location"));
 
                             if (location == null) {
-                                sender.sendMessage(TextUtil.color("&c&oHologram \"" + holoName + "\" has no location and was skipped"));
+                                sender.sendMessage(ChatColor.RED + "Hologram " + holoName + " has no location (skipping)");
                             } else {
                                 List<String> lines = config.getStringList(holoName + ".lines");
 
                                 if (lines == null || lines.isEmpty()) {
-                                    sender.sendMessage(TextUtil.color("&c&oHologram \"" + holoName + "\" has no lines and was skipped"));
+                                    sender.sendMessage(ChatColor.RED + "Holgoram " + holoName + " has no lines (skipping)");
                                     continue;
                                 } else if (plugin.getHologramManager().getHologram(holoName) != null) {
                                     int randomInt = random.nextInt(1000);
-                                    sender.sendMessage(TextUtil.color("&e&oHologram \"" + holoName + "\" was renamed to \"" + (holoName + randomInt) + "\" (already existed)"));
+                                    sender.sendMessage(ChatColor.GOLD + "Hologram " + holoName + " was renamed to " + (holoName + randomInt) + " (already existed)");
                                     holoName = holoName + randomInt;
                                 }
 
@@ -73,13 +73,15 @@ public class CommandImport implements CommandExecutor {
                                 }
                                 plugin.getHologramManager().addActiveHologram(hologram);
                                 plugin.getHologramManager().saveHologram(hologram);
-                                sender.sendMessage(TextUtil.color("&a&oSuccessfully converted HolographicDisplays hologram \"" + holoName + "\"."));
+                                sender.sendMessage(ChatColor.YELLOW + "Converted HolographicDisplays hologram " + holoName);
                             }
                         } catch (Exception ex) {
-                            sender.sendMessage(TextUtil.color("&c&oFailed to convert hologram \"" + holoName + "\", check your CONSOLE for information."));
+                            sender.sendMessage(ChatColor.DARK_RED + "Failed to convert hologram " + holoName + ", see logs for details");
                             plugin.getLogger().log(Level.SEVERE, "Failed to convert hologram \"" + holoName + "\"", ex);
                         }
                     }
+
+                    sender.sendMessage(ChatColor.GREEN + "Import complete!");
                 }
             }
         }

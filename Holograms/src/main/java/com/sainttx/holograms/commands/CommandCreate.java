@@ -44,7 +44,7 @@ public class CommandCreate implements CommandExecutor {
                 holo.spawn();
                 plugin.getHologramManager().addActiveHologram(holo);
                 plugin.getHologramManager().saveHologram(holo);
-                sender.sendMessage(TextUtil.color("&7Created a new hologram &f\"" + hologramName + "\" &7with line &f\"" + text + "&f\"."));
+                sender.sendMessage(ChatColor.GREEN + "Created hologram " + holo.getId() + " with line \"" + text + "\"");
             }
         }
 

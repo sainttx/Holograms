@@ -27,32 +27,32 @@ public class CommandRemoveLine implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 int index;
                 try {
                     index = Integer.parseInt(args[2]);
                 } catch (NumberFormatException ex) {
-                    sender.sendMessage(ChatColor.RED + "Please enter a valid integer as your index.");
+                    sender.sendMessage(ChatColor.RED + args[2] + " is not a valid number");
                     return true;
                 }
 
                 if (index < 0 || index >= hologram.getLines().size()) {
-                    sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + (hologram.getLines().size() - 1) + ".");
+                    sender.sendMessage(ChatColor.RED + "Index must be between 0 and " + (hologram.getLines().size() - 1));
                 } else {
                     HologramLine line = hologram.getLine(index);
                     hologram.removeLine(line);
                     if (line instanceof TextualHologramLine) {
-                        sender.sendMessage(TextUtil.color("&7Removed line &f\"" + ((TextualHologramLine) line).getText()
-                                + "&f\" &7from hologram &f\"" + hologram.getId() + "\"."));
+                        sender.sendMessage(ChatColor.GREEN + "Removed line " + ((TextualHologramLine) line).getText()
+                                + " from hologram " + hologram.getId());
                     } else {
-                        sender.sendMessage(TextUtil.color("&7Removed line at position &f\"" + index + "&f\" &7from hologram &f\""
-                                + hologram.getId() + "\"."));
+                        sender.sendMessage(ChatColor.GREEN + "Removed line at position " + index
+                                + " from hologram " + hologram.getId());
                     }
 
                     if (hologram.getLines().size() == 0) {
                         plugin.getHologramManager().deleteHologram(hologram);
-                        sender.sendMessage(TextUtil.color("&7Hologram &f\"" + hologram.getId() + "\" &7was removed."));
+                        sender.sendMessage(ChatColor.GREEN + "Hologram " + hologram.getId() + " has no more lines and was deleted");
                     } else {
                         plugin.getHologramManager().saveHologram(hologram);
                     }

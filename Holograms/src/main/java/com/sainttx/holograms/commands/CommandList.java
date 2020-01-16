@@ -21,7 +21,7 @@ public class CommandList implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         HologramManager manager = plugin.getHologramManager();
 
-        sender.sendMessage(ChatColor.GRAY + "All holograms:");
+        sender.sendMessage(ChatColor.GREEN + "All holograms:");
         for (Hologram hologram : manager.getActiveHolograms().values()) {
             int lines = hologram.getLines().size();
             sender.sendMessage(" - \"" + hologram.getId() + "\" at " + TextUtil.locationAsString(hologram.getLocation()) + " (" + lines + " lines)");

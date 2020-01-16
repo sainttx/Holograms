@@ -25,7 +25,7 @@ public class CommandRefresh implements CommandExecutor {
             hologram.spawn();
         }
 
-        sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms!");
+        sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms");
         return true;
     }
 }

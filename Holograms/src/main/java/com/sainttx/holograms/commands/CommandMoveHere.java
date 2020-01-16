@@ -28,14 +28,14 @@ public class CommandMoveHere implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 Player player = (Player) sender;
                 hologram.despawn();
                 hologram.teleport(player.getLocation());
                 hologram.spawn();
                 plugin.getHologramManager().saveHologram(hologram);
-                sender.sendMessage(TextUtil.color("&7Teleported hologram &f\"" + hologramName + "\" &7to your location."));
+                sender.sendMessage(ChatColor.GREEN + "Moved " + hologramName + " to your current location");
             }
         }
 

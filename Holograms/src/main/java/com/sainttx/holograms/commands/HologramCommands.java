@@ -67,19 +67,19 @@ public class HologramCommands implements CommandExecutor {
      * Sends the command menu to a command sender
      */
     private void sendMenu(CommandSender sender) {
-        sender.sendMessage(TextUtil.color("&7&m----------&7[ &eHolograms Help &7]&m----------"));
-        sender.sendMessage(TextUtil.color("&e/holograms addline &f<name> <text>"));
-        sender.sendMessage(TextUtil.color("&e/holograms create &f<name> <text>"));
-        sender.sendMessage(TextUtil.color("&e/holograms delete &f<name>"));
-        sender.sendMessage(TextUtil.color("&e/holograms import &f<plugin>"));
-        sender.sendMessage(TextUtil.color("&e/holograms info &f<name>"));
-        sender.sendMessage(TextUtil.color("&e/holograms insertline &f<name> <index> <text>"));
-        sender.sendMessage(TextUtil.color("&e/holograms list"));
-        sender.sendMessage(TextUtil.color("&e/holograms movehere &f<name>"));
-        sender.sendMessage(TextUtil.color("&e/holograms near &f<radius>"));
-        sender.sendMessage(TextUtil.color("&e/holograms removeline &f<name> <index>"));
-        sender.sendMessage(TextUtil.color("&e/holograms refresh"));
-        sender.sendMessage(TextUtil.color("&e/holograms setline &f<name> <index> <text>"));
-        sender.sendMessage(TextUtil.color("&7&oHolograms v" + plugin.getDescription().getVersion() + " by SainttX"));
+        sender.sendMessage(ChatColor.GRAY + "----------[ " + ChatColor.WHITE + "Holograms Help " + ChatColor.GRAY + "]----------");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms addline " + ChatColor.WHITE + "<name> <text>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms create " + ChatColor.WHITE + "<name> <text>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms delete " + ChatColor.WHITE + "<name>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms import " + ChatColor.WHITE + "<plugin>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms info " + ChatColor.WHITE + "<name> <text>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms insertline " + ChatColor.WHITE + "<name> <index> <text>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms list");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms movehere " + ChatColor.WHITE + "<name>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms near " + ChatColor.WHITE + "<radius>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms removeline " + ChatColor.WHITE + "<name> <index>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms refresh");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms setline " + ChatColor.WHITE + "<name> <index> <text>");
+        sender.sendMessage(ChatColor.GRAY + "Holograms v" + plugin.getDescription().getVersion() + " by SainttX");
     }
 }
