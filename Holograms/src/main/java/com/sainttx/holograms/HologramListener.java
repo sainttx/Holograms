@@ -40,10 +40,7 @@ public class HologramListener implements Listener {
 
         Collection<Hologram> holograms = plugin.getHologramManager().getActiveHolograms().values();
         for (Hologram holo : holograms) {
-            Location loc = holo.getLocation();
-            int chunkX = (int) Math.floor(loc.getBlockX() / 16.0D);
-            int chunkZ = (int) Math.floor(loc.getBlockZ() / 16.0D);
-            if (chunkX == chunk.getX() && chunkZ == chunk.getZ()) {
+            if (holo.isChunkLoaded()) {
                 plugin.getServer().getScheduler().runTaskLater(plugin, holo::spawn, 10L);
             }
         }
