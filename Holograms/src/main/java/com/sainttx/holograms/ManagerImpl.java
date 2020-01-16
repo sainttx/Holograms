@@ -61,6 +61,7 @@ public class ManagerImpl implements HologramManager {
                         continue loadHolograms;
                     }
                 }
+                hologram.spawn();
                 addActiveHologram(hologram);
                 plugin.getLogger().info("Loaded hologram with \"" + hologram.getId() + "\" with " + hologram.getLines().size() + " lines");
             }

@@ -16,6 +16,7 @@ public class Hologram {
     private final String id;
     private Location location;
     private boolean persist;
+    private boolean spawned;
     private List<HologramLine> lines = new ArrayList<>();
 
     @ConstructorProperties({ "id", "location" })
@@ -34,7 +35,7 @@ public class Hologram {
     }
     
     // Internal method to save hologram if persistent state has been set
-    private void saveIfPersistent() {
+    private void save() {
         if (isPersistent()) {
             plugin.getHologramManager().saveHologram(this);
         }
@@ -47,6 +48,15 @@ public class Hologram {
      */
     public String getId() {
         return this.id;
+    }
+
+    /**
+     * Returns whether the Hologram is currently spawned (ie. visible).
+     *
+     * @return true if spawned, false otherwise
+     */
+    public boolean isSpawned() {
+        return spawned;
     }
 
     /**
@@ -102,14 +112,13 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        reorganize();
-        if (isChunkLoaded()) {
-            respawn();
+        save();
+        if (this.spawned) {
+            spawn();
         }
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
-        saveIfPersistent();
     }
 
     /**
@@ -119,17 +128,12 @@ public class Hologram {
      * @throws IllegalArgumentException if the line is not part of this hologram
      */
     public void removeLine(HologramLine line) {
-        Validate.isTrue(lines.contains(line), "Line is not a part of this hologram");
         lines.remove(line);
-        if (!line.isHidden()) {
-            line.hide();
-        }
+        save();
+        line.hide();
         if (line instanceof UpdatingHologramLine) { // Remove tracked line
             plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
-        reorganize();
-        respawn();
-        saveIfPersistent();
     }
 
     /**
@@ -173,20 +177,22 @@ public class Hologram {
      * De-spawns all of the lines in this Hologram.
      */
     public void despawn() {
-        getLines().stream().filter(line -> !line.isHidden()).forEach(HologramLine::hide);
+        getLines().forEach(HologramLine::hide);
+        this.spawned = false;
     }
 
     /**
      * Spawns all of the lines in this Hologram.
      */
     public void spawn() {
-        reorganize();
-        getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
-    }
-
-    private void respawn() {
-        despawn();
-        spawn();
+        if (this.isSpawned()) {
+            despawn();
+        }
+        if (isChunkLoaded()) {
+            reorganize();
+            getLines().forEach(HologramLine::show);
+            this.spawned = true;
+        }
     }
 
     /**
@@ -197,8 +203,10 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location.clone();
-            respawn();
-            saveIfPersistent();
+            save();
+            if (isSpawned()) {
+                spawn();
+            }
         }
     }
 }
