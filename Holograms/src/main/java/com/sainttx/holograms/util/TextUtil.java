@@ -10,7 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 
 public class TextUtil {
 

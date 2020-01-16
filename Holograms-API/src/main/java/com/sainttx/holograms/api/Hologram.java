@@ -127,8 +127,8 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        line.show();
         reorganize();
+        line.show();
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
@@ -168,10 +168,17 @@ public class Hologram {
         return lines.get(index);
     }
 
+    public boolean isChunkLoaded() {
+        Location location = getLocation();
+        int chunkX = (int) Math.floor(location.getBlockX() / 16.0D);
+        int chunkZ = (int) Math.floor(location.getBlockZ() / 16.0D);
+        return location.getWorld().isChunkLoaded(chunkX, chunkZ);
+    }
+
     // Reorganizes holograms after an initial index
     public void reorganize() {
         // Don't reorganize lines if there are none to reorganize
-        if (lines.isEmpty()) { 
+        if (lines.isEmpty() || !isChunkLoaded()) {
             return;
         }
         Location location = getLocation();

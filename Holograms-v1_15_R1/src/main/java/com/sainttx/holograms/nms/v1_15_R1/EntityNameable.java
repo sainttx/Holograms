@@ -10,6 +10,7 @@ import net.minecraft.server.v1_15_R1.EntityPlayer;
 import net.minecraft.server.v1_15_R1.EntityTypes;
 import net.minecraft.server.v1_15_R1.EnumHand;
 import net.minecraft.server.v1_15_R1.EnumInteractionResult;
+import net.minecraft.server.v1_15_R1.EnumItemSlot;
 import net.minecraft.server.v1_15_R1.ItemStack;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityTeleport;
@@ -28,6 +29,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     public EntityNameable(World world, HologramLine parentPiece) {
         super(EntityTypes.ARMOR_STAND, world);
         super.a(new NullBoundingBox()); // Forces the bounding box
+        super.collides = false;
         setInvisible(true);
         setSmall(true);
         setArms(false);
@@ -39,7 +41,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
+
     }
 
     @Override
@@ -57,10 +59,24 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         return new NBTTagCompound();
     }
 
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
 
     @Override
     public boolean isInvulnerable(DamageSource source) {
         return true;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
     }
 
     @Override
@@ -92,6 +108,11 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     }
 
     @Override
+    public void setSlot(EnumItemSlot enumitemslot, ItemStack itemstack) {
+
+    }
+
+    @Override
     public void a(AxisAlignedBB boundingBox) {
 
     }
@@ -109,7 +130,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public void tick() {
         if (!lockTick) {
-            super.playStepSound();
+            super.tick();
         }
     }
 

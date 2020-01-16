@@ -2,12 +2,16 @@ package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
 import java.util.Collection;
+
+import com.sainttx.holograms.api.entity.HologramEntity;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
@@ -48,6 +52,12 @@ public class HologramListener implements Listener {
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         Chunk chunk = event.getChunk();
+        for (Entity entity : chunk.getEntities()) {
+            HologramEntity hologramEntity = plugin.getEntityController().getHologramEntity(entity);
+            if (hologramEntity != null) {
+                hologramEntity.remove();
+            }
+        }
         Collection<Hologram> holograms = plugin.getHologramManager().getActiveHolograms().values();
         for (Hologram holo : holograms) {
             Location loc = holo.getLocation();
@@ -61,6 +71,13 @@ public class HologramListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (event.isCancelled() && plugin.getEntityController().getHologramEntity(event.getEntity()) != null) {
+            event.setCancelled(false);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onItemSpawn(ItemSpawnEvent event) {
         if (event.isCancelled() && plugin.getEntityController().getHologramEntity(event.getEntity()) != null) {
             event.setCancelled(false);
         }

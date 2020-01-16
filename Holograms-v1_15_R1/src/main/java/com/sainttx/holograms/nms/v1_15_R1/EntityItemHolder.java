@@ -4,16 +4,16 @@ import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 import java.lang.reflect.Field;
+
+import net.minecraft.server.v1_15_R1.Blocks;
 import net.minecraft.server.v1_15_R1.DamageSource;
 import net.minecraft.server.v1_15_R1.Entity;
 import net.minecraft.server.v1_15_R1.EntityItem;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
 import net.minecraft.server.v1_15_R1.EntityTypes;
 import net.minecraft.server.v1_15_R1.ItemStack;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import net.minecraft.server.v1_15_R1.NBTTagList;
 import net.minecraft.server.v1_15_R1.NBTTagString;
-import net.minecraft.server.v1_15_R1.PacketPlayOutMount;
 import net.minecraft.server.v1_15_R1.World;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
@@ -41,10 +41,16 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(EntityTypes.ITEM, world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
+        super.age = Integer.MIN_VALUE; // TODO: inactiveTick increments this value, might cause the random vanishes
     }
 
     public void setLockTick(boolean lockTick) {
         this.lockTick = lockTick;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
     }
 
     @Override
@@ -89,6 +95,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
     public void die() {
 
     }
@@ -121,6 +132,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         Entity vehicle = super.getVehicle();
         if (vehicle != null) {
             vehicle.dead = true;
+            try {
+                vehicleField.set(this, null);
+            } catch (IllegalAccessException e) {
+                // Ignore
+            }
         }
     }
 
@@ -144,7 +160,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
             display.set("Lore", tagList);
         }
         this.item = item;
-        setItemStack(nms);
+        setItemStack(nms == null || nms == ItemStack.a ? new ItemStack(Blocks.BARRIER) : nms);
     }
 
     // Returns a random string
