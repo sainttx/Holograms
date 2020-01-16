@@ -67,7 +67,7 @@ public class HologramCommands implements CommandExecutor {
      * Sends the command menu to a command sender
      */
     private void sendMenu(CommandSender sender) {
-        sender.sendMessage(ChatColor.GRAY + "----------[ " + ChatColor.WHITE + "Holograms Help " + ChatColor.GRAY + "]----------");
+        sender.sendMessage(ChatColor.GRAY + "------[ " + ChatColor.WHITE + "Holograms v" + plugin.getDescription().getVersion() + " - SainttX " + ChatColor.GRAY + "]------");
         sender.sendMessage(ChatColor.YELLOW + "/holograms addline " + ChatColor.WHITE + "<name> <text>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms create " + ChatColor.WHITE + "<name> <text>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms delete " + ChatColor.WHITE + "<name>");
@@ -80,6 +80,5 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "/holograms removeline " + ChatColor.WHITE + "<name> <index>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms refresh");
         sender.sendMessage(ChatColor.YELLOW + "/holograms setline " + ChatColor.WHITE + "<name> <index> <text>");
-        sender.sendMessage(ChatColor.GRAY + "Holograms v" + plugin.getDescription().getVersion() + " by SainttX");
     }
 }
