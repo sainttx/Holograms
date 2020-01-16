@@ -128,7 +128,9 @@ public class Hologram {
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
         reorganize();
-        line.show();
+        if (isChunkLoaded()) {
+            line.show();
+        }
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
