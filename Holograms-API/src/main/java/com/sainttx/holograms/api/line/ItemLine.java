@@ -211,7 +211,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             case V1_8_R1:
                 return 1.60;
             default:
-                return 0.8;
+                return 0.7;
         }
     }
 }

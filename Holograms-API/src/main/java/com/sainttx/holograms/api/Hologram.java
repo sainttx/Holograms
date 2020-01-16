@@ -157,30 +157,14 @@ public class Hologram {
 
     // Reorganizes holograms after an initial index
     public void reorganize() {
-        // Don't reorganize lines if there are none to reorganize
-        if (lines.isEmpty()) {
-            return;
-        }
         Location location = getLocation();
         double y = location.getY();
-
-        // Spawn the first line and then start decrementing the y
-        HologramLine first = getLine(0);
-        first.setLocation(location);
-        y -= first.getHeight() / 2;
-        y -= HologramLine.SPACE_BETWEEN_LINES;
-
-        for (int i = 1 ; i < lines.size() ; i++) {
+        for (int i = 0 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
-            if (line != null && !line.isHidden()) {
-                double height = line.getHeight();
-                double middle = height / 2;
-                y -= middle; // Spawn the line at the middle of its height
-                location.setY(y);
-                y -= middle; // Add space below the line so added lines don't get placed inside it
-                y -= HologramLine.SPACE_BETWEEN_LINES;
-                line.setLocation(location);
-            }
+            Location lineLocation = new Location(location.getWorld(), location.getX(), y, location.getZ());
+            line.setLocation(lineLocation);
+            y -= line.getHeight();
+            y -= HologramLine.SPACE_BETWEEN_LINES;
         }
     }
 
