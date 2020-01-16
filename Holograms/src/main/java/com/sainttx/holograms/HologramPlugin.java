@@ -21,7 +21,6 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     private HologramManager manager;
     private HologramEntityController controller;
-    private Runnable saveTask = new HologramSaveTask(this);
     private Runnable updateTask = new HologramUpdateTask(this);
 
     @Override
@@ -43,7 +42,6 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     @Override
     public void onDisable() {
-        saveTask.run();
         manager.clear();
         this.manager = null;
         this.controller = null;
