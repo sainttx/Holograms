@@ -1,5 +1,6 @@
 package com.sainttx.holograms.tasks;
 
+import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 
 public class HologramSaveTask implements Runnable {
@@ -13,7 +14,7 @@ public class HologramSaveTask implements Runnable {
     @Override
     public void run() {
         plugin.getHologramManager().getActiveHolograms().values().stream()
-                .filter(holo -> holo.isPersistent() && holo.isDirty())
+                .filter(Hologram::isPersistent)
                 .forEach(plugin.getHologramManager()::saveHologram);
     }
 }

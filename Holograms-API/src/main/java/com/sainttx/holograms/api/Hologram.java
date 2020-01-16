@@ -16,7 +16,6 @@ public class Hologram {
     private final String id;
     private Location location;
     private boolean persist;
-    private boolean dirty;
     private List<HologramLine> lines = new ArrayList<>();
 
     @ConstructorProperties({ "id", "location" })
@@ -38,7 +37,6 @@ public class Hologram {
     private void saveIfPersistent() {
         if (isPersistent()) {
             plugin.getHologramManager().saveHologram(this);
-            setDirty(false);
         }
     }
 
@@ -67,29 +65,6 @@ public class Hologram {
      */
     public void setPersistent(boolean persist) {
         this.persist = persist;
-        setDirty(true);
-    }
-
-    /**
-     * Returns whether this Hologram has had any changes since it was last saved.
-     *
-     * @return <tt>true</tt> if the hologram has been modified
-     */
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    /**
-     * Sets this Holograms dirty state. A "dirty" Hologram implies that since the last
-     * time it was saved, the Hologram has had some sort of modification performed to it
-     * and requires the plugin to save it to reflect any changes. If the Hologram is not
-     * persistent, it will always remain dirty unless modified by a third party. This is
-     * due to the plugin never saving it.
-     *
-     * @param dirty the dirty state
-     */
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
     }
 
     /**
@@ -134,7 +109,6 @@ public class Hologram {
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
-        setDirty(true);
         saveIfPersistent();
     }
 
@@ -154,7 +128,6 @@ public class Hologram {
             plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
         reorganize();
-        setDirty(true);
         saveIfPersistent();
     }
 
@@ -240,7 +213,6 @@ public class Hologram {
         if (!this.location.equals(location)) {
             this.location = location.clone();
             respawn();
-            setDirty(true);
             saveIfPersistent();
         }
     }
