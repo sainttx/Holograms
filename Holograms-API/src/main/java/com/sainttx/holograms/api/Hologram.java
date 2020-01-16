@@ -129,7 +129,7 @@ public class Hologram {
         lines.add(index, line);
         reorganize();
         if (isChunkLoaded()) {
-            line.show();
+            respawn();
         }
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
@@ -170,6 +170,11 @@ public class Hologram {
         return lines.get(index);
     }
 
+    /**
+     * Returns whether the Hologram is in a loaded chunk.
+     *
+     * @return true if chunk is loaded, false otherwise
+     */
     public boolean isChunkLoaded() {
         Location location = getLocation();
         int chunkX = (int) Math.floor(location.getBlockX() / 16.0D);
@@ -180,7 +185,7 @@ public class Hologram {
     // Reorganizes holograms after an initial index
     public void reorganize() {
         // Don't reorganize lines if there are none to reorganize
-        if (lines.isEmpty() || !isChunkLoaded()) {
+        if (lines.isEmpty()) {
             return;
         }
         Location location = getLocation();
@@ -217,7 +222,13 @@ public class Hologram {
      * Spawns all of the lines in this Hologram.
      */
     public void spawn() {
+        reorganize();
         getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
+    }
+
+    private void respawn() {
+        despawn();
+        spawn();
     }
 
     /**
@@ -228,7 +239,7 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location.clone();
-            reorganize();
+            respawn();
             setDirty(true);
             saveIfPersistent();
         }
