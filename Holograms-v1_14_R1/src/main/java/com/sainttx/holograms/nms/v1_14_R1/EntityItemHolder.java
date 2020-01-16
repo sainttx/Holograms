@@ -41,6 +41,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(EntityTypes.ITEM, world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
+        super.age = Integer.MIN_VALUE;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -94,6 +95,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
     public CraftEntity getBukkitEntity() {
         if (this.bukkitEntity == null) {
             this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
@@ -108,20 +114,13 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setPosition(double x, double y, double z) {
-        HologramEntity mount = getMount();
-        if (mount != null) {
-            mount.setPosition(x, y, z);
-        }
         super.setPosition(x, y, z);
     }
 
     @Override
     public void remove() {
-        super.dead = true;
-        Entity vehicle = super.getVehicle();
-        if (vehicle != null) {
-            vehicle.dead = true;
-        }
+        this.lockTick = false;
+        super.die();
     }
 
     @Override

@@ -41,7 +41,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(EntityTypes.ITEM, world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
-        super.age = Integer.MIN_VALUE; // TODO: inactiveTick increments this value, might cause the random vanishes
+        super.age = Integer.MIN_VALUE;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -119,25 +119,13 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setPosition(double x, double y, double z) {
-        HologramEntity mount = getMount();
-        if (mount != null) {
-            mount.setPosition(x, y, z);
-        }
         super.setPosition(x, y, z);
     }
 
     @Override
     public void remove() {
-        super.dead = true;
-        Entity vehicle = super.getVehicle();
-        if (vehicle != null) {
-            vehicle.dead = true;
-            try {
-                vehicleField.set(this, null);
-            } catch (IllegalAccessException e) {
-                // Ignore
-            }
-        }
+        setLockTick(false);
+        super.die();
     }
 
     @Override
