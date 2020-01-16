@@ -128,6 +128,7 @@ public class Hologram {
             plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
         reorganize();
+        respawn();
         saveIfPersistent();
     }
 

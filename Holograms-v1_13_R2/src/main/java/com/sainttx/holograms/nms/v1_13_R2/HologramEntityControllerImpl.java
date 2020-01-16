@@ -34,7 +34,7 @@ public class HologramEntityControllerImpl implements HologramEntityController {
 
     @Override
     public EntityNameable spawnNameable(HologramLine line, Location location) {
-        return spawnNameable(line, location, true); // TODO: Might not be true for lock, don't know logic
+        return spawnNameable(line, location, true);
     }
 
     private EntityNameable spawnNameable(HologramLine line, Location location, boolean lock) {
