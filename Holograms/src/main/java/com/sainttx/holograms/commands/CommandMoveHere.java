@@ -31,9 +31,10 @@ public class CommandMoveHere implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
             } else {
                 Player player = (Player) sender;
+                hologram.despawn();
                 hologram.teleport(player.getLocation());
+                hologram.spawn();
                 plugin.getHologramManager().saveHologram(hologram);
-                // hologram.refreshAll();
                 sender.sendMessage(TextUtil.color("&7Teleported hologram &f\"" + hologramName + "\" &7to your location."));
             }
         }
