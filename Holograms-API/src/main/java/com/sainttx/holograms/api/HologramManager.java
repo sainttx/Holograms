@@ -86,4 +86,9 @@ public interface HologramManager {
      * Despawns and removes all active holograms.
      */
     void clear();
+
+    /**
+     * Reloads holograms from the save file.
+     */
+    void reload();
 }

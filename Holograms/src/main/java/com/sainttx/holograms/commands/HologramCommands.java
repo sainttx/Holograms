@@ -1,7 +1,6 @@
 package com.sainttx.holograms.commands;
 
 import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,7 +38,7 @@ public class HologramCommands implements CommandExecutor {
         commands.put("movehere", new CommandMoveHere(plugin));
         commands.put("near", new CommandNear(plugin));
         commands.put("removeline", new CommandRemoveLine(plugin));
-        commands.put("refresh", new CommandRefresh(plugin));
+        commands.put("reload", new CommandReload(plugin));
         commands.put("setline", new CommandSetLine(plugin));
     }
 
@@ -78,7 +77,7 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "/holograms movehere " + ChatColor.WHITE + "<name>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms near " + ChatColor.WHITE + "<radius>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms removeline " + ChatColor.WHITE + "<name> <index>");
-        sender.sendMessage(ChatColor.YELLOW + "/holograms refresh");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms reload");
         sender.sendMessage(ChatColor.YELLOW + "/holograms setline " + ChatColor.WHITE + "<name> <index> <text>");
     }
 }

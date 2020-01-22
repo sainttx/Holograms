@@ -26,7 +26,19 @@ public class ManagerImpl implements HologramManager {
 
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
-        persistingHolograms = new Configuration(plugin, "holograms.yml");
+        this.reloadConfiguration();
+    }
+
+    /* Re-reads the holograms.yml file into memory */
+    private void reloadConfiguration() {
+        this.persistingHolograms = new Configuration(plugin, "holograms.yml");
+    }
+
+    @Override
+    public void reload() {
+        clear();
+        reloadConfiguration();
+        load();
     }
 
     /**
@@ -34,7 +46,7 @@ public class ManagerImpl implements HologramManager {
      */
     void load() {
         if (persistingHolograms == null) {
-            persistingHolograms = new Configuration(plugin, "holograms.yml");
+            this.reloadConfiguration();
         }
 
         // Load all the holograms
