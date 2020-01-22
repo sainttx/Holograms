@@ -54,10 +54,10 @@ public class CommandNear implements CommandExecutor {
             if (nearby.isEmpty()) {
                 sender.sendMessage(ChatColor.RED + "There are no nearby holograms within radius " + radius);
             } else {
-                sender.sendMessage(TextUtil.color("&7Holograms within a radius of &f" + radius + "&7:"));
+                sender.sendMessage(ChatColor.GREEN + "Holograms within " + radius + " blocks:");
                 for (Map.Entry<Hologram, Double> near : nearby.entrySet()) {
                     Hologram holo = near.getKey();
-                    sender.sendMessage(" - \"" + holo.getId() + "\" at " + TextUtil.locationAsString(holo.getLocation()) + " (dist: " + TextUtil.formatDouble(near.getValue()) + ")");
+                    sender.sendMessage(" - \"" + holo.getId() + "\" at " + TextUtil.locationAsString(holo.getLocation()) + " (" + TextUtil.formatDouble(near.getValue()) + " blocks away)");
                 }
             }
         }

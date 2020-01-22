@@ -31,24 +31,19 @@ public class TextLine extends AbstractLine implements TextualHologramLine {
 
     @Override
     public void hide() {
-        if (isHidden()) {
-            throw new IllegalStateException("This hologram line is already hidden");
+        if (!isHidden()) {
+            nameable.remove();
+            nameable = null;
         }
-        nameable.remove();
-        nameable = null;
     }
 
     @Override
     public boolean show() {
-        if (!isHidden()) {
-            throw new IllegalStateException("This hologram line is already being displayed");
+        if (isHidden()) {
+            HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+            nameable = plugin.getEntityController().spawnNameable(this, getLocation());
+            nameable.setName(text);
         }
-        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        nameable = plugin.getEntityController().spawnNameable(this, getLocation());
-        if (nameable == null) {
-            return false;
-        }
-        nameable.setName(text);
         return true;
     }
 

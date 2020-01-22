@@ -61,6 +61,7 @@ public class ManagerImpl implements HologramManager {
                         continue loadHolograms;
                     }
                 }
+                hologram.spawn();
                 addActiveHologram(hologram);
                 plugin.getLogger().info("Loaded hologram with \"" + hologram.getId() + "\" with " + hologram.getLines().size() + " lines");
             }
@@ -76,7 +77,6 @@ public class ManagerImpl implements HologramManager {
         List<String> uncoloredLines = holoLines.stream()
                 .map(HologramLine::getRaw)
                 .collect(Collectors.toList());
-        hologram.setDirty(false);
         persistingHolograms.set("holograms." + hologramName + ".location", LocationUtil.locationAsString(hologram.getLocation()));
         persistingHolograms.set("holograms." + hologramName + ".lines", uncoloredLines);
         persistingHolograms.saveConfiguration();

@@ -27,21 +27,18 @@ public class CommandAddLine implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 String text = TextUtil.implode(2, args);
                 try {
                     HologramLine line = plugin.parseLine(hologram, text);
-                    if (line instanceof ItemLine) {
-                        sender.sendMessage(TextUtil.color("&cYou may need to relog or reload the area to properly view the item"));
-                    }
                     hologram.addLine(line);
                     plugin.getHologramManager().saveHologram(hologram);
                 } catch (Exception ex) {
                     sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
                     return true;
                 }
-                sender.sendMessage(TextUtil.color("&7Added line &f\"" + text + "\" &7to hologram &f\"" + hologram.getId() + "&f\"."));
+                sender.sendMessage(ChatColor.GREEN + "Added line \"" + text + "\" to hologram " + hologram.getId());
             }
         }
 

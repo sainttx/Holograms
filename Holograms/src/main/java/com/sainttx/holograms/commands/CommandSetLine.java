@@ -28,31 +28,26 @@ public class CommandSetLine implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 int index;
                 try {
                     index = Integer.parseInt(args[2]);
                 } catch (NumberFormatException ex) {
-                    sender.sendMessage(ChatColor.RED + "Please enter a valid integer as your index.");
+                    sender.sendMessage(ChatColor.RED + args[2] + " is not a valid number");
                     return true;
                 }
 
                 if (index < 0 || index >= hologram.getLines().size()) {
-                    sender.sendMessage(ChatColor.RED + "Invalid index, must be between 0 and " + (hologram.getLines().size() - 1) + ".");
+                    sender.sendMessage(ChatColor.RED + "Index must be between 0 and  " + (hologram.getLines().size() - 1));
                 } else {
                     HologramLine line = hologram.getLine(index);
                     String text = TextUtil.implode(3, args);
                     HologramLine settingLine = plugin.parseLine(hologram, text);
-                    if (line instanceof ItemLine) {
-                        sender.sendMessage(TextUtil.color("&cYou may need to relog or reload the area to properly view the item"));
-                    }
                     hologram.removeLine(line);
                     hologram.addLine(settingLine, index);
-                    plugin.getServer().getScheduler().runTaskLater(plugin, hologram::reorganize, 10L);
                     plugin.getHologramManager().saveHologram(hologram);
-                    sender.sendMessage(TextUtil.color("&7Updated line at index &f" + index + " &7of hologram &f\""
-                        + hologram.getId() + "\""));
+                    sender.sendMessage(ChatColor.GREEN + "Updated line at position " + index + " of hologram " + hologram.getId());
                 }
             }
         }

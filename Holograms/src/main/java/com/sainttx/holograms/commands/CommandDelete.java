@@ -25,10 +25,10 @@ public class CommandDelete implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 plugin.getHologramManager().deleteHologram(hologram);
-                sender.sendMessage(TextUtil.color("&7Deleted hologram &f\"" + hologram.getId() + "\"&7."));
+                sender.sendMessage(ChatColor.GREEN + "Deleted hologram " + hologram.getId());
             }
         }
 

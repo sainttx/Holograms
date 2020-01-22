@@ -21,7 +21,6 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     private HologramManager manager;
     private HologramEntityController controller;
-    private Runnable saveTask = new HologramSaveTask(this);
     private Runnable updateTask = new HologramUpdateTask(this);
 
     @Override
@@ -37,14 +36,12 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
             getCommand("holograms").setExecutor(new HologramCommands(this));
             getServer().getScheduler().runTaskLater(this, () -> ((ManagerImpl) manager).load(), 5L);
-            // getServer().getScheduler().runTaskTimer(this, saveTask, 0L, 20L * 60L * 5L); // Save dirty holograms every 5 minutes
-            getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L); // Update holograms (TODO: Configurable interval)
+            getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L);
         }
     }
 
     @Override
     public void onDisable() {
-        saveTask.run();
         manager.clear();
         this.manager = null;
         this.controller = null;

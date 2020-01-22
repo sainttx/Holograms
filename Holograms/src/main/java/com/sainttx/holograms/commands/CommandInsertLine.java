@@ -28,13 +28,13 @@ public class CommandInsertLine implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
                 int index;
                 try {
                     index = Integer.parseInt(args[2]);
                 } catch (NumberFormatException ex) {
-                    sender.sendMessage(ChatColor.RED + "Please enter a valid integer as your index.");
+                    sender.sendMessage(ChatColor.RED + args[2] + " is not a valid number");
                     return true;
                 }
 
@@ -51,8 +51,8 @@ public class CommandInsertLine implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
                         return true;
                     }
-                    sender.sendMessage(TextUtil.color("&7Inserted line &f\"" + text + "&f\" &7into hologram &f\""
-                            + hologram.getId() + "\" &7at index &f" + index + "."));
+                    sender.sendMessage(ChatColor.GREEN + "Inserted line \"" + text + "\" into hologram "
+                            + hologram.getId() + " at index " + index);
                 }
             }
         }

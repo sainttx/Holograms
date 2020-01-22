@@ -16,7 +16,7 @@ public class Hologram {
     private final String id;
     private Location location;
     private boolean persist;
-    private boolean dirty;
+    private boolean spawned;
     private List<HologramLine> lines = new ArrayList<>();
 
     @ConstructorProperties({ "id", "location" })
@@ -35,10 +35,9 @@ public class Hologram {
     }
     
     // Internal method to save hologram if persistent state has been set
-    private void saveIfPersistent() {
+    private void save() {
         if (isPersistent()) {
             plugin.getHologramManager().saveHologram(this);
-            setDirty(false);
         }
     }
 
@@ -49,6 +48,15 @@ public class Hologram {
      */
     public String getId() {
         return this.id;
+    }
+
+    /**
+     * Returns whether the Hologram is currently spawned (ie. visible).
+     *
+     * @return true if spawned, false otherwise
+     */
+    public boolean isSpawned() {
+        return spawned;
     }
 
     /**
@@ -67,29 +75,6 @@ public class Hologram {
      */
     public void setPersistent(boolean persist) {
         this.persist = persist;
-        setDirty(true);
-    }
-
-    /**
-     * Returns whether this Hologram has had any changes since it was last saved.
-     *
-     * @return <tt>true</tt> if the hologram has been modified
-     */
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    /**
-     * Sets this Holograms dirty state. A "dirty" Hologram implies that since the last
-     * time it was saved, the Hologram has had some sort of modification performed to it
-     * and requires the plugin to save it to reflect any changes. If the Hologram is not
-     * persistent, it will always remain dirty unless modified by a third party. This is
-     * due to the plugin never saving it.
-     *
-     * @param dirty the dirty state
-     */
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
     }
 
     /**
@@ -127,13 +112,13 @@ public class Hologram {
      */
     public void addLine(HologramLine line, int index) {
         lines.add(index, line);
-        line.show();
-        reorganize();
+        save();
+        if (this.spawned) {
+            spawn();
+        }
         if (line instanceof UpdatingHologramLine) { // Track updating line
             plugin.getHologramManager().trackLine(((UpdatingHologramLine) line));
         }
-        setDirty(true);
-        saveIfPersistent();
     }
 
     /**
@@ -143,17 +128,12 @@ public class Hologram {
      * @throws IllegalArgumentException if the line is not part of this hologram
      */
     public void removeLine(HologramLine line) {
-        Validate.isTrue(lines.contains(line), "Line is not a part of this hologram");
         lines.remove(line);
-        if (!line.isHidden()) {
-            line.hide();
-        }
+        save();
+        line.hide();
         if (line instanceof UpdatingHologramLine) { // Remove tracked line
             plugin.getHologramManager().untrackLine(((UpdatingHologramLine) line));
         }
-        reorganize();
-        setDirty(true);
-        saveIfPersistent();
     }
 
     /**
@@ -168,32 +148,28 @@ public class Hologram {
         return lines.get(index);
     }
 
+    /**
+     * Returns whether the Hologram is in a loaded chunk.
+     *
+     * @return true if chunk is loaded, false otherwise
+     */
+    public boolean isChunkLoaded() {
+        Location location = getLocation();
+        int chunkX = (int) Math.floor(location.getBlockX() / 16.0D);
+        int chunkZ = (int) Math.floor(location.getBlockZ() / 16.0D);
+        return location.getWorld().isChunkLoaded(chunkX, chunkZ);
+    }
+
     // Reorganizes holograms after an initial index
-    public void reorganize() {
-        // Don't reorganize lines if there are none to reorganize
-        if (lines.isEmpty()) { 
-            return;
-        }
+    private void reorganize() {
         Location location = getLocation();
         double y = location.getY();
-
-        // Spawn the first line and then start decrementing the y
-        HologramLine first = getLine(0);
-        first.setLocation(location);
-        y -= first.getHeight() / 2;
-        y -= HologramLine.SPACE_BETWEEN_LINES;
-
-        for (int i = 1 ; i < lines.size() ; i++) {
+        for (int i = 0 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
-            if (line != null && !line.isHidden()) {
-                double height = line.getHeight();
-                double middle = height / 2;
-                y -= middle; // Spawn the line at the middle of its height
-                location.setY(y);
-                y -= middle; // Add space below the line so added lines don't get placed inside it
-                y -= HologramLine.SPACE_BETWEEN_LINES;
-                line.setLocation(location);
-            }
+            Location lineLocation = new Location(location.getWorld(), location.getX(), y, location.getZ());
+            line.setLocation(lineLocation);
+            y -= line.getHeight();
+            y -= HologramLine.SPACE_BETWEEN_LINES;
         }
     }
 
@@ -201,14 +177,22 @@ public class Hologram {
      * De-spawns all of the lines in this Hologram.
      */
     public void despawn() {
-        getLines().stream().filter(line -> !line.isHidden()).forEach(HologramLine::hide);
+        getLines().forEach(HologramLine::hide);
+        this.spawned = false;
     }
 
     /**
      * Spawns all of the lines in this Hologram.
      */
     public void spawn() {
-        getLines().stream().filter(HologramLine::isHidden).forEach(HologramLine::show);
+        if (this.isSpawned()) {
+            despawn();
+        }
+        if (isChunkLoaded()) {
+            reorganize();
+            getLines().forEach(HologramLine::show);
+            this.spawned = true;
+        }
     }
 
     /**
@@ -219,9 +203,10 @@ public class Hologram {
     public void teleport(Location location) {
         if (!this.location.equals(location)) {
             this.location = location.clone();
-            reorganize();
-            setDirty(true);
-            saveIfPersistent();
+            save();
+            if (isSpawned()) {
+                spawn();
+            }
         }
     }
 }

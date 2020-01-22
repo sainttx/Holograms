@@ -2,6 +2,7 @@ package com.sainttx.holograms.api.line;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import org.apache.commons.lang.Validate;
@@ -162,32 +163,26 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     @Override
     public void setLocation(Location location) {
         super.setLocation(location);
-        if (!isHidden()) {
+        if (entity != null) {
             entity.setPosition(location.getX(), location.getY(), location.getZ());
         }
     }
 
     @Override
     public void hide() {
-        if (isHidden()) {
-            throw new IllegalStateException("This hologram line is already hidden");
+        if (!isHidden()) {
+            entity.setMount(null);
+            entity.remove();
+            entity = null;
         }
-        entity.setMount(null);
-        entity.remove();
-        entity = null;
     }
 
     @Override
     public boolean show() {
-        if (!isHidden()) {
-            throw new IllegalStateException("This hologram line is already being displayed");
+        if (isHidden()) {
+            HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
+            entity = plugin.getEntityController().spawnItemHolder(this, getLocation(), item);
         }
-        HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        entity = plugin.getEntityController().spawnItemHolder(this, getLocation());
-        if (entity == null) {
-            return false;
-        }
-        entity.setItem(item);
         return true;
     }
 
@@ -210,11 +205,9 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     @Override
     public double getHeight() {
         HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-        switch (plugin.getEntityController().getMinecraftVersion()) {
-            case V1_8_R1:
-                return 1.60;
-            default:
-                return 0.8;
+        if (plugin.getEntityController().getMinecraftVersion() == MinecraftVersion.V1_8_R1) {
+            return 1.60;
         }
+        return 0.7;
     }
 }

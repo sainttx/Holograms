@@ -22,11 +22,10 @@ public class CommandRefresh implements CommandExecutor {
         HologramManager manager = plugin.getHologramManager();
 
         for (Hologram hologram : manager.getActiveHolograms().values()) {
-            hologram.despawn();
             hologram.spawn();
         }
 
-        sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms!");
+        sender.sendMessage(ChatColor.GREEN + "Refreshed all holograms");
         return true;
     }
 }

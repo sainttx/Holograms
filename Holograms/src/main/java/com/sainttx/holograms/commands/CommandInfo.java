@@ -28,11 +28,11 @@ public class CommandInfo implements CommandExecutor {
             Hologram hologram = plugin.getHologramManager().getHologram(hologramName);
 
             if (hologram == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find a hologram with name \"" + hologramName + "\".");
+                sender.sendMessage(ChatColor.RED + "Hologram " + hologramName + " does not exist");
             } else {
-                sender.sendMessage(TextUtil.color("&7Hologram information for &f\"" + hologram.getId() + "\"&7:"));
+                sender.sendMessage(ChatColor.GREEN + "Hologram \"" + hologram.getId() + "\"");
                 Collection<HologramLine> lines = hologram.getLines();
-                sender.sendMessage(TextUtil.color("&7Location: &f" + TextUtil.locationAsString(hologram.getLocation())));
+                sender.sendMessage(ChatColor.GRAY + "Location: " + ChatColor.WHITE + TextUtil.locationAsString(hologram.getLocation()));
                 if (lines.isEmpty()) {
                     sender.sendMessage(ChatColor.GRAY + "Hologram has no lines.");
                 } else {

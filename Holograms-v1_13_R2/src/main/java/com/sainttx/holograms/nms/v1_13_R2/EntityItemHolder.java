@@ -30,6 +30,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super(world);
         this.line = line;
         super.pickupDelay = Integer.MAX_VALUE;
+        this.age = Integer.MIN_VALUE;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -39,28 +40,9 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void tick() {
         ticksLived = 0;
-        if (mountPacketTick++ > 20) {
-            mountPacketTick = 0;
-            mountPacket();
-        }
         if (!lockTick) {
             super.tick();
         }
-    }
-
-    // Sends a packet to notify nearby players that this entity is mounted
-    private void mountPacket() {
-        // Send packet to update passenger state
-        PacketPlayOutMount packet = new PacketPlayOutMount(this.vehicle);
-        world.players.stream()
-                .filter(e -> e instanceof EntityPlayer)
-                .map(e -> (EntityPlayer) e)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 1024 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(packet);
-                    }
-                });
     }
 
     @Override
@@ -101,6 +83,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
     public CraftEntity getBukkitEntity() {
         if (super.bukkitEntity == null) {
             this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
@@ -115,17 +102,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setPosition(double x, double y, double z) {
-        HologramEntity mount = getMount();
-        if (mount != null) {
-            mount.setPosition(x, y, z);
-        }
         super.setPosition(x, y, z);
     }
 
     @Override
     public void remove() {
         this.lockTick = false;
-        removeMount();
         super.die();
     }
 
@@ -145,7 +127,6 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
             NBTTagList tagList = new NBTTagList();
             tagList.add(new NBTTagString(getRandomString()));
-
             display.set("Lore", tagList);
         }
         this.item = item;
@@ -169,9 +150,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null) {
-            removeMount();
-        } else if (entity instanceof Entity) {
+        if (entity instanceof Entity) {
             removeMount();
             vehicle = (Entity) entity;
             super.a(vehicle, true);
@@ -182,9 +161,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     // Removes the current mount
     private void removeMount() {
         if (vehicle != null) {
-            stopRiding();
             vehicle.passengers.remove(this);
-            vehicle.die();
             vehicle = null;
         }
     }
