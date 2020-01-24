@@ -74,6 +74,7 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "/holograms info " + ChatColor.WHITE + "<name> <text>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms insertline " + ChatColor.WHITE + "<name> <index> <text>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms list");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms move " + ChatColor.WHITE + "<name> <world> <x> <y> <z>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms movehere " + ChatColor.WHITE + "<name>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms near " + ChatColor.WHITE + "<radius>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms removeline " + ChatColor.WHITE + "<name> <index>");
