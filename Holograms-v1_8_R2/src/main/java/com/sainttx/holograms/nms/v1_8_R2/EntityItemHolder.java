@@ -7,6 +7,7 @@ import net.minecraft.server.v1_8_R2.*;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
@@ -19,76 +20,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        super.pickupDelay = Integer.MAX_VALUE;
-        super.u();
+        this.pickupDelay = Integer.MAX_VALUE;
+        this.u();
     }
 
     public void setLockTick(boolean lockTick) {
         this.lockTick = lockTick;
-    }
-
-    @Override
-    public void t_() {
-        super.u(); // Reset age to -6000
-        ticksLived = 0;
-        if (!lockTick) {
-            super.m();
-        }
-    }
-
-    @Override
-    public void d(EntityHuman entityhuman) {
-
-    }
-
-    @Override
-    public void b(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public boolean d(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public void e(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public void f(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public void a(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean isInvulnerable(DamageSource source) {
-        return true;
-    }
-
-    @Override
-    public void die() {
-        setLockTick(false);
-        super.die();
-    }
-
-    @Override
-    public boolean isAlive() {
-        return false;
-    }
-
-    @Override
-    public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
-        }
-        return this.bukkitEntity;
     }
 
     @Override
@@ -103,8 +40,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void remove() {
-        this.lockTick = false;
-        super.die();
+        this.dead = true;
     }
 
     @Override
@@ -160,5 +96,105 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
             vehicle.passenger = null;
             vehicle = null;
         }
+    }
+
+    // Overriden NMS methods
+
+    @Override
+    public void t_() {
+        this.u();
+        this.ticksLived = 0;
+        if (!lockTick) {
+            super.t_();
+        }
+    }
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public boolean d(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public void e(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public boolean ad() {
+        return false;
+    }
+
+    @Override
+    public boolean ae() {
+        return false;
+    }
+
+    @Override
+    public boolean isInvulnerable(DamageSource source) {
+        return true;
+    }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public void a(int i) {
+        super.a(Integer.MAX_VALUE);
+    }
+
+    @Override
+    protected void burn(float i) {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
+    }
+
+    @Override
+    public void d(EntityHuman entityhuman) {
+
+    }
+
+    @Nullable
+    @Override
+    public void c(int i) {
+
+    }
+
+    @Override
+    public CraftEntity getBukkitEntity() {
+        if (super.bukkitEntity == null) {
+            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
+        }
+        return this.bukkitEntity;
     }
 }

@@ -22,7 +22,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
-        super.a(new NullBoundingBox()); // Forces the bounding box
+        super.a(new NullBoundingBox());
         setInvisible(true);
         setSmall(true);
         setArms(false);
@@ -32,6 +32,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         this.parentPiece = parentPiece;
     }
 
+    /* Since super.n(boolean) is private, we override to set marker flag */
     private void setMarker(boolean flag) {
         byte b0 = this.datawatcher.getByte(10);
         if(flag) {
@@ -41,39 +42,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         }
 
         this.datawatcher.watch(10, b0);
-    }
-
-    @Override
-    public void b(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-    }
-
-    @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-        return false;
-    }
-
-    @Override
-    public boolean d(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-        return false;
-    }
-
-    @Override
-    public void e(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-    }
-
-
-    @Override
-    public boolean isInvulnerable(DamageSource source) {
-        /*
-		 * The field Entity.invulnerable is private.
-		 * It's only used while saving NBTTags, but since the entity would be killed
-		 * on chunk unload, we prefer to override isInvulnerable().
-		 */
-        return true;
     }
 
     @Override
@@ -90,88 +58,20 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         return super.getCustomName();
     }
 
-    @Override
-    public void setCustomNameVisible(boolean visible) {
-        // Locks the custom name.
-    }
-
-    @Override
-    public boolean a(EntityHuman human, Vec3D vec3d) {
-        // Prevent stand being equipped
-        return true;
-    }
-
-    @Override
-    public boolean d(int i, ItemStack item) {
-        // Prevent stand being equipped
-        return false;
-    }
-
-    @Override
-    public void setEquipment(int i, ItemStack item) {
-        // Prevent stand being equipped
-    }
-
-    @Override
-    public void a(AxisAlignedBB boundingBox) {
-        // Do not change it!
-    }
-
-    @Override
-    public int getId() {
-        if (this.disableFakeId) {
-            return super.getId();
-        }
-
-        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            // Then this method is being called when creating a new packet, we return a fake ID!
-            return -1;
-        }
-
-        return super.getId();
-    }
-
-    @Override
-    public void t_() {
-        if (!lockTick) {
-            super.t_();
-        }
-    }
-
-    @Override
-    public void makeSound(String sound, float f1, float f2) {
-        // Remove sounds.
-    }
-
     public void setLockTick(boolean lock) {
         lockTick = lock;
     }
 
     @Override
     public void remove() {
-        die();
-    }
-
-    @Override
-    public void die() {
-        setLockTick(false);
-        super.die();
-    }
-
-    @Override
-    public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
-        }
-        return this.bukkitEntity;
+        this.dead = true;
     }
 
     @Override
     public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
 
-        // Send a packet near to update the position.
+        // Send a packet to update the position.
         this.disableFakeId = true;
         PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
         this.disableFakeId = false;
@@ -189,5 +89,122 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public HologramLine getHologramLine() {
         return parentPiece;
+    }
+
+    // Overriden NMS methods
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public boolean d(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public void e(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean isInvulnerable(DamageSource source) {
+        return true;
+    }
+
+    @Override
+    public void setCustomName(String name) {
+
+    }
+
+    @Override
+    public void setCustomNameVisible(boolean visible) {
+
+    }
+
+    @Override
+    public boolean a(EntityHuman human, Vec3D vec3d) {
+        return true;
+    }
+
+    @Override
+    public boolean d(int i, ItemStack item) {
+        return false;
+    }
+
+    @Override
+    public void setEquipment(int i, ItemStack item) {
+
+    }
+
+    @Override
+    public void a(AxisAlignedBB boundingBox) {
+
+    }
+
+    @Override
+    public int getId() {
+        if (this.disableFakeId) {
+            return super.getId();
+        }
+
+        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java")
+                && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
+            return -1;
+        }
+
+        return super.getId();
+    }
+
+    @Override
+    public void t_() {
+        if (!lockTick) {
+            super.t_();
+        }
+    }
+
+    @Override
+    public void makeSound(String sound, float f1, float f2) {
+
+    }
+
+    @Override
+    public void setInvisible(boolean flag) {
+        super.setInvisible(true);
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
+    }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public CraftEntity getBukkitEntity() {
+        if (super.bukkitEntity == null) {
+            this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
+        }
+        return this.bukkitEntity;
     }
 }

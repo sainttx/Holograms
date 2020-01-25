@@ -81,4 +81,9 @@ public class CraftItemHolder extends CraftItem {
     @Override
     public void setPickupDelay(int delay) {
     }
+
+    @Override
+    public void setTicksLived(int value) {
+
+    }
 }

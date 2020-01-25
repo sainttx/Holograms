@@ -7,6 +7,7 @@ import net.minecraft.server.v1_9_R2.*;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
@@ -20,95 +21,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        super.pickupDelay = Integer.MAX_VALUE;
-        super.v();
+        this.pickupDelay = Integer.MAX_VALUE;
+        this.v();
     }
 
     public void setLockTick(boolean lockTick) {
         this.lockTick = lockTick;
-    }
-
-    @Override
-    public void d(EntityHuman entityhuman) {
-
-    }
-
-    @Override
-    public void m() {
-        super.v();
-        ticksLived = 0;
-        if (mountPacketTick++ > 20) {
-            mountPacketTick = 0;
-            mountPacket();
-        }
-        if (!lockTick) {
-            super.m();
-        }
-    }
-
-    // Sends a packet to notify nearby players that this entity is mounted
-    private void mountPacket() {
-        // Send packet to update passenger state
-        PacketPlayOutMount packet = new PacketPlayOutMount(this.vehicle);
-        world.players.stream()
-                .filter(e -> e instanceof EntityPlayer)
-                .map(e -> (EntityPlayer) e)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 1024 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(packet);
-                    }
-                });
-    }
-
-    @Override
-    public void b(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public boolean d(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public NBTTagCompound e(NBTTagCompound nbttagcompound) {
-        return new NBTTagCompound();
-    }
-
-    @Override
-    public void f(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public void a(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean isInvulnerable(DamageSource source) {
-        return true;
-    }
-
-    @Override
-    public void die() {
-
-    }
-
-    @Override
-    public boolean isAlive() {
-        return false;
-    }
-
-    @Override
-    public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
-        }
-        return this.bukkitEntity;
     }
 
     @Override
@@ -123,8 +41,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void remove() {
-        this.lockTick = false;
-        super.die();
+        this.dead = true;
     }
 
     @Override
@@ -180,5 +97,122 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
             vehicle.passengers.remove(this);
             vehicle = null;
         }
+    }
+
+    // Overriden NMS methods
+
+    @Override
+    public void m() {
+        this.v();
+        this.ticksLived = 0;
+        if (mountPacketTick++ > 20) {
+            mountPacketTick = 0;
+            mountPacket();
+        }
+        if (!lockTick) {
+            super.m();
+        }
+    }
+
+    private void mountPacket() {
+        PacketPlayOutMount packet = new PacketPlayOutMount(this.vehicle);
+        world.players.stream()
+                .filter(e -> e instanceof EntityPlayer)
+                .map(e -> (EntityPlayer) e)
+                .forEach(p -> {
+                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
+                    if (distanceSquared < 1024 && p.playerConnection != null) {
+                        p.playerConnection.sendPacket(packet);
+                    }
+                });
+    }
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public boolean d(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public NBTTagCompound e(NBTTagCompound nbttagcompound) {
+        return new NBTTagCompound();
+    }
+
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInvulnerable(DamageSource source) {
+        return true;
+    }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public void a(int i) {
+        super.a(Integer.MAX_VALUE);
+    }
+
+    @Override
+    protected void burn(float i) {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
+    }
+
+    @Override
+    public void d(EntityHuman entityhuman) {
+
+    }
+
+    @Nullable
+    @Override
+    public Entity c(int i) {
+        return null;
+    }
+
+    @Override
+    public CraftEntity getBukkitEntity() {
+        if (super.bukkitEntity == null) {
+            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
+        }
+        return this.bukkitEntity;
     }
 }

@@ -3,19 +3,20 @@ package com.sainttx.holograms.nms.v1_13_R1;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
+import net.minecraft.server.v1_13_R1.Blocks;
 import net.minecraft.server.v1_13_R1.DamageSource;
 import net.minecraft.server.v1_13_R1.Entity;
+import net.minecraft.server.v1_13_R1.EntityHuman;
 import net.minecraft.server.v1_13_R1.EntityItem;
-import net.minecraft.server.v1_13_R1.EntityPlayer;
 import net.minecraft.server.v1_13_R1.ItemStack;
 import net.minecraft.server.v1_13_R1.NBTTagCompound;
 import net.minecraft.server.v1_13_R1.NBTTagList;
 import net.minecraft.server.v1_13_R1.NBTTagString;
-import net.minecraft.server.v1_13_R1.PacketPlayOutMount;
 import net.minecraft.server.v1_13_R1.World;
 import org.bukkit.craftbukkit.v1_13_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_13_R1.inventory.CraftItemStack;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
@@ -23,89 +24,17 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     private boolean lockTick;
     private HologramLine line;
     private Entity vehicle;
-    private int mountPacketTick;
     private org.bukkit.inventory.ItemStack item;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        super.pickupDelay = Integer.MAX_VALUE;
+        this.pickupDelay = Integer.MAX_VALUE;
+        this.s();
     }
 
     public void setLockTick(boolean lockTick) {
         this.lockTick = lockTick;
-    }
-
-    @Override
-    public void tick() {
-        ticksLived = 0;
-        if (mountPacketTick++ > 20) {
-            mountPacketTick = 0;
-            mountPacket();
-        }
-        if (!lockTick) {
-            super.tick();
-        }
-    }
-
-    // Sends a packet to notify nearby players that this entity is mounted
-    private void mountPacket() {
-        // Send packet to update passenger state
-        PacketPlayOutMount packet = new PacketPlayOutMount(this.vehicle);
-        world.players.stream()
-                .filter(e -> e instanceof EntityPlayer)
-                .map(e -> (EntityPlayer) e)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 1024 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(packet);
-                    }
-                });
-    }
-
-    @Override
-    public void b(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public boolean d(NBTTagCompound nbttagcompound) {
-        return false;
-    }
-
-    @Override
-    public NBTTagCompound save(NBTTagCompound nbttagcompound) {
-        return new NBTTagCompound();
-    }
-
-    @Override
-    public void f(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public void a(NBTTagCompound nbttagcompound) {
-    }
-
-    @Override
-    public boolean isInvulnerable(DamageSource source) {
-        return true;
-    }
-
-    @Override
-    public void die() {
-
-    }
-
-    @Override
-    public CraftEntity getBukkitEntity() {
-        if (super.bukkitEntity == null) {
-            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
-        }
-        return this.bukkitEntity;
     }
 
     @Override
@@ -124,9 +53,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void remove() {
-        this.lockTick = false;
-        removeMount();
-        super.die();
+        this.dead = true;
     }
 
     @Override
@@ -149,7 +76,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
             display.set("Lore", tagList);
         }
         this.item = item;
-        setItemStack(nms);
+        setItemStack(nms == null || nms == ItemStack.a ? new ItemStack(Blocks.BARRIER) : nms);
     }
 
     // Returns a random string
@@ -189,4 +116,104 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         }
     }
 
+    // Overriden NMS methods
+
+    @Override
+    public void tick() {
+        this.s();
+        this.ticksLived = 0;
+
+        if (!lockTick) {
+            super.tick();
+        }
+    }
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public boolean d(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public NBTTagCompound save(NBTTagCompound nbttagcompound) {
+        return new NBTTagCompound();
+    }
+
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInvulnerable(DamageSource source) {
+        return true;
+    }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public void a(int i) {
+        super.a(Integer.MAX_VALUE);
+    }
+
+    @Override
+    protected void burn(float i) {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
+    }
+
+    @Override
+    public void d(EntityHuman entityhuman) {
+
+    }
+
+    @Nullable
+    @Override
+    public Entity d(int i) {
+        return null;
+    }
+
+    @Override
+    public CraftEntity getBukkitEntity() {
+        if (super.bukkitEntity == null) {
+            this.bukkitEntity = new CraftItemHolder(this.world.getServer(), this);
+        }
+        return this.bukkitEntity;
+    }
 }

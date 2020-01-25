@@ -11,6 +11,7 @@ import net.minecraft.server.v1_15_R1.EntityTypes;
 import net.minecraft.server.v1_15_R1.EnumHand;
 import net.minecraft.server.v1_15_R1.EnumInteractionResult;
 import net.minecraft.server.v1_15_R1.EnumItemSlot;
+import net.minecraft.server.v1_15_R1.IChatBaseComponent;
 import net.minecraft.server.v1_15_R1.ItemStack;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import net.minecraft.server.v1_15_R1.PacketPlayOutEntityTeleport;
@@ -20,6 +21,8 @@ import net.minecraft.server.v1_15_R1.World;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.util.CraftChatMessage;
 
+import javax.annotation.Nullable;
+
 public class EntityNameable extends EntityArmorStand implements Nameable {
 
     private boolean lockTick;
@@ -28,7 +31,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(EntityTypes.ARMOR_STAND, world);
-        super.a(new NullBoundingBox()); // Forces the bounding box
+        super.a(new NullBoundingBox());
         super.collides = false;
         setInvisible(true);
         setSmall(true);
@@ -37,6 +40,53 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         setBasePlate(true);
         setMarker(true);
         this.parentPiece = parentPiece;
+    }
+
+    public void setLockTick(boolean lock) {
+        lockTick = lock;
+    }
+
+    @Override
+    public void setName(String text) {
+        super.setCustomName(CraftChatMessage.fromStringOrNull(text));
+        super.setCustomNameVisible(!text.isEmpty());
+    }
+
+    @Override
+    public String getName() {
+        return CraftChatMessage.fromComponent(super.getCustomName());
+    }
+
+    @Override
+    public void setPosition(double x, double y, double z) {
+        super.setPosition(x, y, z);
+        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
+        this.world.getPlayers().stream()
+                .filter(p -> p instanceof EntityPlayer)
+                .map(p -> (EntityPlayer) p)
+                .forEach(p -> {
+                    double distanceSquared = Math.pow(p.locX() - this.locX(), 2) + Math.pow(p.locZ() - this.locZ(), 2);
+                    if (distanceSquared < 8192 && p.playerConnection != null) {
+                        p.playerConnection.sendPacket(teleportPacket);
+                    }
+                });
+    }
+
+    @Override
+    public HologramLine getHologramLine() {
+        return parentPiece;
+    }
+
+    @Override
+    public void remove() {
+        this.dead = true;
+    }
+
+    // Overriden NMS methods
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
     }
 
     @Override
@@ -65,11 +115,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     }
 
     @Override
-    public void a(NBTTagCompound nbttagcompound) {
-
-    }
-
-    @Override
     public boolean isInvulnerable(DamageSource source) {
         return true;
     }
@@ -80,36 +125,44 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     }
 
     @Override
-    public void setName(String text) {
-        super.setCustomName(CraftChatMessage.fromStringOrNull(text));
-        super.setCustomNameVisible(!text.isEmpty());
-    }
+    public void setCustomName(@Nullable IChatBaseComponent ichatbasecomponent) {
 
-    @Override
-    public String getName() {
-        return CraftChatMessage.fromComponent(super.getCustomName());
     }
 
     @Override
     public void setCustomNameVisible(boolean visible) {
-        // Lock custom name
+
     }
 
     @Override
     public EnumInteractionResult a(EntityHuman entityhuman, Vec3D vec3d, EnumHand enumhand) {
-        // Don't allow equipping armor stand
         return EnumInteractionResult.FAIL;
     }
 
     @Override
     public boolean a_(int i, ItemStack item) {
-        // Don't allow equipping armor stand
         return false;
     }
 
     @Override
     public void setSlot(EnumItemSlot enumitemslot, ItemStack itemstack) {
 
+    }
+
+    @Override
+    public void setInvisible(boolean flag) {
+        super.setInvisible(true);
+    }
+
+
+    @Override
+    public void killEntity() {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
     }
 
     @Override
@@ -120,7 +173,8 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public int getId() {
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
+        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java")
+                && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
             return -1;
         }
 
@@ -136,16 +190,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void a(SoundEffect soundeffect, float f, float f1) {
-        // Disable sound effects
-    }
 
-    public void setLockTick(boolean lock) {
-        lockTick = lock;
-    }
-
-    @Override
-    public void remove() {
-        super.dead = true;
     }
 
     @Override
@@ -160,27 +205,4 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         }
         return this.bukkitEntity;
     }
-
-    @Override
-    public void setPosition(double x, double y, double z) {
-        super.setPosition(x, y, z);
-
-        // Send a packet near to update the position.
-        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-        this.world.getPlayers().stream()
-                .filter(p -> p instanceof EntityPlayer)
-                .map(p -> (EntityPlayer) p)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX() - this.locX(), 2) + Math.pow(p.locZ() - this.locZ(), 2);
-                    if (distanceSquared < 8192 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(teleportPacket);
-                    }
-                });
-    }
-
-    @Override
-    public HologramLine getHologramLine() {
-        return parentPiece;
-    }
-
 }

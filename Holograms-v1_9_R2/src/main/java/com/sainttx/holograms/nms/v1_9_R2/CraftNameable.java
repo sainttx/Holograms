@@ -86,6 +86,11 @@ public class CraftNameable extends CraftArmorStand {
     }
 
     @Override
+    public void setMarker(boolean marker) {
+
+    }
+
+    @Override
     public boolean addPotionEffect(PotionEffect effect) {
         return false;
     }
