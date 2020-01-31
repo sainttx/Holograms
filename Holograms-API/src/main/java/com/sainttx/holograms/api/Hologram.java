@@ -1,6 +1,7 @@
 package com.sainttx.holograms.api;
 
 import com.sainttx.holograms.api.line.HologramLine;
+import com.sainttx.holograms.api.line.ItemLine;
 import com.sainttx.holograms.api.line.UpdatingHologramLine;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
@@ -166,10 +167,13 @@ public class Hologram {
         double y = location.getY();
         for (int i = 0 ; i < lines.size() ; i++) {
             HologramLine line = getLine(i);
+            if (line instanceof ItemLine) {
+                y -= 0.2;
+            }
             Location lineLocation = new Location(location.getWorld(), location.getX(), y, location.getZ());
-            line.setLocation(lineLocation);
             y -= line.getHeight();
             y -= HologramLine.SPACE_BETWEEN_LINES;
+            line.setLocation(lineLocation);
         }
     }
 

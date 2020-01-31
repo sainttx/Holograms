@@ -208,6 +208,6 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         if (plugin.getEntityController().getMinecraftVersion() == MinecraftVersion.V1_8_R1) {
             return 1.60;
         }
-        return 0.7;
+        return 0.5;
     }
 }
