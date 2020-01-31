@@ -21,9 +21,9 @@
     <dependencies>
         <!-- Local .m2 -->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.14-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- End local .m2 -->

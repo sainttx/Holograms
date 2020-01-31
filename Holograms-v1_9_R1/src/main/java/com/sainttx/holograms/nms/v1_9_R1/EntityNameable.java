@@ -9,6 +9,7 @@ import net.minecraft.server.v1_9_R1.EntityHuman;
 import net.minecraft.server.v1_9_R1.EntityPlayer;
 import net.minecraft.server.v1_9_R1.EnumHand;
 import net.minecraft.server.v1_9_R1.EnumInteractionResult;
+import net.minecraft.server.v1_9_R1.EnumItemSlot;
 import net.minecraft.server.v1_9_R1.ItemStack;
 import net.minecraft.server.v1_9_R1.NBTTagCompound;
 import net.minecraft.server.v1_9_R1.PacketPlayOutEntityTeleport;
@@ -24,7 +25,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
-        super.a(new NullBoundingBox()); // Forces the bounding box
+        super.collides = false;
         setInvisible(true);
         setSmall(true);
         setArms(false);
@@ -34,37 +35,8 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         this.parentPiece = parentPiece;
     }
 
-    @Override
-    public void b(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-    }
-
-    @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-        return false;
-    }
-
-    @Override
-    public boolean d(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-        return false;
-    }
-
-    @Override
-    public void e(NBTTagCompound nbttagcompound) {
-        // Do not save NBT.
-    }
-
-
-    @Override
-    public boolean isInvulnerable(DamageSource source) {
-        /*
-         * The field Entity.invulnerable is private.
-		 * It's only used while saving NBTTags, but since the entity would be killed
-		 * on chunk unload, we prefer to override isInvulnerable().
-		 */
-        return true;
+    public void setLockTick(boolean lock) {
+        lockTick = lock;
     }
 
     @Override
@@ -79,62 +51,122 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     }
 
     @Override
+    public void remove() {
+        this.dead = true;
+    }
+
+    @Override
+    public void setPosition(double x, double y, double z) {
+        super.setPosition(x, y, z);
+    }
+
+    @Override
+    public HologramLine getHologramLine() {
+        return parentPiece;
+    }
+
+    // Overriden NMS methods
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean c(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public boolean d(NBTTagCompound nbttagcompound) {
+        return false;
+    }
+
+    @Override
+    public void e(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public void f(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
+    public boolean isInvulnerable(DamageSource source) {
+        return true;
+    }
+
+    @Override
+    public void setCustomName(String name) {
+
+    }
+
+    @Override
     public void setCustomNameVisible(boolean visible) {
-        // Locks the custom name.
+
     }
 
     @Override
     public EnumInteractionResult a(EntityHuman entityhuman, Vec3D vec3d, ItemStack itemstack, EnumHand enumhand) {
-        // Prevent stand being equipped
         return EnumInteractionResult.FAIL;
     }
 
     @Override
     public boolean c(int i, ItemStack item) {
-        // Prevent stand being equipped
         return false;
     }
 
     @Override
     public void a(AxisAlignedBB boundingBox) {
-        // Do not change it!
-    }
 
-    @Override
-    public int getId() {
-        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java") && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            return -1;
-        }
-
-        return super.getId();
     }
 
     @Override
     public void m() {
         if (!lockTick) {
-            super.playStepSound();
+            super.m();
         }
     }
 
     @Override
     public void a(SoundEffect soundeffect, float f, float f1) {
-        // Remove sounds.
-    }
 
-    public void setLockTick(boolean lock) {
-        lockTick = lock;
     }
 
     @Override
-    public void remove() {
-        die();
+    public boolean isCollidable() {
+        return false;
+    }
+
+    @Override
+    public void setInvisible(boolean flag) {
+        super.setInvisible(true);
+    }
+
+    @Override
+    public void setSlot(EnumItemSlot enumitemslot, ItemStack itemstack) {
+
+    }
+
+    @Override
+    public void Q() {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
+        return false;
     }
 
     @Override
     public void die() {
-        setLockTick(false);
-        super.die();
+
     }
 
     @Override
@@ -143,27 +175,5 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
             this.bukkitEntity = new CraftNameable(this.world.getServer(), this);
         }
         return this.bukkitEntity;
-    }
-
-    @Override
-    public void setPosition(double x, double y, double z) {
-        super.setPosition(x, y, z);
-
-        // Send a packet near to update the position.
-        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-        this.world.players.stream()
-                .filter(p -> p instanceof EntityPlayer)
-                .map(p -> (EntityPlayer) p)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 8192 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(teleportPacket);
-                    }
-                });
-    }
-
-    @Override
-    public HologramLine getHologramLine() {
-        return parentPiece;
     }
 }

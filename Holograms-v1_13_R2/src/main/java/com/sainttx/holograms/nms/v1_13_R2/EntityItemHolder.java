@@ -3,34 +3,30 @@ package com.sainttx.holograms.nms.v1_13_R2;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
+import net.minecraft.server.v1_13_R2.Blocks;
 import net.minecraft.server.v1_13_R2.DamageSource;
+import net.minecraft.server.v1_13_R2.DimensionManager;
 import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityHuman;
 import net.minecraft.server.v1_13_R2.EntityItem;
-import net.minecraft.server.v1_13_R2.EntityPlayer;
 import net.minecraft.server.v1_13_R2.ItemStack;
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
-import net.minecraft.server.v1_13_R2.NBTTagList;
-import net.minecraft.server.v1_13_R2.NBTTagString;
-import net.minecraft.server.v1_13_R2.PacketPlayOutMount;
 import net.minecraft.server.v1_13_R2.World;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 
-import java.util.concurrent.ThreadLocalRandom;
+import javax.annotation.Nullable;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     private boolean lockTick;
     private HologramLine line;
-    private Entity vehicle;
-    private int mountPacketTick;
     private org.bukkit.inventory.ItemStack item;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        super.pickupDelay = Integer.MAX_VALUE;
-        this.age = Integer.MIN_VALUE;
+        this.noclip = true;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -38,15 +34,84 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public HologramLine getHologramLine() {
+        return line;
+    }
+
+    @Override
+    public void setPosition(double x, double y, double z) {
+        super.setPosition(x, y, z);
+    }
+
+    @Override
+    public void remove() {
+        this.dead = true;
+        if (isPassenger()) {
+            getVehicle().dead = true;
+        }
+    }
+
+    @Override
+    public void setItem(org.bukkit.inventory.ItemStack item) {
+        ItemStack nms = CraftItemStack.asNMSCopy(item);
+        if (nms == null || nms == ItemStack.a) {
+            nms = new ItemStack(Blocks.BARRIER);
+        }
+        this.item = item;
+        super.setItemStack(nms);
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack getItem() {
+        return item;
+    }
+
+    @Override
+    public HologramEntity getMount() {
+        return (HologramEntity) getVehicle();
+    }
+
+    @Override
+    public void setMount(HologramEntity entity) {
+        if (entity instanceof Entity) {
+            this.startRiding((Entity) entity);
+        }
+    }
+
+    // Overriden NMS methods
+
+    @Override
     public void tick() {
-        ticksLived = 0;
+        this.s();
+        this.p();
+        this.ticksLived = 0;
         if (!lockTick) {
             super.tick();
         }
     }
 
     @Override
+    public void postTick() {
+        if (!lockTick) {
+            super.postTick();
+        }
+    }
+
+    @Override
+    public void W() {
+        if (!lockTick) {
+            super.W();
+        }
+    }
+
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+
+    }
+
+    @Override
     public void b(NBTTagCompound nbttagcompound) {
+
     }
 
     @Override
@@ -66,10 +131,22 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void f(NBTTagCompound nbttagcompound) {
+
     }
 
     @Override
-    public void a(NBTTagCompound nbttagcompound) {
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
     }
 
     @Override
@@ -83,8 +160,39 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
-    public boolean isAlive() {
+    public void killEntity() {
+
+    }
+
+    @Override
+    public void a(int i) {
+        super.a(Integer.MAX_VALUE);
+    }
+
+    @Override
+    protected void burn(float i) {
+
+    }
+
+    @Override
+    public boolean damageEntity(DamageSource damagesource, float f) {
         return false;
+    }
+
+    @Override
+    public void d(EntityHuman entityhuman) {
+
+    }
+
+    @Nullable
+    @Override
+    public Entity a(DimensionManager dimensionmanager) {
+        return null;
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemstack) {
+
     }
 
     @Override
@@ -94,76 +202,4 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         }
         return this.bukkitEntity;
     }
-
-    @Override
-    public HologramLine getHologramLine() {
-        return line;
-    }
-
-    @Override
-    public void setPosition(double x, double y, double z) {
-        super.setPosition(x, y, z);
-    }
-
-    @Override
-    public void remove() {
-        this.lockTick = false;
-        super.die();
-    }
-
-    @Override
-    public void setItem(org.bukkit.inventory.ItemStack item) {
-        ItemStack nms = CraftItemStack.asNMSCopy(item);
-
-        if (nms != null) {
-            if (nms.getTag() == null) {
-                nms.setTag(new NBTTagCompound());
-            }
-
-            NBTTagCompound display = nms.getTag().getCompound("display");
-            if (!nms.getTag().hasKey("display")) {
-                nms.getTag().set("display", display);
-            }
-
-            NBTTagList tagList = new NBTTagList();
-            tagList.add(new NBTTagString(getRandomString()));
-            display.set("Lore", tagList);
-        }
-        this.item = item;
-        setItemStack(nms);
-    }
-
-    // Returns a random string
-    private String getRandomString() {
-        return Double.toString(ThreadLocalRandom.current().nextDouble());
-    }
-
-    @Override
-    public org.bukkit.inventory.ItemStack getItem() {
-        return item;
-    }
-
-    @Override
-    public HologramEntity getMount() {
-        return (HologramEntity) vehicle;
-    }
-
-    @Override
-    public void setMount(HologramEntity entity) {
-        if (entity instanceof Entity) {
-            removeMount();
-            vehicle = (Entity) entity;
-            super.a(vehicle, true);
-            vehicle.passengers.add(this);
-        }
-    }
-
-    // Removes the current mount
-    private void removeMount() {
-        if (vehicle != null) {
-            vehicle.passengers.remove(this);
-            vehicle = null;
-        }
-    }
-
 }
