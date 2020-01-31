@@ -43,9 +43,14 @@ public class CommandSetLine implements CommandExecutor {
                 } else {
                     HologramLine line = hologram.getLine(index);
                     String text = TextUtil.implode(3, args);
-                    HologramLine settingLine = plugin.parseLine(hologram, text);
                     hologram.removeLine(line);
-                    hologram.addLine(settingLine, index);
+                    try {
+                        HologramLine settingLine = plugin.parseLine(hologram, text);
+                        hologram.addLine(settingLine, index);
+                    } catch (Exception ex) {
+                        sender.sendMessage(ChatColor.RED + "Error: " + ex.getMessage());
+                        return true;
+                    }
                     plugin.getHologramManager().saveHologram(hologram);
                     sender.sendMessage(ChatColor.GREEN + "Updated line at position " + index + " of hologram " + hologram.getId());
                 }
