@@ -40,6 +40,9 @@ public class HologramCommands implements CommandExecutor {
         commands.put("removeline", new CommandRemoveLine(plugin));
         commands.put("reload", new CommandReload(plugin));
         commands.put("setline", new CommandSetLine(plugin));
+        CommandTeleport teleportCommand = new CommandTeleport(plugin);
+        commands.put("teleport", teleportCommand);
+        commands.put("tp", teleportCommand);
     }
 
     @Override
@@ -79,5 +82,6 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "/holograms removeline " + ChatColor.WHITE + "<name> <index>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms reload");
         sender.sendMessage(ChatColor.YELLOW + "/holograms setline " + ChatColor.WHITE + "<name> <index> <text>");
+        sender.sendMessage(ChatColor.YELLOW + "/holograms teleport " + ChatColor.WHITE + "<name>");
     }
 }
