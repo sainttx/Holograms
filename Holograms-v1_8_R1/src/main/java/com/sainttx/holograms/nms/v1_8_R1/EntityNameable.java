@@ -24,7 +24,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
-        super.a(new NullBoundingBox());
         setInvisible(true);
         setSmall(true);
         setArms(false);
@@ -59,20 +58,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
-        this.disableFakeId = true;
-        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-        this.disableFakeId = false;
-        List<Object> players = this.world.players;
-        players.stream()
-                .filter(obj -> obj instanceof EntityPlayer)
-                .forEach(obj -> {
-                    EntityPlayer nmsPlayer = (EntityPlayer) obj;
-
-                    double distanceSquared = Math.pow(nmsPlayer.locX - this.locX, 2) + Math.pow(nmsPlayer.locZ - this.locZ, 2);
-                    if (distanceSquared < 8192 && nmsPlayer.playerConnection != null) {
-                        nmsPlayer.playerConnection.sendPacket(teleportPacket);
-                    }
-                });
     }
 
     @Override
@@ -143,21 +128,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     @Override
     public void a(AxisAlignedBB boundingBox) {
-    }
-
-    @Override
-    public int getId() {
-        if (this.disableFakeId) {
-            return super.getId();
-        }
-
-        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java")
-                && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            return -1;
-        }
-
-        return super.getId();
     }
 
     @Override

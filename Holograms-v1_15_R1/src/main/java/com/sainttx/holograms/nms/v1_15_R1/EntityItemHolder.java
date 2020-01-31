@@ -3,7 +3,6 @@ package com.sainttx.holograms.nms.v1_15_R1;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
-import java.lang.reflect.Field;
 
 import net.minecraft.server.v1_15_R1.Blocks;
 import net.minecraft.server.v1_15_R1.DamageSource;
@@ -50,6 +49,9 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void remove() {
         this.dead = true;
+        if (isPassenger()) {
+            getVehicle().dead = true;
+        }
     }
 
     @Override
@@ -83,10 +85,9 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void tick() {
+        this.s();
+        this.p();
         this.ticksLived = 0;
-        this.pickupDelay = Integer.MAX_VALUE;
-        this.age = Integer.MIN_VALUE;
-
         if (!lockTick) {
             super.tick();
         }

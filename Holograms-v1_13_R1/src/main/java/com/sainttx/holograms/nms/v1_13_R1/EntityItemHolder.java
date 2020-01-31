@@ -10,27 +10,22 @@ import net.minecraft.server.v1_13_R1.EntityHuman;
 import net.minecraft.server.v1_13_R1.EntityItem;
 import net.minecraft.server.v1_13_R1.ItemStack;
 import net.minecraft.server.v1_13_R1.NBTTagCompound;
-import net.minecraft.server.v1_13_R1.NBTTagList;
-import net.minecraft.server.v1_13_R1.NBTTagString;
 import net.minecraft.server.v1_13_R1.World;
 import org.bukkit.craftbukkit.v1_13_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_13_R1.inventory.CraftItemStack;
 
 import javax.annotation.Nullable;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     private boolean lockTick;
     private HologramLine line;
-    private Entity vehicle;
     private org.bukkit.inventory.ItemStack item;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        this.pickupDelay = Integer.MAX_VALUE;
-        this.s();
+        this.noclip = true;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -54,34 +49,19 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void remove() {
         this.dead = true;
+        if (isPassenger()) {
+            getVehicle().dead = true;
+        }
     }
 
     @Override
     public void setItem(org.bukkit.inventory.ItemStack item) {
         ItemStack nms = CraftItemStack.asNMSCopy(item);
-
-        if (nms != null) {
-            if (nms.getTag() == null) {
-                nms.setTag(new NBTTagCompound());
-            }
-
-            NBTTagCompound display = nms.getTag().getCompound("display");
-            if (!nms.getTag().hasKey("display")) {
-                nms.getTag().set("display", display);
-            }
-
-            NBTTagList tagList = new NBTTagList();
-            tagList.add(new NBTTagString(getRandomString()));
-
-            display.set("Lore", tagList);
+        if (nms == null || nms == ItemStack.a) {
+            nms = new ItemStack(Blocks.BARRIER);
         }
         this.item = item;
-        setItemStack(nms == null || nms == ItemStack.a ? new ItemStack(Blocks.BARRIER) : nms);
-    }
-
-    // Returns a random string
-    private String getRandomString() {
-        return Double.toString(ThreadLocalRandom.current().nextDouble());
+        super.setItemStack(nms);
     }
 
     @Override
@@ -91,28 +71,13 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public HologramEntity getMount() {
-        return (HologramEntity) vehicle;
+        return (HologramEntity) getVehicle();
     }
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (entity == null) {
-            removeMount();
-        } else if (entity instanceof Entity) {
-            removeMount();
-            vehicle = (Entity) entity;
-            super.a(vehicle, true);
-            vehicle.passengers.add(this);
-        }
-    }
-
-    // Removes the current mount
-    private void removeMount() {
-        if (vehicle != null) {
-            stopRiding();
-            vehicle.passengers.remove(this);
-            vehicle.die();
-            vehicle = null;
+        if (entity instanceof Entity) {
+            this.startRiding((Entity) entity);
         }
     }
 
@@ -121,10 +86,24 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void tick() {
         this.s();
+        this.p();
         this.ticksLived = 0;
-
         if (!lockTick) {
             super.tick();
+        }
+    }
+
+    @Override
+    public void postTick() {
+        if (!lockTick) {
+            super.postTick();
+        }
+    }
+
+    @Override
+    public void W() {
+        if (!lockTick) {
+            super.W();
         }
     }
 
@@ -184,6 +163,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public void killEntity() {
+
+    }
+
+    @Override
     public void a(int i) {
         super.a(Integer.MAX_VALUE);
     }
@@ -207,6 +191,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public Entity d(int i) {
         return null;
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemstack) {
+
     }
 
     @Override

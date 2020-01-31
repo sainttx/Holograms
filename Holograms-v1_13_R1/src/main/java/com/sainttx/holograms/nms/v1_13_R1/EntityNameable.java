@@ -29,7 +29,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(world);
-        super.a(new NullBoundingBox());
         super.collides = false;
         setInvisible(true);
         setSmall(true);
@@ -63,16 +62,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
-        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-        this.world.players.stream()
-                .filter(p -> p instanceof EntityPlayer)
-                .map(p -> (EntityPlayer) p)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX - this.locX, 2) + Math.pow(p.locZ - this.locZ, 2);
-                    if (distanceSquared < 8192 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(teleportPacket);
-                    }
-                });
     }
 
     @Override

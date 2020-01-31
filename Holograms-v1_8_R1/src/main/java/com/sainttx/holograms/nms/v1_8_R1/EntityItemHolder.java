@@ -14,14 +14,12 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     private boolean lockTick;
     private HologramLine line;
-    private Entity vehicle;
     private org.bukkit.inventory.ItemStack item;
 
     public EntityItemHolder(World world, HologramLine line) {
         super(world);
         this.line = line;
-        this.pickupDelay = Integer.MAX_VALUE;
-        this.u();
+        this.T = true;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -41,33 +39,19 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void remove() {
         this.dead = true;
+        if (vehicle != null) {
+            vehicle.dead = true;
+        }
     }
 
     @Override
     public void setItem(org.bukkit.inventory.ItemStack item) {
         ItemStack nms = CraftItemStack.asNMSCopy(item);
-
-        if (nms != null) {
-            if (nms.getTag() == null) {
-                nms.setTag(new NBTTagCompound());
-            }
-
-            NBTTagCompound display = nms.getTag().getCompound("display");
-            if (!nms.getTag().hasKey("display")) {
-                nms.getTag().set("display", display);
-            }
-
-            NBTTagList tagList = new NBTTagList();
-            tagList.add(new NBTTagString(getRandomString()));
-            display.set("Lore", tagList);
+        if (nms == null) {
+            nms = new ItemStack(Blocks.BARRIER);
         }
         this.item = item;
-        setItemStack(nms);
-    }
-
-    // Returns a random string
-    private String getRandomString() {
-        return Double.toString(ThreadLocalRandom.current().nextDouble());
+        super.setItemStack(nms);
     }
 
     @Override
@@ -83,18 +67,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void setMount(HologramEntity entity) {
         if (entity instanceof Entity) {
-            removeMount();
-            vehicle = (Entity) entity;
-            mount(vehicle);
-            vehicle.passenger = this;
-        }
-    }
-
-    // Removes the current mount
-    private void removeMount() {
-        if (vehicle != null) {
-            vehicle.passenger = null;
-            vehicle = null;
+            this.mount((Entity) entity);
         }
     }
 
@@ -103,9 +76,17 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void s_() {
         this.u();
+        this.r();
         this.ticksLived = 0;
         if (!lockTick) {
             super.s_();
+        }
+    }
+
+    @Override
+    public void K() {
+        if (!lockTick) {
+            super.K();
         }
     }
 
@@ -165,6 +146,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public void G() {
+
+    }
+
+    @Override
     public void a(int i) {
         super.a(Integer.MAX_VALUE);
     }
@@ -187,6 +173,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Nullable
     @Override
     public void c(int i) {
+
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemstack) {
 
     }
 
