@@ -22,16 +22,6 @@ import javax.annotation.Nullable;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
-    private static final Field vehicleField;
-    static {
-        try {
-            vehicleField = Entity.class.getDeclaredField("vehicle");
-            vehicleField.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private boolean lockTick;
     private HologramLine line;
     private org.bukkit.inventory.ItemStack item;
@@ -79,32 +69,14 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public HologramEntity getMount() {
-        try {
-            return (HologramEntity) vehicleField.get(this);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        return (HologramEntity) getVehicle();
     }
 
     @Override
     public void setMount(HologramEntity entity) {
-        if (!(entity instanceof Entity)) {
-            return;
+        if (entity instanceof Entity) {
+            this.startRiding((Entity) entity);
         }
-
-        Entity old = super.getVehicle();
-        if (old != null) {
-            old.passengers.remove(this);
-        }
-
-        Entity next = (Entity) entity;
-        try {
-            vehicleField.set(this, next);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        next.passengers.clear();
-        next.passengers.add(this);
     }
 
     // Overriden NMS methods
