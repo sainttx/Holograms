@@ -31,7 +31,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
 
     public EntityNameable(World world, HologramLine parentPiece) {
         super(EntityTypes.ARMOR_STAND, world);
-        super.a(new NullBoundingBox());
         super.collides = false;
         setInvisible(true);
         setSmall(true);
@@ -60,16 +59,6 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     @Override
     public void setPosition(double x, double y, double z) {
         super.setPosition(x, y, z);
-        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this);
-        this.world.getPlayers().stream()
-                .filter(p -> p instanceof EntityPlayer)
-                .map(p -> (EntityPlayer) p)
-                .forEach(p -> {
-                    double distanceSquared = Math.pow(p.locX() - this.locX(), 2) + Math.pow(p.locZ() - this.locZ(), 2);
-                    if (distanceSquared < 8192 && p.playerConnection != null) {
-                        p.playerConnection.sendPacket(teleportPacket);
-                    }
-                });
     }
 
     @Override
@@ -171,20 +160,23 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
     }
 
     @Override
-    public int getId() {
-        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        if (elements.length > 2 && elements[2] != null && elements[2].getFileName().equals("EntityTrackerEntry.java")
-                && elements[2].getLineNumber() > 137 && elements[2].getLineNumber() < 147) {
-            return -1;
-        }
-
-        return super.getId();
-    }
-
-    @Override
     public void tick() {
         if (!lockTick) {
             super.tick();
+        }
+    }
+
+    @Override
+    public void postTick() {
+        if (!lockTick) {
+            super.postTick();
+        }
+    }
+
+    @Override
+    public void entityBaseTick() {
+        if (!lockTick) {
+            super.entityBaseTick();
         }
     }
 

@@ -14,14 +14,11 @@ import net.minecraft.server.v1_15_R1.EntityItem;
 import net.minecraft.server.v1_15_R1.EntityTypes;
 import net.minecraft.server.v1_15_R1.ItemStack;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
-import net.minecraft.server.v1_15_R1.NBTTagString;
 import net.minecraft.server.v1_15_R1.World;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 
 import javax.annotation.Nullable;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
@@ -43,8 +40,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     public EntityItemHolder(World world, HologramLine line) {
         super(EntityTypes.ITEM, world);
         this.line = line;
-        this.pickupDelay = Integer.MAX_VALUE;
-        this.age = Integer.MIN_VALUE;
+        this.noclip = true;
     }
 
     public void setLockTick(boolean lockTick) {
@@ -69,29 +65,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void setItem(org.bukkit.inventory.ItemStack item) {
         ItemStack nms = CraftItemStack.asNMSCopy(item);
-
-        if (nms != null) {
-            if (nms.getTag() == null) {
-                nms.setTag(new NBTTagCompound());
-            }
-
-            NBTTagCompound display = nms.getTag().getCompound("display");
-            if (!nms.getTag().hasKey("display")) {
-                nms.getTag().set("display", display);
-            }
-
-            NBTTagList tagList = new NBTTagList();
-            tagList.add(NBTTagString.a(getRandomString()));
-
-            display.set("Lore", tagList);
+        if (nms == null || nms == ItemStack.a) {
+            nms = new ItemStack(Blocks.BARRIER);
         }
         this.item = item;
-        setItemStack(nms == null || nms == ItemStack.a ? new ItemStack(Blocks.BARRIER) : nms);
-    }
-
-    // Returns a random string
-    private String getRandomString() {
-        return Double.toString(ThreadLocalRandom.current().nextDouble());
+        super.setItemStack(nms);
     }
 
     @Override
@@ -133,11 +111,26 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Override
     public void tick() {
-        this.age = Integer.MIN_VALUE;
         this.ticksLived = 0;
+        this.pickupDelay = Integer.MAX_VALUE;
+        this.age = Integer.MIN_VALUE;
 
         if (!lockTick) {
             super.tick();
+        }
+    }
+
+    @Override
+    public void postTick() {
+        if (!lockTick) {
+            super.postTick();
+        }
+    }
+
+    @Override
+    public void entityBaseTick() {
+        if (!lockTick) {
+            super.entityBaseTick();
         }
     }
 
@@ -195,6 +188,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
+    public void killEntity() {
+
+    }
+
+    @Override
     public void setPickupDelay(int i) {
         super.setPickupDelay(Integer.MAX_VALUE);
     }
@@ -218,6 +216,11 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public Entity a(DimensionManager dimensionmanager) {
         return null;
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemstack) {
+
     }
 
     @Override
