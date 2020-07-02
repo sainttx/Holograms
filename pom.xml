@@ -40,5 +40,6 @@
         <module>Holograms-v1_14_R1</module>
         <module>Holograms-v1_15_R1</module>
         <module>Holograms</module>
+        <module>holograms-v1_16_R1</module>
     </modules>
 </project>
