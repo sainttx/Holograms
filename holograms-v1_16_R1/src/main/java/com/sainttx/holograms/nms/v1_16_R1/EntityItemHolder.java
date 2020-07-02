@@ -1,24 +1,24 @@
-package com.sainttx.holograms.nms.v1_15_R1;
+package com.sainttx.holograms.nms.v1_16_R1;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
 
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 
-import net.minecraft.server.v1_15_R1.Blocks;
-import net.minecraft.server.v1_15_R1.DamageSource;
-import net.minecraft.server.v1_15_R1.DimensionManager;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityHuman;
-import net.minecraft.server.v1_15_R1.EntityItem;
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.ItemStack;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.World;
+import net.minecraft.server.v1_16_R1.Blocks;
+import net.minecraft.server.v1_16_R1.DamageSource;
+import net.minecraft.server.v1_16_R1.Entity;
+import net.minecraft.server.v1_16_R1.EntityHuman;
+import net.minecraft.server.v1_16_R1.EntityItem;
+import net.minecraft.server.v1_16_R1.EntityTypes;
+import net.minecraft.server.v1_16_R1.ItemStack;
+import net.minecraft.server.v1_16_R1.NBTTagCompound;
+import net.minecraft.server.v1_16_R1.World;
+import net.minecraft.server.v1_16_R1.WorldServer;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 
@@ -58,7 +58,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     @Override
     public void setItem(org.bukkit.inventory.ItemStack item) {
         ItemStack nms = CraftItemStack.asNMSCopy(item);
-        if (nms == null || nms == ItemStack.a) {
+        if (nms == null || nms == ItemStack.b) {
             nms = new ItemStack(Blocks.BARRIER);
         }
         this.item = item;
@@ -109,16 +109,17 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
-    public void a(NBTTagCompound nbttagcompound) {
+    public void loadData(NBTTagCompound nbttagcompound) {
 
     }
 
     @Override
-    public void b(NBTTagCompound nbttagcompound) {
+    public void saveData(NBTTagCompound nbttagcompound) {
+    	
     }
 
     @Override
-    public boolean c(NBTTagCompound nbttagcompound) {
+    public boolean a_(NBTTagCompound nbttagcompound) {
         return false;
     }
 
@@ -133,7 +134,8 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     }
 
     @Override
-    public void f(NBTTagCompound nbttagcompound) {
+    public void load(NBTTagCompound nbttagcompound) {
+    	
     }
 
     @Override
@@ -171,10 +173,10 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
         super.setPickupDelay(Integer.MAX_VALUE);
     }
 
-    @Override
+/*  @Override TODO Cannot find this method. Maybe it was removed
     protected void burn(float i) {
 
-    }
+    }*/
 
     @Override
     public boolean damageEntity(DamageSource damagesource, float f) {
@@ -188,7 +190,7 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
 
     @Nullable
     @Override
-    public Entity a(DimensionManager dimensionmanager) {
+    public Entity a(WorldServer dimensionmanager) {
         return null;
     }
 
