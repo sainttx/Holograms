@@ -7,7 +7,7 @@
     <groupId>com.sainttx.holograms</groupId>
     <artifactId>holograms-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.12</version>
+    <version>2.13</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
