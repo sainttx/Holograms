@@ -12,6 +12,7 @@ commands:
   holograms:
     description: All commands for Hologram
     aliases: [hologram, holo, h]
+    permission: holograms.base
     permission-message: You do not have sufficient permissions to use this command
 
 permissions:
