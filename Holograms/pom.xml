@@ -152,5 +152,10 @@
             <artifactId>holograms-v1_16_R1</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sainttx.holograms</groupId>
+            <artifactId>holograms-v1_16_R2</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
