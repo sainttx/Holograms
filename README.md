@@ -1,4 +1,4 @@
-# Holograms - KingTux Fork
+# Holograms - KingTux Fork [![Build Status](https://ci.kingtux.dev/buildStatus/icon?job=Holograms)](https://ci.kingtux.dev/job/Holograms/)
 A Bukkit plugin that allows easy creation and management of text based Holograms
 
 ### Resources
