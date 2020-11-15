@@ -40,9 +40,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.2</version>
+                <version>3.2.4</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <!-- Replace this with your package! -->
+                            <shadedPattern>com.sainttx.holograms</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
                 <executions>
                     <execution>
@@ -70,8 +77,8 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>Plugin Metrics</id>
-            <url>http://repo.mcstats.org/content/repositories/public</url>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
     </repositories>
 
@@ -86,36 +93,56 @@
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-api</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_13_R1</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
+
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_13_R2</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_14_R1</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_15_R1</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_16_R1</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_16_R2</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sainttx.holograms</groupId>
+            <artifactId>holograms-v1_16_R3</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

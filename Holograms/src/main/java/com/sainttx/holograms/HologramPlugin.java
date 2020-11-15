@@ -6,9 +6,9 @@ import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.parser.AnimatedItemLineParser;
 import com.sainttx.holograms.parser.AnimatedTextLineParser;
 import com.sainttx.holograms.parser.ItemLineParser;
-import com.sainttx.holograms.tasks.HologramSaveTask;
 import com.sainttx.holograms.tasks.HologramUpdateTask;
 import com.sainttx.holograms.util.ReflectionUtil;
+import org.bstats.bukkit.Metrics;
 
 import java.lang.reflect.Constructor;
 
@@ -21,12 +21,13 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
     private HologramManager manager;
     private HologramEntityController controller;
-    private Runnable updateTask = new HologramUpdateTask(this);
+    private final Runnable updateTask = new HologramUpdateTask(this);
+    private Metrics metrics;
 
     @Override
     public void onEnable() {
         this.manager = new ManagerImpl(this);
-
+        metrics = new Metrics(this, 9421);
         // Register parsers
         addLineParser(new ItemLineParser());
         addLineParser(new AnimatedItemLineParser());
