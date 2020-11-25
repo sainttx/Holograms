@@ -47,13 +47,11 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
             text = matcher.group(3);
         }
         String[] split = text.split(" ");
-        short durability = -1;
         String data = split[0];
 
         if (data.contains(":")) {
             String[] datasplit = data.split(":");
             data = datasplit[0];
-            durability = Short.parseShort(datasplit[1]);
         }
         Material material = Material.getMaterial(data.toUpperCase());
 
@@ -68,7 +66,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
         }
-        ItemStack item = new ItemStack(material, amount, (short) Math.max(0, durability));
+        ItemStack item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
 
         // No meta data was provided, we can return here
@@ -100,11 +98,9 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
 
                     meta.setLore(lore);
                     break;
-                case "data":
-                    short dataValue = Short.parseShort(information[1]);
-                    item.setDurability(dataValue);
                 default:
                     // Try parsing enchantment if it was nothing else
+                    //TODO update to stop using deprecated method.
                     Enchantment ench = Enchantment.getByName(information[0].toUpperCase());
                     int level = Integer.parseInt(information[1]);
 

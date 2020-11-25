@@ -53,23 +53,19 @@ public class TextUtil {
      *
      * @param text the text
      * @return the item
-     * @throws NumberFormatException when an invalid amount or durability are provided
+     * @throws NumberFormatException    when an invalid amount or durability are provided
      * @throws IllegalArgumentException when an invalid material or enchantment is provided
      */
     public static ItemStack parseItem(String text) {
         String[] split = text.split(" ");
-        short durability = -1;
         String data = split[0];
 
         if (data.contains(":")) {
             String[] datasplit = data.split(":");
             data = datasplit[0];
-            durability = Short.parseShort(datasplit[1]);
         }
 
-        Material material = data.matches("[0-9]+")
-                ? Material.getMaterial(Integer.parseInt(data))
-                : Material.getMaterial(data.toUpperCase());
+        Material material = Material.getMaterial(data.toUpperCase());
 
         // Throw exception if the material provided was wrong
         if (material == null) {
@@ -82,7 +78,7 @@ public class TextUtil {
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
         }
-        ItemStack item = new ItemStack(material, amount, (short) Math.max(0, durability));
+        ItemStack item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
 
         // No meta data was provided, we can return here
@@ -91,7 +87,7 @@ public class TextUtil {
         }
 
         // Go through all the item meta specified
-        for (int i = 2 ; i < split.length ; i++) {
+        for (int i = 2; i < split.length; i++) {
             String[] information = split[i].split(":");
 
             // Data, name, or lore has been specified
@@ -111,14 +107,11 @@ public class TextUtil {
                         line = line.replace('_', ' '); // Replace '_' with space
                         lore.add(ChatColor.translateAlternateColorCodes('&', line));
                     }
-
                     meta.setLore(lore);
                     break;
-                case "data":
-                    short dataValue = Short.parseShort(information[1]);
-                    item.setDurability(dataValue);
                 default:
                     // Try parsing enchantment if it was nothing else
+                    //TODO update to stop using deprecated method.
                     Enchantment ench = Enchantment.getByName(information[0].toUpperCase());
                     int level = Integer.parseInt(information[1]);
 
@@ -150,7 +143,7 @@ public class TextUtil {
      * Implodes a String array and combines into a single string seprated by a space
      *
      * @param startIndex The start index of the String array to implode
-     * @param toImplode The String array to implode
+     * @param toImplode  The String array to implode
      * @return An imploded string joined by spaces
      */
     public static String implode(int startIndex, String[] toImplode) {
@@ -161,14 +154,14 @@ public class TextUtil {
      * Implode a string array from a starting index and combine into a string separated by a space
      *
      * @param startIndex The start index of the String array to implode
-     * @param toImplode A string array to implode
-     * @param spacer The string to seperate words
+     * @param toImplode  A string array to implode
+     * @param spacer     The string to seperate words
      * @return An imploded string joined by the spacer
      */
     public static String implode(int startIndex, String[] toImplode, String spacer) {
         StringBuilder ret = new StringBuilder();
 
-        for (int i = startIndex ; i < toImplode.length ; i++) {
+        for (int i = startIndex; i < toImplode.length; i++) {
             if (toImplode[i] != null) {
                 ret.append(toImplode[i]);
             }
