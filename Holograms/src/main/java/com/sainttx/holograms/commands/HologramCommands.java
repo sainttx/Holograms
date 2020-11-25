@@ -14,12 +14,12 @@ public class HologramCommands implements CommandExecutor {
     /*
      * The hologram plugin instance
      */
-    private HologramPlugin plugin;
+    private final HologramPlugin plugin;
 
     /*
      * A map containing all commands for the Hologram plugin
      */
-    private Map<String, CommandExecutor> commands = new HashMap<String, CommandExecutor>();
+    private final Map<String, CommandExecutor> commands = new HashMap<>();
 
     /**
      * Instantiates the Hologram command controller
