@@ -1,24 +1,22 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.logging.Level;
-
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
-import org.bukkit.inventory.ItemStack;
-
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
-
 import net.minecraft.server.v1_16_R3.Entity;
 import net.minecraft.server.v1_16_R3.WorldServer;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
 

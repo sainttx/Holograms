@@ -5,7 +5,6 @@ import com.sainttx.holograms.api.animation.TextAnimation;
 import com.sainttx.holograms.api.line.AnimatedTextLine;
 import com.sainttx.holograms.api.line.HologramLine;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

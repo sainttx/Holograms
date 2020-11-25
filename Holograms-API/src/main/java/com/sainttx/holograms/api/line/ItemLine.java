@@ -2,8 +2,6 @@ package com.sainttx.holograms.api.line;
 
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.MinecraftVersion;
-import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
@@ -121,7 +119,6 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     static String itemstackToRaw(ItemStack itemstack) {
         StringBuilder sb = new StringBuilder();
         sb.append(itemstack.getType().toString()); // append type
-        sb.append(':').append(itemstack.getDurability()); // append durability
         sb.append(' ').append(itemstack.getAmount()); // append amount
 
         if (itemstack.hasItemMeta()) {

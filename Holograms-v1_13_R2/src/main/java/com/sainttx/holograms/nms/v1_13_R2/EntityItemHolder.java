@@ -3,15 +3,7 @@ package com.sainttx.holograms.nms.v1_13_R2;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
-import net.minecraft.server.v1_13_R2.Blocks;
-import net.minecraft.server.v1_13_R2.DamageSource;
-import net.minecraft.server.v1_13_R2.DimensionManager;
-import net.minecraft.server.v1_13_R2.Entity;
-import net.minecraft.server.v1_13_R2.EntityHuman;
-import net.minecraft.server.v1_13_R2.EntityItem;
-import net.minecraft.server.v1_13_R2.ItemStack;
-import net.minecraft.server.v1_13_R2.NBTTagCompound;
-import net.minecraft.server.v1_13_R2.World;
+import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 
@@ -47,7 +39,8 @@ public class EntityItemHolder extends EntityItem implements ItemHolder {
     public void remove() {
         this.dead = true;
         if (isPassenger()) {
-            getVehicle().dead = true;
+            if(getVehicle() != null)
+                getVehicle().dead = true;
         }
     }
 

@@ -1,8 +1,6 @@
 package com.sainttx.holograms;
 
 import com.sainttx.holograms.api.Hologram;
-import java.util.Collection;
-
 import com.sainttx.holograms.api.entity.HologramEntity;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -14,6 +12,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+
+import java.util.Collection;
 
 public class HologramListener implements Listener {
 

@@ -1,7 +1,5 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
-import java.util.Collection;
-
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
@@ -12,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
+
+import java.util.Collection;
 
 public class CraftNameable extends CraftArmorStand {
 

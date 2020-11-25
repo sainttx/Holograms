@@ -5,20 +5,17 @@ import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
-import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import net.minecraft.server.v1_15_R1.Entity;
 import net.minecraft.server.v1_15_R1.WorldServer;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {

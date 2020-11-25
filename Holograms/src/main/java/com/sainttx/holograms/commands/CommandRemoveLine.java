@@ -4,7 +4,6 @@ import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.line.TextualHologramLine;
-import com.sainttx.holograms.util.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

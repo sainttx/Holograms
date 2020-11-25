@@ -1,27 +1,12 @@
 package com.sainttx.holograms.nms.v1_16_R1;
 
-import javax.annotation.Nullable;
-
+import com.sainttx.holograms.api.entity.Nameable;
+import com.sainttx.holograms.api.line.HologramLine;
+import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.craftbukkit.v1_16_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_16_R1.util.CraftChatMessage;
 
-import com.sainttx.holograms.api.entity.Nameable;
-import com.sainttx.holograms.api.line.HologramLine;
-
-import net.minecraft.server.v1_16_R1.AxisAlignedBB;
-import net.minecraft.server.v1_16_R1.DamageSource;
-import net.minecraft.server.v1_16_R1.EntityArmorStand;
-import net.minecraft.server.v1_16_R1.EntityHuman;
-import net.minecraft.server.v1_16_R1.EntityTypes;
-import net.minecraft.server.v1_16_R1.EnumHand;
-import net.minecraft.server.v1_16_R1.EnumInteractionResult;
-import net.minecraft.server.v1_16_R1.EnumItemSlot;
-import net.minecraft.server.v1_16_R1.IChatBaseComponent;
-import net.minecraft.server.v1_16_R1.ItemStack;
-import net.minecraft.server.v1_16_R1.NBTTagCompound;
-import net.minecraft.server.v1_16_R1.SoundEffect;
-import net.minecraft.server.v1_16_R1.Vec3D;
-import net.minecraft.server.v1_16_R1.World;
+import javax.annotation.Nullable;
 
 public class EntityNameable extends EntityArmorStand implements Nameable {
 

@@ -1,14 +1,13 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
-import javax.annotation.Nullable;
-
+import com.sainttx.holograms.api.entity.HologramEntity;
+import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 
-import com.sainttx.holograms.api.entity.HologramEntity;
-import com.sainttx.holograms.api.entity.ItemHolder;
-import com.sainttx.holograms.api.line.HologramLine;
+import javax.annotation.Nullable;
 
 public class EntityItemHolder extends EntityItem implements ItemHolder {
 

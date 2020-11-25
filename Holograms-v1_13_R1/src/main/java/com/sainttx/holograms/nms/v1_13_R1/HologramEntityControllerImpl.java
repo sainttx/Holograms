@@ -5,7 +5,6 @@ import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
-import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_13_R1.Entity;
 import net.minecraft.server.v1_13_R1.WorldServer;
