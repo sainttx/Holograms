@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.2</version>
+                <version>3.2.4</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
@@ -150,6 +150,11 @@
         <dependency>
             <groupId>com.sainttx.holograms</groupId>
             <artifactId>holograms-v1_16_R1</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sainttx.holograms</groupId>
+            <artifactId>holograms-v1_16_R2</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
