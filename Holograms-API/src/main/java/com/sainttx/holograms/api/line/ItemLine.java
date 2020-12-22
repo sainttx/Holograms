@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -73,7 +74,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
         }
 
         // Go through all the item meta specified
-        for (int i = 2 ; i < split.length ; i++) {
+        for (int i = 2; i < split.length; i++) {
             String[] information = split[i].split(":");
 
             // Data, name, or lore has been specified
@@ -95,6 +96,23 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
                     }
 
                     meta.setLore(lore);
+                    break;
+                case "damage":
+                    int damage;
+                    try {
+                        damage = Integer.parseInt(information[1]);
+                    } catch (NumberFormatException ex) {
+                        throw new IllegalArgumentException("Invalid damage \"" + information[1] + "\"", ex);
+                    }
+                    if(damage<=0){
+                        throw new IllegalArgumentException("Invalid damage \"" + amount + "\"");
+                    }
+                    if (meta instanceof Damageable) {
+                        ((Damageable) meta).setDamage(damage);
+                    } else {
+                        throw new IllegalArgumentException("Item is not damageable. ");
+
+                    }
                     break;
                 default:
                     // Try parsing enchantment if it was nothing else
