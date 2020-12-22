@@ -35,7 +35,9 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
-            getCommand("holograms").setExecutor(new HologramCommands(this));
+            HologramCommands hologramCommands = new HologramCommands(this);
+            getCommand("holograms").setExecutor(hologramCommands);
+            getCommand("holograms").setTabCompleter(hologramCommands);
             getServer().getScheduler().runTaskLater(this, () -> ((ManagerImpl) manager).load(), 5L);
             getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L);
         }
