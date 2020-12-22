@@ -71,7 +71,7 @@ public interface HologramManager {
      *
      * @param line the line
      * @return <tt>true</tt> if the line was removed from the
-     *      collection returned by {@link #getTrackedLines()}
+     * collection returned by {@link #getTrackedLines()}
      */
     boolean untrackLine(UpdatingHologramLine line);
 
@@ -91,4 +91,6 @@ public interface HologramManager {
      * Reloads holograms from the save file.
      */
     void reload();
+
+    CustomModelDataHelper getCustomModelDataHelper();
 }

@@ -1,10 +1,12 @@
 package com.sainttx.holograms;
 
+import com.sainttx.holograms.api.CustomModelDataHelper;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.line.UpdatingHologramLine;
+import com.sainttx.holograms.nms.v1_14_R1.CustomModelDataHelperImpl;
 import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.Location;
 
@@ -18,10 +20,12 @@ public class ManagerImpl implements HologramManager {
     private Configuration persistingHolograms;
     private Map<String, Hologram> activeHolograms = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private Set<UpdatingHologramLine> trackedUpdatingLines = new HashSet<>();
+    private CustomModelDataHelper customModelDataHelper;
 
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
         this.reloadConfiguration();
+        customModelDataHelper = new CustomModelDataHelperImpl();
     }
 
     /* Re-reads the holograms.yml file into memory */
@@ -34,6 +38,11 @@ public class ManagerImpl implements HologramManager {
         clear();
         reloadConfiguration();
         load();
+    }
+
+    @Override
+    public CustomModelDataHelper getCustomModelDataHelper() {
+        return customModelDataHelper;
     }
 
     /**

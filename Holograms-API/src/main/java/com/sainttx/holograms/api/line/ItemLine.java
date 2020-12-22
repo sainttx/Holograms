@@ -1,3 +1,4 @@
+
 package com.sainttx.holograms.api.line;
 
 import com.sainttx.holograms.api.Hologram;
@@ -104,7 +105,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
                     } catch (NumberFormatException ex) {
                         throw new IllegalArgumentException("Invalid damage \"" + information[1] + "\"", ex);
                     }
-                    if(damage<=0){
+                    if (damage <= 0) {
                         throw new IllegalArgumentException("Invalid damage \"" + amount + "\"");
                     }
                     if (meta instanceof Damageable) {
@@ -112,6 +113,23 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
                     } else {
                         throw new IllegalArgumentException("Item is not damageable. ");
 
+                    }
+                    break;
+                case "cmd":
+
+                    int cmd;
+                    try {
+                        cmd = Integer.parseInt(information[1]);
+                    } catch (NumberFormatException ex) {
+                        throw new IllegalArgumentException("Invalid damage \"" + information[1] + "\"", ex);
+                    }
+                    if (cmd <= 0) {
+                        break;
+                    }
+                    try {
+                        HologramPlugin.getHologramPlugin().getHologramManager().getCustomModelDataHelper().setCustomModelData(meta, cmd);
+                    } catch (NoSuchMethodException e) {
+                        throw new IllegalArgumentException("This must be on a MC 1.14 or newer", e);
                     }
                     break;
                 default:

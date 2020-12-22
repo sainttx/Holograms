@@ -24,6 +24,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
     private final Runnable updateTask = new HologramUpdateTask(this);
     private Metrics metrics;
 
+
     @Override
     public void onEnable() {
         this.manager = new ManagerImpl(this);

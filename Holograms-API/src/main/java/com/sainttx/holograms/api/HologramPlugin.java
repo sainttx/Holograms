@@ -12,13 +12,18 @@ public abstract class HologramPlugin extends JavaPlugin {
 
     // Holds all registered line parsers
     private Set<HologramLine.Parser> parsers = new HashSet<>();
+    private static HologramPlugin hologramPlugin;
+
+    public HologramPlugin() {
+        hologramPlugin = this;
+    }
 
     /**
      * Parses and returns a {@link HologramLine} from a textual representation.
      * This method will return a {@link TextLine} if no valid parser is found.
      *
      * @param hologram the parent hologram
-     * @param text the text
+     * @param text     the text
      * @return the created line
      */
     public HologramLine parseLine(Hologram hologram, String text) {
@@ -26,6 +31,10 @@ public abstract class HologramPlugin extends JavaPlugin {
                 .filter(p -> p.canParse(text))
                 .findFirst();
         return parser.isPresent() ? parser.get().parse(hologram, text) : new TextLine(hologram, text);
+    }
+
+    public static HologramPlugin getHologramPlugin() {
+        return hologramPlugin;
     }
 
     /**
