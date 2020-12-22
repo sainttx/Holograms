@@ -5,11 +5,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class HologramCommands implements CommandExecutor {
+public class HologramCommands implements CommandExecutor, TabExecutor {
 
     /*
      * The hologram plugin instance
@@ -84,5 +85,14 @@ public class HologramCommands implements CommandExecutor {
         sender.sendMessage(ChatColor.YELLOW + "/holograms reload");
         sender.sendMessage(ChatColor.YELLOW + "/holograms setline " + ChatColor.WHITE + "<name> <index> <text>");
         sender.sendMessage(ChatColor.YELLOW + "/holograms teleport " + ChatColor.WHITE + "<name>");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 0) {
+            return new ArrayList<>(commands.keySet());
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
