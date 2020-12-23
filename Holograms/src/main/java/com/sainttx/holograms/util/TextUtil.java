@@ -1,15 +1,11 @@
 package com.sainttx.holograms.util;
 
+import com.sainttx.holograms.api.line.ItemLine;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TextUtil {
 
@@ -57,76 +53,7 @@ public class TextUtil {
      * @throws IllegalArgumentException when an invalid material or enchantment is provided
      */
     public static ItemStack parseItem(String text) {
-        String[] split = text.split(" ");
-        String data = split[0];
-
-        if (data.contains(":")) {
-            String[] datasplit = data.split(":");
-            data = datasplit[0];
-        }
-
-        Material material = Material.getMaterial(data.toUpperCase());
-
-        // Throw exception if the material provided was wrong
-        if (material == null) {
-            throw new IllegalArgumentException("Invalid material " + data);
-        }
-
-        int amount;
-        try {
-            amount = split.length == 1 ? 1 : Integer.parseInt(split[1]);
-        } catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("Invalid amount \"" + split[1] + "\"", ex);
-        }
-        ItemStack item = new ItemStack(material, amount);
-        ItemMeta meta = item.getItemMeta();
-
-        // No meta data was provided, we can return here
-        if (split.length < 3) {
-            return item;
-        }
-
-        // Go through all the item meta specified
-        for (int i = 2; i < split.length; i++) {
-            String[] information = split[i].split(":");
-
-            // Data, name, or lore has been specified
-            switch (information[0].toLowerCase()) {
-                case "name":
-                    // Replace '_' with spaces
-                    String name = information[1].replace(' ', ' ');
-                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-                    break;
-                case "lore":
-                    // If lore was specified 2x for some reason, don't overwrite
-                    List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
-                    String[] loreLines = information[1].split("\\|");
-
-                    // Format all the lines and add them as lore
-                    for (String line : loreLines) {
-                        line = line.replace('_', ' '); // Replace '_' with space
-                        lore.add(ChatColor.translateAlternateColorCodes('&', line));
-                    }
-                    meta.setLore(lore);
-                    break;
-                default:
-                    // Try parsing enchantment if it was nothing else
-                    //TODO update to stop using deprecated method.
-                    Enchantment ench = Enchantment.getByName(information[0].toUpperCase());
-                    int level = Integer.parseInt(information[1]);
-
-                    if (ench != null) {
-                        meta.addEnchant(ench, level, true);
-                    } else {
-                        throw new IllegalArgumentException("Invalid enchantment " + information[0]);
-                    }
-                    break;
-            }
-        }
-
-        // Set the meta and return created item line
-        item.setItemMeta(meta);
-        return item;
+        return ItemLine.parseItem(text);
     }
 
     /**

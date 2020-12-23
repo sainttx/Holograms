@@ -41,7 +41,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     }
 
     // Parses an itemstack from text
-    private static ItemStack parseItem(String text) {
+    public static ItemStack parseItem(String text) {
         Matcher matcher = linePattern.matcher(text);
         if (matcher.find()) {
             text = matcher.group(3);
@@ -175,6 +175,17 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
                         sb.append('|');
                     }
                 }
+            }
+            //append damage
+            if (meta instanceof Damageable) {
+                sb.append(" ").append("damage:").append(((Damageable) meta).getDamage());
+            }
+            //Append customModelData if needed
+            try {
+                int customModelData = HologramPlugin.getHologramPlugin().getHologramManager().getCustomModelDataHelper().getCustomModelData(meta);
+                sb.append(" ").append("cmd:").append(customModelData);
+            } catch (NoSuchMethodException ignored) {
+                //Ignoring because this does not matter.
             }
 
             // append enchantments
