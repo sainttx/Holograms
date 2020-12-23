@@ -89,7 +89,7 @@ public class HologramCommands implements CommandExecutor, TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (args.length == 0) {
+        if (args.length == 1) {
             return new ArrayList<>(commands.keySet());
         } else {
             return Collections.emptyList();
