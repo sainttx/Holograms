@@ -105,7 +105,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
                     } catch (NumberFormatException ex) {
                         throw new IllegalArgumentException("Invalid damage \"" + information[1] + "\"", ex);
                     }
-                    if (damage <= 0) {
+                    if (damage < 0) {
                         throw new IllegalArgumentException("Invalid damage \"" + amount + "\"");
                     }
                     if (meta instanceof Damageable) {
