@@ -16,12 +16,12 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <url>http://maven.sainttx.com/nexus/content/repositories/releases</url>
+            <id>kingtux-repo</id>
+            <url>https://repo.kingtux.me/storages/maven/kingtux-repo</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
-            <url>http://maven.sainttx.com/nexus/content/repositories/snapshots</url>
+            <id>kingtux-repo</id>
+            <url>https://repo.kingtux.me/storages/maven/kingtux-repo</url>
         </snapshotRepository>
     </distributionManagement>
 
