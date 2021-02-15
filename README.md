@@ -3,7 +3,7 @@ A Bukkit plugin that allows easy creation and management of text based Holograms
 
 ### Resources
 
-* [Resource Page](https://www.spigotmc.org/resources/holograms.4924/)
+* [Resource Page](https://www.spigotmc.org/resources/holograms.85800/)
 
 ### Building
 
