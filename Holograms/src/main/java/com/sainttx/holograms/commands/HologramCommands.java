@@ -44,6 +44,7 @@ public class HologramCommands implements CommandExecutor, TabExecutor {
         CommandTeleport teleportCommand = new CommandTeleport(plugin);
         commands.put("teleport", teleportCommand);
         commands.put("tp", teleportCommand);
+        commands.put("rename", new CommandRename(plugin));
     }
 
     @Override
