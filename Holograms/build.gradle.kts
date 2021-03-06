@@ -12,8 +12,9 @@ var build = "0"
 var branch = ""
 if (hasProperty("buildNumber")) {
     build = properties.get("buildNumber").toString();
-}if (hasProperty("branch")) {
-    build = properties.get("branch").toString();
+}
+if (hasProperty("branch")) {
+    branch = properties.get("branch").toString();
 }
 
 version = me.kingtux.holograms.Version.getHologramsVersion(build, branch);
@@ -63,9 +64,13 @@ publishing {
 tasks {
     named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
         archiveClassifier.set("");
+        dependencies {
+            relocate("org.bstats.bukkit", "me.kingtux.holograms.bstats")
+        }
     }
     "jar"{
         enabled = false
+
     }
 
     "assemble"{
@@ -84,7 +89,6 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc", "spigot-api", "1.13-R0.1-SNAPSHOT")
     implementation("org.bstats", "bstats-bukkit", "2.2.1")
-    implementation(project(":Holograms-API"))
     implementation(project(":Holograms-v1_13_R1"))
     implementation(project(":Holograms-v1_13_R2"))
     implementation(project(":Holograms-v1_14_R1"))
@@ -92,5 +96,7 @@ dependencies {
     implementation(project(":Holograms-v1_16_R1"))
     implementation(project(":Holograms-v1_16_R2"))
     implementation(project(":Holograms-v1_16_R3"))
+    implementation(project(":Holograms-API"))
+
 }
 

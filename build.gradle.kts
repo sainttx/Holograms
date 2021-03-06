@@ -9,7 +9,7 @@ var branch = ""
 if (hasProperty("buildNumber")) {
     build = properties.get("buildNumber").toString();
 }if (hasProperty("branch")) {
-    build = properties.get("branch").toString();
+    branch = properties.get("branch").toString();
 }
 
 version = me.kingtux.holograms.Version.getHologramsVersion(build, branch);

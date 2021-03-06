@@ -8,12 +8,14 @@
  */
 
 rootProject.name = "Holograms"
-include("Holograms")
-include("Holograms-API")
-include("Holograms-v1_13_R1")
-include("Holograms-v1_13_R2")
-include("Holograms-v1_14_R1")
-include("Holograms-v1_15_R1")
-include("Holograms-v1_16_R1")
-include("Holograms-v1_16_R2")
-include("Holograms-v1_16_R3")
+include(
+    "Holograms-API",
+    "Holograms-v1_13_R1",
+    "Holograms-v1_13_R2",
+    "Holograms-v1_14_R1",
+    "Holograms-v1_15_R1",
+    "Holograms-v1_16_R1",
+    "Holograms-v1_16_R2",
+    "Holograms-v1_16_R3",
+    "Holograms"
+)

@@ -6,7 +6,7 @@ import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
 import com.sainttx.holograms.api.line.HologramLine;
 import com.sainttx.holograms.api.line.UpdatingHologramLine;
-import com.sainttx.holograms.nms.v1_14_R1.CustomModelDataHelperImpl;
+//import com.sainttx.holograms.nms.v1_14_R1.CustomModelDataHelperImpl;
 import com.sainttx.holograms.util.LocationUtil;
 import org.bukkit.Location;
 
@@ -25,7 +25,7 @@ public class ManagerImpl implements HologramManager {
     ManagerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
         this.reloadConfiguration();
-        customModelDataHelper = new CustomModelDataHelperImpl();
+        //customModelDataHelper = new CustomModelDataHelperImpl();
     }
 
     /* Re-reads the holograms.yml file into memory */

@@ -3,8 +3,6 @@ plugins {
     `java-library`
     `maven-publish`
     signing
-    id("com.github.johnrengelman.shadow") version "6.1.0"
-
 }
 
 group = "me.kingtux.holograms"
@@ -13,9 +11,8 @@ var branch = ""
 if (hasProperty("buildNumber")) {
     build = properties.get("buildNumber").toString();
 }if (hasProperty("branch")) {
-    build = properties.get("branch").toString();
+    branch = properties.get("branch").toString();
 }
-
 version = me.kingtux.holograms.Version.getHologramsVersion(build, branch);
 val artifactName = "Holograms-v1_15_R1"
 
@@ -31,7 +28,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
 
             artifactId = artifactName
-            artifact(tasks["shadowJar"])
+            artifact(tasks["jar"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -61,19 +58,6 @@ publishing {
 
 
 
-tasks {
-    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-        archiveClassifier.set("");
-    }
-    "jar"{
-        enabled = false
-    }
-
-    "assemble"{
-        dependsOn(shadowJar)
-
-    }
-}
 repositories {
     maven("https://repo.maven.apache.org/maven2/")
     mavenLocal()
@@ -83,6 +67,6 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc", "spigot", "1.15.1-R0.1-SNAPSHOT")
-    implementation(project(":Holograms-API"))
+    compileOnly(project(":Holograms-API"))
 }
 

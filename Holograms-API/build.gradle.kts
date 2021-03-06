@@ -13,9 +13,8 @@ var branch = ""
 if (hasProperty("buildNumber")) {
     build = properties.get("buildNumber").toString();
 }if (hasProperty("branch")) {
-    build = properties.get("branch").toString();
+    branch = properties.get("branch").toString();
 }
-
 version = me.kingtux.holograms.Version.getHologramsVersion(build, branch);
 val artifactName = "API"
 
@@ -25,19 +24,7 @@ java {
     targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
     sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
 }
-tasks {
-    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-        archiveClassifier.set("");
-    }
-    "jar"{
-        enabled = false
-    }
 
-    "assemble"{
-        dependsOn(shadowJar)
-
-    }
-}
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {

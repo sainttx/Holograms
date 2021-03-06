@@ -32,7 +32,7 @@ public class Version {
                 System.out.println("finalBranch = " + finalBranch);
                 if (!branchBlacklist.stream().anyMatch(s -> s.contains(finalBranch1))) {
                     value = HOLOGRAMS_VERSION.replace("-SNAPSHOT", String.format("-%s-SNAPSHOT", finalBranch.replace("/", "-")));
-
+                    System.out.println("value = " + value);
                 }
             } catch (IOException e) {
                 throw new GradleException("Unable to execute git command", e);
@@ -40,6 +40,7 @@ public class Version {
 
         }
         if (!buildNumber.isEmpty() && !buildNumber.isBlank() && !buildNumber.equalsIgnoreCase("0")) {
+            System.out.println("buildNumber = " + buildNumber);
             value = value.replace("-SNAPSHOT", String.format("-%s-SNAPSHOT", buildNumber));
         }
         System.out.println("Building with version: " + value);
