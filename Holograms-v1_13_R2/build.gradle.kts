@@ -73,5 +73,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.spigotmc", "spigot", "1.13-R0-2-SNAPSHOT")
+    implementation(project(":Holograms-API"))
 }
 

@@ -67,13 +67,18 @@ repositories {
     mavenLocal()
     jcenter()
     maven("https://repo.kingtux.me/storages/maven/kingtux-repo")
-    maven("https://repo.kingtux.me/storages/maven/ryandw11")
-    maven("https://jitpack.io")
-    maven("https://repo.ryandw11.com/repository/maven-snapshots/")
 }
 
 dependencies {
-
-
+    implementation("org.spigotmc", "spigot-api", "1.13-R0-1-SNAPSHOT")
+    implementation("org.bstats", "bstats-bukkit", "2.2.1")
+    implementation(project(":Holograms-API"))
+    implementation(project(":Holograms-v1_13_R1"))
+    implementation(project(":Holograms-v1_13_R2"))
+    implementation(project(":Holograms-v1_14_R1"))
+    implementation(project(":Holograms-v1_15_R1"))
+    implementation(project(":Holograms-v1_16_R1"))
+    implementation(project(":Holograms-v1_16_R2"))
+    implementation(project(":Holograms-v1_16_R3"))
 }
 
