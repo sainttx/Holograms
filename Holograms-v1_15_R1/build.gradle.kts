@@ -66,14 +66,11 @@ repositories {
     maven("https://repo.maven.apache.org/maven2/")
     mavenLocal()
     jcenter()
-    maven("https://repo.kingtux.me/storages/maven/kingtux-repo")
-    maven("https://repo.kingtux.me/storages/maven/ryandw11")
-    maven("https://jitpack.io")
-    maven("https://repo.ryandw11.com/repository/maven-snapshots/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
 }
 
 dependencies {
-    implementation("org.spigotmc", "spigot", "1.15-R0-1-SNAPSHOT")
+    implementation("org.spigotmc", "spigot", "1.15.1-R0.1-SNAPSHOT")
     implementation(project(":Holograms-API"))
 }
 

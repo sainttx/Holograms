@@ -31,7 +31,7 @@ public interface Animation<T> {
      * Adds a slide to this animation.
      *
      * @param slide the slide
-     * @return <tt>true</tt> if the slide was successfully added
+     * @return true if the slide was successfully added
      */
     boolean addSlide(T slide);
 
@@ -39,7 +39,7 @@ public interface Animation<T> {
      * Removes a slide from this animation.
      *
      * @param slide the slide
-     * @return <tt>true</tt> if the slide was successfully removed
+     * @return true if the slide was successfully removed
      */
     boolean removeSlide(T slide);
 }

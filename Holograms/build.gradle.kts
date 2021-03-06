@@ -66,11 +66,11 @@ repositories {
     maven("https://repo.maven.apache.org/maven2/")
     mavenLocal()
     jcenter()
-    maven("https://repo.kingtux.me/storages/maven/kingtux-repo")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
 }
 
 dependencies {
-    implementation("org.spigotmc", "spigot-api", "1.13-R0-1-SNAPSHOT")
+    implementation("org.spigotmc", "spigot-api", "1.13-R0.1-SNAPSHOT")
     implementation("org.bstats", "bstats-bukkit", "2.2.1")
     implementation(project(":Holograms-API"))
     implementation(project(":Holograms-v1_13_R1"))

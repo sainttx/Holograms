@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Version {
-    public static final String HOLOGRAMS_VERSION = "1.0-SNAPSHOT";
+    public static final String HOLOGRAMS_VERSION = "2.14-SNAPSHOT";
     public static final List<String> branchBlacklist = List.of("master", "active");
 
     /**

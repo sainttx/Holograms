@@ -20,5 +20,6 @@ subprojects {
         mavenLocal()
         maven("https://repo.maven.apache.org/maven2")
         maven("https://repo.codemc.org/repository/maven-public")
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots")
     }
 }
