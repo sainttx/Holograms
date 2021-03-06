@@ -31,7 +31,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
 
             artifactId = artifactName
-            from(components["java"])
+            artifact(tasks["shadowJar"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -61,7 +61,19 @@ publishing {
 
 
 
+tasks {
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveClassifier.set("");
+    }
+    "jar"{
+        enabled = false
+    }
 
+    "assemble"{
+        dependsOn(shadowJar)
+
+    }
+}
 repositories {
     maven("https://repo.maven.apache.org/maven2/")
     mavenLocal()
@@ -70,7 +82,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.spigotmc", "spigot", "1.16.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc", "spigot", "1.16.2-R0.1-SNAPSHOT")
     implementation(project(":Holograms-API"))
 
 }

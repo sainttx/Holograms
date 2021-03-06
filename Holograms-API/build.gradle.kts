@@ -25,13 +25,25 @@ java {
     targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
     sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
 }
+tasks {
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveClassifier.set("");
+    }
+    "jar"{
+        enabled = false
+    }
 
+    "assemble"{
+        dependsOn(shadowJar)
+
+    }
+}
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
 
             artifactId = artifactName
-            from(components["java"])
+            artifact(tasks["shadowJar"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -70,7 +82,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.spigotmc", "spigot-api", "1.13-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc", "spigot-api", "1.13-R0.1-SNAPSHOT")
 
 }
 
