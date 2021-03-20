@@ -70,7 +70,7 @@ public interface HologramManager {
      * Removes an already tracked line.
      *
      * @param line the line
-     * @return <tt>true</tt> if the line was removed from the
+     * @return true if the line was removed from the
      * collection returned by {@link #getTrackedLines()}
      */
     boolean untrackLine(UpdatingHologramLine line);

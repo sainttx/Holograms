@@ -63,7 +63,7 @@ public class Hologram {
     /**
      * Returns the persistence state of this Hologram.
      *
-     * @return <tt>true</tt> if the Hologram is persistent
+     * @return true if the Hologram is persistent
      */
     public boolean isPersistent() {
         return persist;

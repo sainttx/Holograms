@@ -15,7 +15,7 @@ public interface HologramLine {
          * of the line type this parser is parsing for.
          *
          * @param text the provided text
-         * @return <tt>true</tt> if the text is valid and can be parsed
+         * @return true if the text is valid and can be parsed
          */
         boolean canParse(String text);
 
@@ -68,7 +68,7 @@ public interface HologramLine {
      * Returns whether this line is hidden from being displayed by its
      * parent hologram.
      *
-     * @return <tt>true</tt> if the line is hidden
+     * @return true if the line is hidden
      */
     boolean isHidden();
 

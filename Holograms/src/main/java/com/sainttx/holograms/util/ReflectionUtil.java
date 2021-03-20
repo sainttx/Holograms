@@ -10,7 +10,7 @@ public class ReflectionUtil {
     private static String versionString;
 
     /**
-     * Gets the version string for NMS & OBC class paths
+     * Gets the version string for NMS and OBC class paths
      *
      * @return The version string of OBC and NMS packages
      */
