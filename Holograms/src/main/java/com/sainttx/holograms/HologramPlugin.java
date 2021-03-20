@@ -1,8 +1,15 @@
 package com.sainttx.holograms;
 
+import cloud.commandframework.annotations.AnnotationParser;
+import cloud.commandframework.arguments.parser.ParserParameters;
+import cloud.commandframework.arguments.parser.StandardParameters;
+import cloud.commandframework.bukkit.BukkitCommandManager;
+import cloud.commandframework.execution.CommandExecutionCoordinator;
+import cloud.commandframework.meta.CommandMeta;
+import cloud.commandframework.meta.SimpleCommandMeta;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.commands.HologramCommands;
+import com.sainttx.holograms.commands.HologramCommand;
 import com.sainttx.holograms.parser.AnimatedItemLineParser;
 import com.sainttx.holograms.parser.AnimatedTextLineParser;
 import com.sainttx.holograms.parser.HeadParser;
@@ -10,8 +17,11 @@ import com.sainttx.holograms.parser.ItemLineParser;
 import com.sainttx.holograms.tasks.HologramUpdateTask;
 import com.sainttx.holograms.util.ReflectionUtil;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
+import java.util.function.Function;
 
 public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
@@ -24,8 +34,8 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
     private HologramEntityController controller;
     private final Runnable updateTask = new HologramUpdateTask(this);
     private Metrics metrics;
-
-
+    private   BukkitCommandManager<CommandSender> bukkitCommandManager ;
+private AnnotationParser<CommandSender> annotationParser;
     @Override
     public void onEnable() {
         this.manager = new ManagerImpl(this);
@@ -38,12 +48,21 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
 
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);
-            HologramCommands hologramCommands = new HologramCommands(this);
-            getCommand("holograms").setExecutor(hologramCommands);
-            getCommand("holograms").setTabCompleter(hologramCommands);
+
             getServer().getScheduler().runTaskLater(this, () -> ((ManagerImpl) manager).load(), 5L);
             getServer().getScheduler().runTaskTimer(this, updateTask, 2L, 2L);
         }
+        final Function<ParserParameters, CommandMeta> commandMetaFunction = p ->
+                CommandMeta.simple()
+                        // This will allow you to decorate commands with descriptions
+                        .with(CommandMeta.DESCRIPTION, p.get(StandardParameters.DESCRIPTION, "No description"))
+                        .build();
+        this.annotationParser = new AnnotationParser<>(
+                /* Manager */ bukkitCommandManager,
+                /* Command sender type */ CommandSender.class,
+                /* Mapper for command meta instances */ commandMetaFunction
+        );
+        annotationParser.parse(new HologramCommand(this));
     }
 
     @Override

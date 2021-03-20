@@ -89,6 +89,9 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc", "spigot-api", "1.13-R0.1-SNAPSHOT")
     implementation("org.bstats", "bstats-bukkit", "2.2.1")
+    implementation("cloud.commandframework:cloud-PLATFORM:1.4.0")
+    implementation("cloud.commandframework:cloud-bukkit:1.4.0")
+    implementation("cloud.commandframework:cloud-annotations:1.4.0")
     implementation(project(":Holograms-v1_13_R1"))
     implementation(project(":Holograms-v1_13_R2"))
     implementation(project(":Holograms-v1_14_R1"))
