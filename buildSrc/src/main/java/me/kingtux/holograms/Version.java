@@ -44,7 +44,7 @@ public class Version {
             }
 
         }
-        if (!buildNumber.isEmpty() && !buildNumber.isBlank() && !buildNumber.equalsIgnoreCase("0")) {
+        if (!buildNumber.isEmpty() && !buildNumber.equalsIgnoreCase("0")) {
             System.out.println("buildNumber = " + buildNumber);
             value = value.replace("-SNAPSHOT", String.format("-%s-SNAPSHOT", buildNumber));
         }
