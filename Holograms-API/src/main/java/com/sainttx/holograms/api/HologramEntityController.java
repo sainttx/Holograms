@@ -27,7 +27,16 @@ public interface HologramEntityController {
      * @return the resulting entity that was spawned
      */
     Nameable spawnNameable(HologramLine line, Location location);
-
+    /**
+     * Spawns a new entity at a specific location for a HologramLine
+     * to hold an item as a head. No rotation happens
+     *
+     * @param line the parenting hologram line for the entity
+     * @param location the location
+     * @param itemstack the item to put on the head
+     * @return the resulting entity that was spawned
+     */
+     Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack);
     /**
      * Spawns a new entity at a specific location for a HologramLine
      * to modify displayed item.
@@ -59,4 +68,11 @@ public interface HologramEntityController {
      * @return the base entity
      */
     HologramEntity getHologramEntity(Entity bukkitEntity);
+
+    /**
+     * Gets the HeadController for that version
+     *
+     * @return
+     */
+    HeadController getHeadController();
 }

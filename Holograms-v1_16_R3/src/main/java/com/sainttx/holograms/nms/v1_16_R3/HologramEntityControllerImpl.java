@@ -1,5 +1,6 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
+import com.sainttx.holograms.api.HeadController;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.MinecraftVersion;
@@ -7,11 +8,13 @@ import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R3.Entity;
+import net.minecraft.server.v1_16_R3.EnumItemSlot;
 import net.minecraft.server.v1_16_R3.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
+    private HeadController headController = new HeadControllerImpl(this);
 
     private static final Method registerEntityMethod;
     static {
@@ -84,6 +88,12 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         armorStand.setLockTick(true);
         return item;
     }
+    public EntityNameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        EntityNameable armorStand = spawnNameable(line, location.subtract(0,.75,0), false);
+        armorStand.setSlot(EnumItemSlot.HEAD,CraftItemStack.asNMSCopy(itemstack));
+        armorStand.setLockTick(true);
+        return armorStand;
+    }
 
     private static boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
         int x = (int) Math.floor(nmsEntity.locX() / 16.0D);
@@ -109,5 +119,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public HologramEntity getHologramEntity(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
+    }
+
+    @Override
+    public HeadController getHeadController() {
+        return headController;
     }
 }

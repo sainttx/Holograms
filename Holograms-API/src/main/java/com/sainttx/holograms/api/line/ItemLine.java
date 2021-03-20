@@ -152,7 +152,7 @@ public class ItemLine extends AbstractLine implements ItemCarryingHologramLine {
     }
 
     // Converts an ItemStack to raw representation
-    static String itemstackToRaw(ItemStack itemstack) {
+    public static String itemstackToRaw(ItemStack itemstack) {
         StringBuilder sb = new StringBuilder();
         sb.append(itemstack.getType().toString()); // append type
         sb.append(' ').append(itemstack.getAmount()); // append amount

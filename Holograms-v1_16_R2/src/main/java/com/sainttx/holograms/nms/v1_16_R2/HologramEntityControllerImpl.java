@@ -1,10 +1,9 @@
 package com.sainttx.holograms.nms.v1_16_R2;
 
-import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.MinecraftVersion;
+import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R2.Entity;
 import net.minecraft.server.v1_16_R2.WorldServer;
@@ -19,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
+    private HeadController headController = new BasicHeadController(this);
 
     private static final Method registerEntityMethod;
     static {
@@ -44,6 +44,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     @Override
     public EntityNameable spawnNameable(HologramLine line, Location location) {
         return spawnNameable(line, location, true);
+    }
+
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
     }
 
     @SuppressWarnings("resource")
@@ -109,5 +114,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public HologramEntity getHologramEntity(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
+    }
+
+    @Override
+    public HeadController getHeadController() {
+        return headController;
     }
 }

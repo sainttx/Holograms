@@ -1,10 +1,9 @@
 package com.sainttx.holograms.nms.v1_13_R2;
 
-import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.MinecraftVersion;
+import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_13_R2.Entity;
 import net.minecraft.server.v1_13_R2.WorldServer;
@@ -21,6 +20,7 @@ import java.util.logging.Level;
 public class HologramEntityControllerImpl implements HologramEntityController {
 
     private HologramPlugin plugin;
+    private HeadController headController = new BasicHeadController(this);
 
     public HologramEntityControllerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
@@ -71,7 +71,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         armorStand.setLockTick(true);
         return item;
     }
-
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
+    }
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
         net.minecraft.server.v1_13_R2.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
 
@@ -91,6 +94,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public HologramEntity getHologramEntity(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
+    }
+
+    @Override
+    public HeadController getHeadController() {
+        return headController;
     }
 
 }
