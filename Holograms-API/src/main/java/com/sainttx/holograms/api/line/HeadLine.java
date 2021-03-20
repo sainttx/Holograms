@@ -4,6 +4,7 @@ import com.sainttx.holograms.api.HeadController;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,7 @@ public class HeadLine  extends AbstractLine implements ItemCarryingHologramLine{
 
     private static final Pattern linePattern = Pattern.compile("((head):)(.+)");
     private ItemStack item;
-    private ItemHolder entity;
+    private Nameable entity;
 
     public HeadLine(Hologram parent, String raw) {
         this(parent, raw, parseItem(raw));
@@ -79,7 +80,6 @@ public class HeadLine  extends AbstractLine implements ItemCarryingHologramLine{
     @Override
     public void hide() {
         if (!isHidden()) {
-            entity.setMount(null);
             entity.remove();
             entity = null;
         }
@@ -89,7 +89,7 @@ public class HeadLine  extends AbstractLine implements ItemCarryingHologramLine{
     public boolean show() {
         if (isHidden()) {
             HologramPlugin plugin = JavaPlugin.getPlugin(HologramPlugin.class);
-            entity = plugin.getEntityController().spawnItemHolder(this, getLocation(), item);
+            entity = plugin.getEntityController().spawnHeadHolder(this, getLocation(), item);
         }
         return true;
     }
@@ -107,7 +107,8 @@ public class HeadLine  extends AbstractLine implements ItemCarryingHologramLine{
     @Override
     public void setItem(ItemStack item) {
         this.item = item.clone();
-        entity.setItem(this.item);
+        hide();
+        show();
     }
 
     @Override

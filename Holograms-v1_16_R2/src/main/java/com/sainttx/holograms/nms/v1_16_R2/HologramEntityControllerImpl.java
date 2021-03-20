@@ -3,6 +3,7 @@ package com.sainttx.holograms.nms.v1_16_R2;
 import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R2.Entity;
 import net.minecraft.server.v1_16_R2.WorldServer;
@@ -43,6 +44,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     @Override
     public EntityNameable spawnNameable(HologramLine line, Location location) {
         return spawnNameable(line, location, true);
+    }
+
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
     }
 
     @SuppressWarnings("resource")

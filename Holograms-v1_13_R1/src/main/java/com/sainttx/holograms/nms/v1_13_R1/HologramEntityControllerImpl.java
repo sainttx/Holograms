@@ -3,6 +3,7 @@ package com.sainttx.holograms.nms.v1_13_R1;
 import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_13_R1.Entity;
 import net.minecraft.server.v1_13_R1.WorldServer;
@@ -39,7 +40,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public EntityNameable spawnNameable(HologramLine line, Location location) {
         return spawnNameable(line, location, true);
     }
-
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
+    }
     private EntityNameable spawnNameable(HologramLine line, Location location, boolean lock) {
         WorldServer nmsWorld = ((CraftWorld) location.getWorld()).getHandle();
         EntityNameable armorStand = new EntityNameable(nmsWorld, line);

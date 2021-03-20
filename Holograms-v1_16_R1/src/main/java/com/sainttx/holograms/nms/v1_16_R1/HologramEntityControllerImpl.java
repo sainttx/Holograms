@@ -3,6 +3,7 @@ package com.sainttx.holograms.nms.v1_16_R1;
 import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R1.Entity;
 import net.minecraft.server.v1_16_R1.WorldServer;
@@ -105,7 +106,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         }
         return true;
     }
-
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
+    }
     @Override
     public HologramEntity getHologramEntity(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();

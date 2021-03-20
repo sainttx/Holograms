@@ -5,11 +5,14 @@ import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R3.Entity;
+import net.minecraft.server.v1_16_R3.EntityArmorStand;
+import net.minecraft.server.v1_16_R3.EnumItemSlot;
 import net.minecraft.server.v1_16_R3.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -82,6 +85,13 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         item.setLockTick(true);
         armorStand.setLockTick(true);
         return item;
+    }
+    public EntityNameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        EntityNameable armorStand = spawnNameable(line, location.subtract(0,.75,0), false);
+        armorStand.setSlot(EnumItemSlot.HEAD,CraftItemStack.asNMSCopy(itemstack));
+        armorStand.setLockTick(true);
+
+        return armorStand;
     }
 
     private static boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {

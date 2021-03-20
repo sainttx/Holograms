@@ -27,7 +27,16 @@ public interface HologramEntityController {
      * @return the resulting entity that was spawned
      */
     Nameable spawnNameable(HologramLine line, Location location);
-
+    /**
+     * Spawns a new entity at a specific location for a HologramLine
+     * to modify displayed item.
+     *
+     * @param line the parenting hologram line for the entity
+     * @param location the location
+     * @param itemstack initial item
+     * @return the resulting entity that was spawned
+     */
+     Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack);
     /**
      * Spawns a new entity at a specific location for a HologramLine
      * to modify displayed item.

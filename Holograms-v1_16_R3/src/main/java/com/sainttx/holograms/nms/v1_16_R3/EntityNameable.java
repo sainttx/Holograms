@@ -118,10 +118,7 @@ public class EntityNameable extends EntityArmorStand implements Nameable {
         return false;
     }
 
-    @Override
-    public void setSlot(EnumItemSlot enumitemslot, ItemStack itemstack) {
 
-    }
 
     @Override
     public void setInvisible(boolean flag) {

@@ -3,6 +3,7 @@ package com.sainttx.holograms.nms.v1_13_R2;
 import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
+import com.sainttx.holograms.api.entity.Nameable;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_13_R2.Entity;
 import net.minecraft.server.v1_13_R2.WorldServer;
@@ -70,7 +71,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         armorStand.setLockTick(true);
         return item;
     }
-
+    @Override
+    public Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack) {
+        return null;
+    }
     private boolean addEntityToWorld(WorldServer nmsWorld, Entity nmsEntity) {
         net.minecraft.server.v1_13_R2.Chunk nmsChunk = nmsWorld.getChunkAtWorldCoords(nmsEntity.getChunkCoordinates());
 
