@@ -1,4 +1,4 @@
-# Holograms - KingTux Fork [![Build Status](https://ci.kingtux.dev/buildStatus/icon?job=Holograms)](https://ci.kingtux.dev/job/Holograms/) [![Maven Version](https://mvnhelper.potatocorp.dev/kingtux-repo/com.sainttx.holograms/holograms-api/badge.png)](https://mvnhelper.potatocorp.dev/kingtux-repo/com.sainttx.holograms/holograms-api)
+# Holograms - KingTux Fork [![Build Status](https://ci.potatocorp.dev/job/Holograms/job/active/badge/icon)](https://ci.potatocorp.dev/job/Holograms/job/active/) [![Maven Version](https://mvnhelper.potatocorp.dev/kingtux-repo/com.sainttx.holograms/holograms-api/badge.png)](https://mvnhelper.potatocorp.dev/kingtux-repo/com.sainttx.holograms/holograms-api)
 A Bukkit plugin that allows easy creation and management of text based Holograms
 
 ### Resources
