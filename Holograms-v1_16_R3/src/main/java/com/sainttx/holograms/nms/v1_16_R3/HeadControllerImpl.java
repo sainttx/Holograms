@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import com.sainttx.holograms.api.BasicHeadController;
 import com.sainttx.holograms.api.HologramEntityController;
 import com.sainttx.holograms.api.exception.HologramEntitySpawnException;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;

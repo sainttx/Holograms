@@ -1,11 +1,13 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
-import com.sainttx.holograms.api.*;
+import com.sainttx.holograms.api.HeadController;
+import com.sainttx.holograms.api.HologramEntityController;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.MinecraftVersion;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
 import net.minecraft.server.v1_16_R3.Entity;
-import net.minecraft.server.v1_16_R3.EntityArmorStand;
 import net.minecraft.server.v1_16_R3.EnumItemSlot;
 import net.minecraft.server.v1_16_R3.WorldServer;
 import org.bukkit.Location;
@@ -90,7 +92,6 @@ public class HologramEntityControllerImpl implements HologramEntityController {
         EntityNameable armorStand = spawnNameable(line, location.subtract(0,.75,0), false);
         armorStand.setSlot(EnumItemSlot.HEAD,CraftItemStack.asNMSCopy(itemstack));
         armorStand.setLockTick(true);
-
         return armorStand;
     }
 

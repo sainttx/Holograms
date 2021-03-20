@@ -15,7 +15,6 @@ import org.bukkit.craftbukkit.v1_13_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {

@@ -3,16 +3,12 @@ package com.sainttx.holograms.api.line;
 import com.sainttx.holograms.api.HeadController;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.entity.Nameable;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -3,12 +3,10 @@ package com.sainttx.holograms.commands;
 import com.sainttx.holograms.api.Hologram;
 import com.sainttx.holograms.api.HologramPlugin;
 import com.sainttx.holograms.api.line.HologramLine;
-import com.sainttx.holograms.api.line.TextualHologramLine;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class CommandRename implements CommandExecutor {
     private HologramPlugin plugin;

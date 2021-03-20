@@ -29,11 +29,11 @@ public interface HologramEntityController {
     Nameable spawnNameable(HologramLine line, Location location);
     /**
      * Spawns a new entity at a specific location for a HologramLine
-     * to modify displayed item.
+     * to hold an item as a head. No rotation happens
      *
      * @param line the parenting hologram line for the entity
      * @param location the location
-     * @param itemstack initial item
+     * @param itemstack the item to put on the head
      * @return the resulting entity that was spawned
      */
      Nameable spawnHeadHolder(HologramLine line, Location location, ItemStack itemstack);

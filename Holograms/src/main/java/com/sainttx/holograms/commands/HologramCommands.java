@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HologramCommands implements CommandExecutor, TabExecutor {
 

@@ -18,8 +18,17 @@ public interface HeadController {
      */
     ItemStack createHead(UUID uuid);
 
-
+    /**
+     * Gets the base 64 of the itemStack
+     * @param itemStack the item stack
+     * @return the base64
+     */
     String getBase64(ItemStack itemStack);
 
-    UUID getUUID(ItemStack uuid);
+    /**
+     * Gets the UUID from the ItemStack
+     * @param itemStack the item stack
+     * @return the uuid.
+     */
+    UUID getUUID(ItemStack itemStack);
 }
