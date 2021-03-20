@@ -3,11 +3,16 @@ package me.kingtux.holograms;
 import org.gradle.api.GradleException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Version {
     public static final String HOLOGRAMS_VERSION = "2.14-SNAPSHOT";
-    public static final List<String> branchBlacklist = List.of("master", "active");
+    public static final List<String> branchBlacklist = new ArrayList<>();
+    static {
+        branchBlacklist.add("active");
+        branchBlacklist.add("master");
+    }
 
     /**
      * Generates the hologram version based on the current branch.
