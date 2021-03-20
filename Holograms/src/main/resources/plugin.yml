@@ -1,6 +1,6 @@
-name: ${project.name}
-version: ${project.version}
-description: ${project.description}
+name: Holograms
+version: ${version}
+description: A simple to use Hologram plugin
 author: SainttX,KingTux
 license: MIT
 api-version: 1.13
