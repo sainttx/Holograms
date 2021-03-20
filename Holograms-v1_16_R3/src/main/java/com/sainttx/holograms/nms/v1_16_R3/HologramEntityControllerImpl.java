@@ -1,8 +1,6 @@
 package com.sainttx.holograms.nms.v1_16_R3;
 
-import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.MinecraftVersion;
+import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
@@ -19,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
+    private HeadController headController = new HeadControllerImpl(this);
 
     private static final Method registerEntityMethod;
     static {
@@ -109,5 +108,10 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     public HologramEntity getHologramEntity(org.bukkit.entity.Entity bukkitEntity) {
         Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
         return nmsEntity instanceof HologramEntity ? (HologramEntity) nmsEntity : null;
+    }
+
+    @Override
+    public HeadController getHeadController() {
+        return headController;
     }
 }

@@ -1,8 +1,6 @@
 package com.sainttx.holograms.nms.v1_13_R1;
 
-import com.sainttx.holograms.api.HologramEntityController;
-import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.MinecraftVersion;
+import com.sainttx.holograms.api.*;
 import com.sainttx.holograms.api.entity.HologramEntity;
 import com.sainttx.holograms.api.entity.ItemHolder;
 import com.sainttx.holograms.api.line.HologramLine;
@@ -16,12 +14,13 @@ import org.bukkit.craftbukkit.v1_13_R1.entity.CraftEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class HologramEntityControllerImpl implements HologramEntityController {
 
     private HologramPlugin plugin;
-
+    private HeadController headController = new BasicHeadController(this);
     public HologramEntityControllerImpl(HologramPlugin plugin) {
         this.plugin = plugin;
     }
@@ -29,6 +28,11 @@ public class HologramEntityControllerImpl implements HologramEntityController {
     @Override
     public MinecraftVersion getMinecraftVersion() {
         return MinecraftVersion.V1_13_R1;
+    }
+
+    @Override
+    public HeadController getHeadController() {
+        return headController;
     }
 
     @Override

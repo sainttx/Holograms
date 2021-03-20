@@ -5,6 +5,7 @@ import com.sainttx.holograms.api.HologramManager;
 import com.sainttx.holograms.commands.HologramCommands;
 import com.sainttx.holograms.parser.AnimatedItemLineParser;
 import com.sainttx.holograms.parser.AnimatedTextLineParser;
+import com.sainttx.holograms.parser.HeadParser;
 import com.sainttx.holograms.parser.ItemLineParser;
 import com.sainttx.holograms.tasks.HologramUpdateTask;
 import com.sainttx.holograms.util.ReflectionUtil;
@@ -33,6 +34,7 @@ public class HologramPlugin extends com.sainttx.holograms.api.HologramPlugin {
         addLineParser(new ItemLineParser());
         addLineParser(new AnimatedItemLineParser());
         addLineParser(new AnimatedTextLineParser());
+        addLineParser(new HeadParser());
 
         if (setupController()) {
             getServer().getPluginManager().registerEvents(new HologramListener(this), this);

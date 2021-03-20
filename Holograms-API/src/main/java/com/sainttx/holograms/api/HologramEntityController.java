@@ -59,4 +59,11 @@ public interface HologramEntityController {
      * @return the base entity
      */
     HologramEntity getHologramEntity(Entity bukkitEntity);
+
+    /**
+     * Gets the HeadController for that version
+     *
+     * @return
+     */
+    HeadController getHeadController();
 }
