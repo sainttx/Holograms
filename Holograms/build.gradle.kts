@@ -65,7 +65,7 @@ tasks {
     named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
         archiveClassifier.set("");
         dependencies {
-            relocate("org.bstats.bukkit", "me.kingtux.holograms.bstats")
+            relocate("org.bstats", "me.kingtux.holograms.bstats")
         }
     }
     "jar"{
